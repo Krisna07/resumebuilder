@@ -22,8 +22,23 @@ function App() {
     postcode: "",
     summary: "",
     skills: [],
-    experiences: [],
-    educations: [],
+    experiences: [
+      {
+        title: "",
+        company: "",
+        from: "",
+        to: "",
+        summary: "",
+      },
+    ],
+    educations: [
+      {
+        degree: "",
+        institution: "",
+        from: "",
+        to: "",
+      },
+    ],
   });
 
   const handleInputChange = (e) => {
@@ -52,6 +67,15 @@ function App() {
     });
   };
 
+  const handleExperienceInputChange = (index, field, value) => {
+    const updatedExperiences = [...formData.experiences];
+    updatedExperiences[index][field] = value;
+    setFormData({
+      ...formData,
+      experiences: updatedExperiences,
+    });
+  };
+
   const handleExperienceAdd = () => {
     setFormData({
       ...formData,
@@ -62,6 +86,7 @@ function App() {
           company: "",
           from: "",
           to: "",
+          summary: "",
         },
       ],
     });
@@ -73,6 +98,15 @@ function App() {
     setFormData({
       ...formData,
       experiences: updatedExperiences,
+    });
+  };
+
+  const handleEducationInputChange = (index, field, value) => {
+    const updatedEducations = [...formData.educations];
+    updatedEducations[index][field] = value;
+    setFormData({
+      ...formData,
+      educations: updatedEducations,
     });
   };
 
@@ -99,26 +133,12 @@ function App() {
       educations: updatedEducations,
     });
   };
-  const handleExperienceInputChange = (index, field, value) => {
-    const updatedExperiences = [...formData.experiences];
-    updatedExperiences[index][field] = value;
-    setFormData({
-      ...formData,
-      experiences: updatedExperiences,
-    });
-  };
 
-  const handleEducationInputChange = (index, field, value) => {
-    const updatedEducations = [...formData.educations];
-    updatedEducations[index][field] = value;
-    setFormData({
-      ...formData,
-      educations: updatedEducations,
-    });
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Here, you can send the formData to your backend API or perform other actions.
     console.log(formData);
+    // Reset the form after submission (if needed)
     setFormData({
       firstname: "",
       lastname: "",
@@ -128,8 +148,23 @@ function App() {
       postcode: "",
       summary: "",
       skills: [],
-      experiences: [],
-      educations: [],
+      experiences: [
+        {
+          title: "",
+          company: "",
+          from: "",
+          to: "",
+          summary: "",
+        },
+      ],
+      educations: [
+        {
+          degree: "",
+          institution: "",
+          from: "",
+          to: "",
+        },
+      ],
     });
   };
 
@@ -281,7 +316,9 @@ function App() {
                 </div>
               </div>
               {formData.experiences.map((experience, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  className="grid gap-4">
                   <input
                     type="text"
                     placeholder="Title"
@@ -308,7 +345,7 @@ function App() {
                     }
                     className="w-full border-b-2 outline-none focus:border-green-200"
                   />
-                  <div className=" w-ful grid grid-cols-2 gap-4">
+                  <div className="w-ful grid grid-cols-2 gap-4">
                     <label>
                       <span className="w-full font-semibold">From</span>
                       <input
@@ -326,10 +363,10 @@ function App() {
                       />
                     </label>
                     <label className="">
-                      <span className=" w-full font-semibold"> To</span>
+                      <span className="w-full font-semibold">To</span>
                       <input
                         type="date"
-                        placeholder="From"
+                        placeholder="To"
                         value={experience.to}
                         onChange={(e) =>
                           handleExperienceInputChange(
@@ -342,6 +379,20 @@ function App() {
                       />
                     </label>
                   </div>
+                  <textarea
+                    placeholder="Summary"
+                    value={experience.summary}
+                    onChange={(e) =>
+                      handleExperienceInputChange(
+                        index,
+                        "summary",
+                        e.target.value,
+                      )
+                    }
+                    className="border w-full max-h-[20ch] p-2 outline-none border-2 focus:border-green-200"
+                    minLength={200}
+                    maxLength={800}
+                  />
                   {index === formData.experiences.length - 1 && (
                     <div className="flex gap-4">
                       <span
@@ -362,7 +413,9 @@ function App() {
                 </div>
               </div>
               {formData.educations.map((education, index) => (
-                <div key={index}>
+                <div
+                  key={index}
+                  className="grid gap-4">
                   <input
                     type="text"
                     placeholder="Degree"
@@ -435,7 +488,11 @@ function App() {
                 </div>
               ))}
             </div>
-            <button type="submit">Submit</button>
+            <button
+              type="submit"
+              className="w-fit py-1 px-4 rounded-full bg-green-200">
+              Submit
+            </button>
           </form>
         </div>
         <Greenglance />
