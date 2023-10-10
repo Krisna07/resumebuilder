@@ -136,9 +136,9 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here, you can send the formData to your backend API or perform other actions.
+
     console.log(formData);
-    // Reset the form after submission (if needed)
+
     setFormData({
       firstname: "",
       lastname: "",
