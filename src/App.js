@@ -2,13 +2,14 @@ import { useState } from "react";
 import "./App.css";
 import Header from "./Components/Header";
 import {
-  FaLocationArrow,
-  FaMailBulk,
-  FaPersonBooth,
-  FaPhone,
+  FaBuilding,
+  FaList,
+  FaPlus,
   FaRegUser,
-  FaTicketAlt,
+  FaStar,
+  FaTimes,
 } from "react-icons/fa";
+import Greenglance from "./Components/Greenglance";
 
 function App() {
   const [username, setUsername] = useState({
@@ -17,19 +18,19 @@ function App() {
   });
 
   return (
-    <div className="p-4">
+    <div className=" ">
       <Header />
-      <div className="w-[1400px] grid grid-cols-2 ">
+      <div className="w-[1400px] grid grid-cols-2 py-4 p-4">
         <div>
           <form>
-            <div className="grid gap-2 p-4">
+            <div className="grid gap-4 p-4">
               <div className="flex items-center gap-4 border-b py-2">
                 <span className="text-xl font-[600]"> Profile</span>
                 <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
                   <FaRegUser />
                 </div>
               </div>
-              <label className="flex gap-2">
+              <label className="grid grid-cols-2 gap-4">
                 <input
                   placeholder="Firstname"
                   className="border-b-2 outline-none focus:border-green-200"
@@ -39,84 +40,106 @@ function App() {
                   className="border-b-2 outline-none focus:border-green-200"
                 />
               </label>
-              <div className=" font-[600] bg-green-200 w-fit px-4 py-1 rounded">
-                Next
+              <label className="flex gap-2">
+                <input
+                  type="number"
+                  placeholder="Phone"
+                  className="w-full border-b-2 outline-none focus:border-green-200"
+                />
+              </label>
+              <label className="flex gap-2">
+                <input
+                  type=""
+                  placeholder="Street"
+                  className="w-full border-b-2 outline-none focus:border-green-200"
+                />
+                <input
+                  type=""
+                  placeholder="State"
+                  className="w-full border-b-2 outline-none focus:border-green-200"
+                />
+                <input
+                  type=""
+                  placeholder="Postcode"
+                  className="w-full border-b-2 outline-none focus:border-green-200"
+                />
+              </label>
+            </div>
+            <div className=" p-4">
+              <div className="flex items-center gap-4 py-2">
+                <span className="text-xl font-[600]"> Summary</span>
+                <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
+                  <FaList />
+                </div>
+              </div>
+              <textarea
+                className="border w-full max-h-[20ch] p-2 outline-none border-2 focus:border-green-200"
+                minLength={200}
+                maxLength={800}
+              />
+            </div>
+            <div className=" p-4 grid gap-4">
+              <div className="flex items-center gap-4  py-2">
+                <span className="text-xl font-[600]">Skills</span>
+                <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
+                  <FaStar />
+                </div>
+              </div>
+              <input
+                type=""
+                placeholder="Enter your skill"
+                className="w-full border-b-2 outline-none focus:border-green-200"
+              />
+              <div className="flex gap-4">
+                <span className="text-[14px] font-semibold px-4 py-1 bg-gray-200 rounded-full flex items-center gap-2 hover:bg-green-200 leading-[120%]">
+                  skills <FaTimes />
+                </span>
+              </div>
+            </div>
+            <div className=" p-4 grid gap-4">
+              <div className="flex items-center gap-4  py-2">
+                <span className="text-xl font-[600]">Experience</span>
+                <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
+                  <FaBuilding />
+                </div>
+              </div>
+              <input
+                type=""
+                placeholder="Title"
+                className="w-full border-b-2 outline-none focus:border-green-200"
+              />
+              <input
+                type=""
+                placeholder="Company name"
+                className="w-full border-b-2 outline-none focus:border-green-200"
+              />
+              <div className=" w-ful grid grid-cols-2 gap-4">
+                <label>
+                  <span className="w-full font-semibold">From</span>
+                  <input
+                    type="date"
+                    placeholder="From"
+                    className="w-full border-b-2 outline-none focus:border-green-200"
+                  />
+                </label>
+                <label className="">
+                  <span className=" w-full font-semibold"> To</span>
+                  <input
+                    type="date"
+                    placeholder="From"
+                    className="w-full border-b-2 outline-none focus:border-green-200"
+                  />
+                </label>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-[14px] font-semibold px-4 py-1 bg-gray-200 rounded-full flex items-center gap-2 hover:bg-green-200 leading-[120%]">
+                  Add more <FaPlus />
+                </span>
               </div>
             </div>
           </form>
         </div>
-        <div className="grid place-items-center  gap-4">
-          <div>
-            <div className="w-20 h-20 bg-gray-200 rounded-full"></div>
-            <div>Username </div>
-          </div>
-          <div className="w-full flex items-center justify-between text-[12px] border-b py-2">
-            <div className="flex items-center gap-2 ">
-              <FaPhone /> XXXXXXXX
-            </div>
-            <div className="flex items-center gap-2 ">
-              <FaMailBulk /> email@email.com
-            </div>
-            <div className="flex items-center gap-2 ">
-              <FaLocationArrow /> address, state, 2000
-            </div>
-          </div>
-          <div className="text-[14px] w-full">
-            Highly motivated and accomplished [Your Industry/Field] professional
-            with [X years] of experience in [Key Skill/Experience Area]. Strong
-            analytical and problem-solving abilities, with a commitment to
-            delivering exceptional results. Proven leadership and team
-            collaboration skills. Adept at [Specific Skill/Competency], [Another
-            Skill/Competency], and [Additional Skill/Competency].
-          </div>
-          <div className="grid grid-cols-[200px_500px] gap-4 text-[14px] ">
-            <div className=" grid gap-2">
-              <h2 className="font-bold w-full border-b">Skill</h2>
-              <div>
-                <span className="font-semibold">Soft Skills</span>
-                <ul className="list-disc px-4">
-                  <li>Communication</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                  <li>Emotional Intelligence</li>
-                  <li>Adaptability</li>
-                  <li>Leadership</li>
-                  <li>Customer Service</li>
-                </ul>
-              </div>
-              <div>
-                <span className="font-semibold">Hard skills</span>
-                <ul className="list-disc px-4">
-                  <li>Communication</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                  <li>Emotional Intelligence</li>
-                  <li>Adaptability</li>
-                  <li>Leadership</li>
-                  <li>Customer Service</li>
-                </ul>
-              </div>
-            </div>
-            <div className="px-4 font-bold">
-              <h2>History</h2>
-              <div>
-                <span className="font-semibold">Soft Skills</span>
-                <ul className="list-disc px-4">
-                  <li>Communication</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                  <li>Emotional Intelligence</li>
-                  <li>Adaptability</li>
-                  <li>Leadership</li>
-                  <li>Customer Service</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Greenglance />
       </div>
     </div>
   );

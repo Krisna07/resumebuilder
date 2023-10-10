@@ -3,18 +3,13 @@ import { FaPaintBrush } from "react-icons/fa";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 const Header = () => {
   return (
-    <div className=" flex items-center ">
+    <div className=" flex items-center justify-between bg-white shadow p-4">
       <div className="flex items-center font-[600] gap-4">
         Resume Builder <FaPaintBrush />
       </div>
-      <Tabs className="">
-        <TabList className="flex gap-8">
-          <Tab>Profile</Tab>
-          <Tab>Address</Tab>
-          <Tab>History</Tab>
-          <Tab>Education</Tab>
-        </TabList>
-      </Tabs>
+      <div className="w-fit px-4 py-1 text-[16px] bg-green-200 rounded-full">
+        Sign up
+      </div>
     </div>
   );
 };
