@@ -18,9 +18,9 @@ function App() {
   });
 
   return (
-    <div className=" ">
+    <div className="w-full grid place-items-center">
       <Header />
-      <div className="w-[1400px] grid grid-cols-2 py-4 p-4">
+      <div className="w-[1400px] grid grid-cols-2 place-items-center py-4 p-4">
         <div>
           <form>
             <div className="grid gap-4 p-4">
