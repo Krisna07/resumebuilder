@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { FaList } from 'react-icons/fa'
 
-const Summary = () => {
+const Summary = ({setSummary}) => {
+ 
+  
   return (
     <div className=" p-4">
     <div className="flex items-center gap-4 py-2">
@@ -11,8 +14,7 @@ const Summary = () => {
     </div>
     <textarea
       name="summary"
-      value={formData.summary}
-      onChange={handleInputChange}
+      onChange={(e)=>setSummary(e.target.value)}
       className="border w-full max-h-[20ch] p-2 outline-none border-2 focus:border-green-200"
       minLength={200}
       maxLength={800}
