@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 import Header from "./Components/Header";
-import {
-  FaBuilding,
-  FaGraduationCap,
-  FaList,
-  FaPlus,
-  FaStar,
-  FaTimes,
-} from "react-icons/fa";
+
 import Greenglance from "./Components/Greenglance";
 import Profile from "./Components/formcomponents/Profile";
 import Summary from "./Components/formcomponents/Summary";
 import Skills from "./Components/formcomponents/Skills";
 import Experience from "./Components/formcomponents/Experience";
+import Education from "./Components/formcomponents/Education";
 
 function App() {
   const [profile, setProfile] = useState({
@@ -33,51 +27,7 @@ function App() {
           <Summary setSummary={setSummary} />
           <Skills />
           <Experience />
-          <div className=" p-4 grid gap-4">
-            <div className="flex items-center gap-4  py-2">
-              <span className="text-xl font-[600]">Education</span>
-              <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
-                <FaGraduationCap />
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              <input
-                type="text"
-                placeholder="Degree"
-                className="w-full border-b-2 outline-none focus:border-green-200"
-              />
-              <input
-                type="text"
-                placeholder="Institution name"
-                className="w-full border-b-2 outline-none focus:border-green-200"
-              />
-              <div className=" w-ful grid grid-cols-2 gap-4">
-                <label>
-                  <span className="w-full font-semibold">From</span>
-                  <input
-                    type="date"
-                    placeholder="From"
-                    className="w-full border-b-2 outline-none focus:border-green-200"
-                  />
-                </label>
-                <label className="">
-                  <span className=" w-full font-semibold"> To</span>
-                  <input
-                    type="date"
-                    placeholder="From"
-                    className="w-full border-b-2 outline-none focus:border-green-200"
-                  />
-                </label>
-              </div>
-
-              <div className="flex gap-4">
-                <span className="text-[14px] font-semibold px-4 py-1 bg-gray-200 rounded-full flex items-center gap-2 hover:bg-green-200 leading-[120%]">
-                  Add more <FaPlus />
-                </span>
-              </div>
-            </div>
-          </div>
+          <Education />
           <button
             type="submit"
             className="w-fit py-1 px-4 rounded-full bg-green-200">

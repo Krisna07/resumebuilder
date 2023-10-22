@@ -74,7 +74,7 @@ function ExperienceList({ experiences, onEdit, onDelete }) {
       {experiences.map((experience, index) => (
         <li key={index}>
           <div className="flex gap-2">
-            <strong className="capitalize ">{experience.title}</strong> at
+            <strong className="capitalize  ">{experience.title}</strong> at
             <span className="capitalize">{experience.company}</span>
           </div>
           <div>
