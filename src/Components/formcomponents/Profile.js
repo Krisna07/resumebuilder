@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { FaRegUser } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import { FaRegUser } from "react-icons/fa";
 
-const Profile = ({setProfile}) => {
+const Profile = ({ setProfile }) => {
+  const [user, setUser] = useState({});
   const [details, setDetails] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    address: '',
-    phone: '',
-    street: '',
-    state: '',
-    postcode: '',
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    street: "",
+    state: "",
+    postcode: "",
   });
 
   const handleChange = (e) => {
@@ -18,10 +18,10 @@ const Profile = ({setProfile}) => {
     setDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
-    }))
+    }));
   };
 
-
+  useEffect(() => details && setProfile(details), [details]);
   return (
     <div className="grid gap-4 p-4">
       <div className="flex items-center gap-4 border-b py-2">
@@ -55,6 +55,16 @@ const Profile = ({setProfile}) => {
           placeholder="Phone"
           className="w-full border-b-2 outline-none focus-border-green-200"
           value={details.phone}
+          onChange={handleChange}
+        />
+      </label>
+      <label className="flex gap-2">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          className="w-full border-b-2 outline-none focus-border-green-200"
+          value={details.email}
           onChange={handleChange}
         />
       </label>

@@ -99,7 +99,7 @@ function ExperienceList({ experiences, onEdit, onDelete }) {
   );
 }
 
-function Experience() {
+function Experience({ getExperience }) {
   const [experiences, setExperiences] = useState([]);
   const [newExperience, setNewExperience] = useState({
     title: "",
@@ -139,7 +139,7 @@ function Experience() {
         editing: false,
       });
     }
-    console.log(experiences);
+    getExperience(experiences);
   };
 
   const handleEdit = (index) => {

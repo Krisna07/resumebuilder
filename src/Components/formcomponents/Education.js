@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { FaGraduationCap, FaPlus } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaChevronUp, FaGraduationCap, FaPlus } from "react-icons/fa";
+import Autosuggest from "react-autosuggest";
+// import "./Education.css"; // Add a CSS file for styling the autocomplete input
 
-const Education = () => {
+const Education = ({ getEducation }) => {
   const [educationEntries, setEducationEntries] = useState([]);
-  const [uni, setUni] = useState();
+  const [universities, setUniversities] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [states, setStates] = useState([]);
   const [newEntry, setNewEntry] = useState({
     degree: "",
     institution: "",
@@ -12,6 +17,38 @@ const Education = () => {
     from: "",
     to: "",
   });
+  const [suggestions, setSuggestions] = useState([]);
+  const sortedCountries = countries.sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    return nameA.localeCompare(nameB);
+  });
+
+  useEffect(() => {
+    fetch("https://countriesnow.space/api/v0.1/countries/states")
+      .then((response) => response.json())
+      .then((data) => {
+        setCountries(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: " + error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://universities.hipolabs.com/search?country=${newEntry.country}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUniversities(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: " + error);
+      });
+    const getCountryData = countries.find((country) => {
+      return country.name === newEntry.country;
+    });
+    getCountryData && setStates(getCountryData.states);
+  }, [newEntry.country]);
 
   const addEntry = () => {
     if (
@@ -24,21 +61,44 @@ const Education = () => {
       setNewEntry({
         degree: "",
         institution: "",
+        state: "",
+        country: "",
         from: "",
         to: "",
       });
     }
-    console.log(educationEntries);
+    getEducation(newEntry);
   };
 
-  fetch("http://universities.hipolabs.com/search?country=Australia")
-    .then((response) => response.json())
-    .then((data) => {
-      setUni(data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data: " + error);
-    });
+  const onSuggestionsFetchRequested = ({ value }) => {
+    setSuggestions(getSuggestions(value));
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const getSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+    return inputLength === 0
+      ? []
+      : universities.filter(
+          (uni) => uni.name.toLowerCase().slice(0, inputLength) === inputValue,
+        );
+  };
+
+  const getSuggestionValue = (suggestion) => suggestion.name;
+
+  const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
+
+  const inputProps = {
+    placeholder: "Institution Name",
+    value: newEntry.institution,
+    className: "w-full border-b-2 outline-none focus:border-green-200",
+    onChange: (e, { newValue }) =>
+      setNewEntry({ ...newEntry, institution: newValue }),
+  };
 
   return (
     <div className="p-4 grid gap-4">
@@ -74,51 +134,15 @@ const Education = () => {
           onChange={(e) => setNewEntry({ ...newEntry, degree: e.target.value })}
         />
 
-        <select>
-          {uni.map((uni, index) => (
-            <option
-              key={index}
-              value={uni.name}>
-              {uni.name}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Institution name"
-          className="w-full border-b-2 outline-none focus-border-green-200"
-          value={newEntry.institution}
-          onChange={(e) =>
-            setNewEntry({ ...newEntry, institution: e.target.value })
-          }
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
         />
-        <div className="flex gap-4">
-          <select
-            className="flex leading-[120%] bg-gray-200 px-2"
-            value={newEntry.state}
-            onChange={(e) =>
-              setNewEntry({ ...newEntry, state: e.target.value })
-            }>
-            <option value="NSW">NSW</option>
-            <option value="WA">WA</option>
-            <option value="Victoria">Victoria</option>
-            <option value="Queensland">Queensland</option>
-            <option value="Tasmania">Tasmania</option>
-            <option value="SA">SA</option>
-            <option value="ACT">ACT</option>
-            <option value="NT">NT</option>
-          </select>
 
-          <input
-            type="text"
-            placeholder="Country"
-            className="w-full border-b-2 outline-none focus-border-green-200"
-            value={newEntry.country}
-            onChange={(e) =>
-              setNewEntry({ ...newEntry, country: e.target.value })
-            }
-          />
-        </div>
         <div className="w-full grid grid-cols-2 gap-4">
           <label>
             <span className="w-full font-semibold">From</span>
@@ -140,6 +164,49 @@ const Education = () => {
               onChange={(e) => setNewEntry({ ...newEntry, to: e.target.value })}
             />
           </label>
+        </div>
+        <div className="flex gap-4">
+          <div className="relative focus:bg-green-200">
+            {/* <div
+              className={`absolute w-16 h-full grid place-items-center ${
+                open ? "bg-green-200" : "bg-gray-200"
+              }  right-0`}>
+              <FaChevronUp
+                className={`${open ? "rotate-[180deg]" : ""} transition-all`}
+              />
+            </div> */}
+            <select
+              onClick={() => setOpen(!open)}
+              onChange={(e) =>
+                setNewEntry({ ...newEntry, country: e.target.value })
+              }
+              className="w-fit bg-gray-200 px-4 py-1 rounded outline-none focus:bg-green-200  ">
+              {countries.map((country, index) => (
+                <option
+                  className="text-sm "
+                  key={index}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {states && (
+            <select
+              className="w-fit leading-[120%] bg-gray-200 px-2 rounded focus:bg-green-200"
+              value={newEntry.state}
+              onChange={(e) =>
+                setNewEntry({ ...newEntry, state: e.target.value })
+              }>
+              {states.map((state, index) => (
+                <option
+                  className="text-sm "
+                  value={state.name}
+                  key={index}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
         <div className="flex gap-4">
           <span

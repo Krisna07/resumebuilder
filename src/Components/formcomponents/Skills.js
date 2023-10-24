@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus, FaStar, FaTimes } from "react-icons/fa";
 
-const Skills = () => {
+const Skills = ({ getSkills }) => {
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
 
@@ -22,6 +22,7 @@ const Skills = () => {
     e.preventDefault();
     addSkill();
   };
+  useEffect(() => getSkills(skills), [skills]);
 
   return (
     <div className="p-4 grid gap-4">
