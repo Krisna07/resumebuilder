@@ -1,25 +1,36 @@
 import React from "react";
 import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
 
-const Greenglance = () => {
+const Greenglance = ({ formData }) => {
   return (
-    <div className="grid place-items-center  gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md">
+    <div className="grid place-items-center   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="box-border grid place-items-center">
         <div className="w-20 h-20  shadow-[0_0_2px_0_gray] rounded-full grid place-items-center relative">
           <div className=" w-full h-full absolute bg-gradient-to-r from-green-400 to-green-600  rounded-full z-0 animate-pulse"></div>
           <div className="w-[76px] h-[76px] bg-gradient-to-r from-green-200 to-green-100  rounded-full z-10"></div>
         </div>
-        <div>Firstname Lastname </div>
+        <div>
+          {formData.profile.firstname} {formData.profile.lastname}{" "}
+        </div>
       </div>
       <div className="w-full flex items-center justify-between text-[12px] border-b py-2">
         <div className="flex items-center gap-2 ">
-          <FaPhone /> XXXXXXXX
+          <FaPhone />{" "}
+          {formData.profile.phone ? formData.profile.phone : "1234567890"}
         </div>
         <div className="flex items-center gap-2 ">
-          <FaEnvelope /> email@email.com
+          <FaEnvelope />{" "}
+          {formData.profile.email ? formData.profile.email : "1234567890"}
         </div>
         <div className="flex items-center gap-2 ">
-          <FaLocationArrow /> address, state, 2000
+          <FaLocationArrow />{" "}
+          {formData.profile.street
+            ? formData.profile.street +
+              ", " +
+              formData.profile.state +
+              ", " +
+              formData.profile.postcode
+            : "1234567890"}
         </div>
       </div>
       <div className="text-[14px] w-full">
