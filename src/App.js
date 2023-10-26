@@ -10,17 +10,14 @@ import Greenglance from "./Components/Greenglance";
 
 function App() {
   const [formData, setFormData] = useState({
-    profile: {
-      name: "",
-      address: "",
-      email: "",
-      phone: "",
-    },
+    profile: null,
     summary: "",
     skills: [],
     experience: [],
     education: [],
   });
+  const [isDataValid, setIsDataValid] = useState(false);
+  const [invalidField, setInvalidField] = useState("");
 
   const updateFormData = (key, value) => {
     setFormData((prevData) => ({
@@ -33,10 +30,85 @@ function App() {
     console.log(formData);
   }, [formData]);
 
+  const validateFormData = () => {
+    // You can implement your own validation logic here
+    const { profile, summary, skills, experience, education } = formData;
+
+    if (!profile.name) {
+      setInvalidField("name");
+      return false;
+    } else if (!profile.address) {
+      setInvalidField("address");
+      return false;
+    } else if (!profile.email) {
+      setInvalidField("email");
+      return false;
+    } else if (!profile.phone) {
+      setInvalidField("phone");
+      return false;
+    } else if (!summary) {
+      setInvalidField("summary");
+      return false;
+    } else if (skills.length === 0) {
+      setInvalidField("skills");
+      return false;
+    } else if (experience.length === 0) {
+      setInvalidField("experience");
+      return false;
+    } else if (education.length === 0) {
+      setInvalidField("education");
+      return false;
+    }
+
+    setInvalidField("");
+    return true;
+  };
+
+  const handleSubmit = () => {
+    const isValid = validateFormData();
+
+    if (isValid) {
+      setIsDataValid(true);
+      // Data is valid, you can load the GreenGlance component or perform any other action
+      console.log("Data is valid, loading GreenGlance...");
+    } else {
+      setIsDataValid(false);
+      // Data is not valid, you can display an error message or take other actions
+      switch (invalidField) {
+        case "name":
+          console.log("Please enter your name.");
+          break;
+        case "address":
+          console.log("Please enter your address.");
+          break;
+        case "email":
+          console.log("Please enter a valid email address.");
+          break;
+        case "phone":
+          console.log("Please enter your phone number.");
+          break;
+        case "summary":
+          console.log("Please provide a summary.");
+          break;
+        case "skills":
+          console.log("Please add at least one skill.");
+          break;
+        case "experience":
+          console.log("Please add at least one experience.");
+          break;
+        case "education":
+          console.log("Please add at least one education entry.");
+          break;
+        default:
+          console.log("Please complete all required fields.");
+      }
+    }
+  };
+
   return (
     <div className="w-full  grid place-items-center ">
       <Header />
-      <div className=" h-full overflow-hidden h-[100vh]  grid   py-4 p-4">
+      <div className="h-full overflow-hidden h-[100vh]  grid grid-cols-2 py-4 p-4">
         <div className="h-full w-[900px] ">
           <Profile
             profile={formData.profile}
@@ -52,16 +124,14 @@ function App() {
           />
           <button
             type="submit"
-            className="w-fit py-1 px-4 rounded-full bg-green-200">
+            className="w-fit py-1 px-4 rounded-full bg-green-200"
+            onClick={handleSubmit}>
             Submit
           </button>
         </div>
-        {/* <div className="relative h-[1400px]">
-          <Greenglance
-            formData={formData}
-            updateFormData={updateFormData}
-          />
-        </div> */}
+        <div className="relative h-[1400px]">
+          {isDataValid && <Greenglance formData={formData} />}
+        </div>
       </div>
     </div>
   );

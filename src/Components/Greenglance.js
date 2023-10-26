@@ -2,7 +2,7 @@ import React from "react";
 import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
 import Experience from "./formcomponents/Experience";
 
-const Greenglance = ({ formData, updateFormData }) => {
+const Greenglance = ({ formData }) => {
   return (
     <div className="grid place-items-center   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="box-border grid place-items-center">
@@ -35,12 +35,9 @@ const Greenglance = ({ formData, updateFormData }) => {
         </div>
       </div>
       <div className="text-[14px] w-full">
-        Highly motivated and accomplished [Your Industry/Field] professional
-        with [X years] of experience in [Key Skill/Experience Area]. Strong
-        analytical and problem-solving abilities, with a commitment to
-        delivering exceptional results. Proven leadership and team collaboration
-        skills. Adept at [Specific Skill/Competency], [Another
-        Skill/Competency], and [Additional Skill/Competency].
+        {formData.summary
+          ? formData.Summary
+          : "Highly motivated and accomplished {formData.name} professional with [2 years] of experience in [Key Skill/Experience Area]. Strong analytical and problem-solving abilities, with a commitment to delivering exceptional results. Proven leadership and team collaboration skills. Adept at [Specific Skill/Competency], [Another Skill/Competency], and [Additional Skill/Competency]."}
       </div>
       <div className="grid grid-cols-[1fr_3fr] gap-4 text-[14px] ">
         <div className=" grid gap-2">
@@ -49,37 +46,27 @@ const Greenglance = ({ formData, updateFormData }) => {
             <div>
               <span className="font-semibold">Soft Skills</span>
               <ul className="list-disc px-4">
-                <li>Communication</li>
-                <li>Teamwork</li>
-                <li>Problem-Solving</li>
-                <li>Time Management</li>
-                <li>Emotional Intelligence</li>
-                <li>Adaptability</li>
-                <li>Leadership</li>
-                <li>Customer Service</li>
+                {formData.skills.softSkils.map((skill, index) => (
+                  <li key={index}>{skill}</li>
+                ))}
               </ul>
             </div>
             <div>
               <span className="font-semibold">Hard skills</span>
               <ul className="list-disc px-4">
-                <li>Communication</li>
-                <li>Teamwork</li>
-                <li>Problem-Solving</li>
-                <li>Time Management</li>
-                <li>Emotional Intelligence</li>
-                <li>Adaptability</li>
-                <li>Leadership</li>
-                <li>Customer Service</li>
+                {formData.skills.hardSkills.map((skill, index) => (
+                  <li key={index}>{skill}</li>
+                ))}
               </ul>
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <h2 className="font-bold w-full border-b py-2">Langauges</h2>
             <ul className="list-disc px-4">
               <li>Langauge-1</li>
               <li>Langauge-2</li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="px-4 ">
           <h2 className="font-bold border-b py-2">History</h2>
@@ -162,26 +149,22 @@ const Greenglance = ({ formData, updateFormData }) => {
             </div>
           )}
           <h2 className="font-bold py-2 border-b">Education</h2>
-          <div className="w-full flex items-center justify-between py-2">
-            <div className="grid leading-[120%]">
-              <span className="font-semibold">Degree</span>
-              <span className="text-[12px]">Institution name</span>
-              <span className="text-[12px]">Institution Address</span>
+          {formData.education.map((education, index) => (
+            <div
+              key={index}
+              className="w-full flex items-center justify-between py-2">
+              <div className="grid leading-[120%]">
+                <span className="font-semibold">{education.degree}</span>
+                <span className="text-[12px]">{education.institution}</span>
+                <span className="text-[12px]">
+                  {education.state},{education.country}
+                </span>
+              </div>
+              <div className="text-[12px]">
+                <span>{education.from}</span> - <span>{education.to}</span>
+              </div>
             </div>
-            <div className="text-[12px]">
-              <span>start date</span> - <span>end date</span>
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-between py-2">
-            <div className="grid leading-[120%]">
-              <span className="font-semibold">Degree</span>
-              <span className="text-[12px]">Institution name</span>
-              <span className="text-[12px]">Institution Address</span>
-            </div>
-            <div className="text-[12px]">
-              <span>start date</span> - <span>end date</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
