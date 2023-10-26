@@ -36,8 +36,8 @@ function App() {
   return (
     <div className="w-full  grid place-items-center ">
       <Header />
-      <div className="w-[1400px] h-full overflow-hidden h-[100vh]  grid grid-cols-2  py-4 p-4">
-        <div className="h-full overflow-y-scroll">
+      <div className=" h-full overflow-hidden h-[100vh]  grid   py-4 p-4">
+        <div className="h-full w-[900px] ">
           <Profile
             profile={formData.profile}
             setProfile={(value) => updateFormData("profile", value)}
@@ -56,9 +56,12 @@ function App() {
             Submit
           </button>
         </div>
-        <div className="relative h-[1400px]">
-          <Greenglance formData={formData} />
-        </div>
+        {/* <div className="relative h-[1400px]">
+          <Greenglance
+            formData={formData}
+            updateFormData={updateFormData}
+          />
+        </div> */}
       </div>
     </div>
   );

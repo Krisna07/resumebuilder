@@ -1,7 +1,8 @@
 import React from "react";
 import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
+import Experience from "./formcomponents/Experience";
 
-const Greenglance = ({ formData }) => {
+const Greenglance = ({ formData, updateFormData }) => {
   return (
     <div className="grid place-items-center   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="box-border grid place-items-center">
@@ -82,59 +83,84 @@ const Greenglance = ({ formData }) => {
         </div>
         <div className="px-4 ">
           <h2 className="font-bold border-b py-2">History</h2>
-          <div>
-            <div className="w-full grid gap-2 border-b py-2">
-              <div className="w-full flex items-center justify-between ">
-                <div className="grid leading-[120%]">
-                  <span className="font-semibold">Job title</span>
-                  <span className="text-[12px]">Company name</span>
+          {formData.experience.length > 0 ? (
+            formData.experience.map((experience, index) => (
+              <>
+                <div
+                  key={index}
+                  className="w-full grid gap-2 border-b py-2">
+                  <div className="w-full flex items-center justify-between ">
+                    <div className="grid leading-[120%]">
+                      <span className="font-semibold">{experience.title}</span>
+                      <span className="text-[12px]">{experience.company}</span>
+                    </div>
+                    <div className="text-[12px]">
+                      <span>{experience.from}</span> -{" "}
+                      <span>{experience.to}</span>
+                    </div>
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: experience.summary,
+                    }}></div>
                 </div>
-                <div className="text-[12px]">
-                  <span>start date</span> - <span>end date</span>
+              </>
+            ))
+          ) : (
+            <div>
+              <div className="w-full grid gap-2 border-b py-2">
+                <div className="w-full flex items-center justify-between ">
+                  <div className="grid leading-[120%]">
+                    <span className="font-semibold">Job title</span>
+                    <span className="text-[12px]">Company name</span>
+                  </div>
+                  <div className="text-[12px]">
+                    <span>start date</span> - <span>end date</span>
+                  </div>
                 </div>
+                <ul className="list-disc px-4">
+                  <li>something</li>
+                  <li>Teamwork</li>
+                  <li>Problem-Solving</li>
+                  <li>Time Management</li>
+                </ul>
               </div>
-              <ul className="list-disc px-4">
-                <li>something</li>
-                <li>Teamwork</li>
-                <li>Problem-Solving</li>
-                <li>Time Management</li>
-              </ul>
-            </div>
-            <div className="w-full grid gap-2 border-b py-2">
-              <div className="w-full flex items-center justify-between">
-                <div className="grid leading-[120%]">
-                  <span className="font-semibold">Job title</span>
-                  <span className="text-[12px]">Company name</span>
+              <div className="w-full grid gap-2 border-b py-2">
+                <div className="w-full flex items-center justify-between">
+                  <div className="grid leading-[120%]">
+                    <span className="font-semibold">Job title</span>
+                    <span className="text-[12px]">Company name</span>
+                  </div>
+                  <div className="text-[12px]">
+                    <span>start date</span> - <span>end date</span>
+                  </div>
                 </div>
-                <div className="text-[12px]">
-                  <span>start date</span> - <span>end date</span>
-                </div>
+                <ul className="list-disc px-4">
+                  <li>something</li>
+                  <li>Teamwork</li>
+                  <li>Problem-Solving</li>
+                  <li>Time Management</li>
+                </ul>
               </div>
-              <ul className="list-disc px-4">
-                <li>something</li>
-                <li>Teamwork</li>
-                <li>Problem-Solving</li>
-                <li>Time Management</li>
-              </ul>
-            </div>
-            <div className="w-full grid gap-2 border-b py-2">
-              <div className="w-full flex items-center justify-between">
-                <div className="grid leading-[120%]">
-                  <span className="font-semibold">Job title</span>
-                  <span className="text-[12px]">Company name</span>
+              <div className="w-full grid gap-2 border-b py-2">
+                <div className="w-full flex items-center justify-between">
+                  <div className="grid leading-[120%]">
+                    <span className="font-semibold">Job title</span>
+                    <span className="text-[12px]">Company name</span>
+                  </div>
+                  <div className="text-[12px]">
+                    <span>start date</span> - <span>end date</span>
+                  </div>
                 </div>
-                <div className="text-[12px]">
-                  <span>start date</span> - <span>end date</span>
-                </div>
+                <ul className="list-disc px-4">
+                  <li>something</li>
+                  <li>Teamwork</li>
+                  <li>Problem-Solving</li>
+                  <li>Time Management</li>
+                </ul>
               </div>
-              <ul className="list-disc px-4">
-                <li>something</li>
-                <li>Teamwork</li>
-                <li>Problem-Solving</li>
-                <li>Time Management</li>
-              </ul>
             </div>
-          </div>
+          )}
           <h2 className="font-bold py-2 border-b">Education</h2>
           <div className="w-full flex items-center justify-between py-2">
             <div className="grid leading-[120%]">
