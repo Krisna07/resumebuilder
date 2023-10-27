@@ -1,6 +1,6 @@
 import React from "react";
 import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
-import Experience from "./formcomponents/Experience";
+
 
 const Greenglance = ({ formData }) => {
   return (
@@ -46,8 +46,8 @@ const Greenglance = ({ formData }) => {
             <div>
               <span className="font-semibold">Soft Skills</span>
               <ul className="list-disc px-4">
-                {formData.skills.softSkils.map((skill, index) => (
-                  <li key={index}>{skill}</li>
+                {formData.skills.softSkills.map((skill, index) => (
+                  <li key={skill}>{skill}</li>
                 ))}
               </ul>
             </div>
@@ -55,24 +55,18 @@ const Greenglance = ({ formData }) => {
               <span className="font-semibold">Hard skills</span>
               <ul className="list-disc px-4">
                 {formData.skills.hardSkills.map((skill, index) => (
-                  <li key={index}>{skill}</li>
+                  <li key={skill}>{skill}</li>
                 ))}
               </ul>
             </div>
           </div>
-          {/* <div className="">
-            <h2 className="font-bold w-full border-b py-2">Langauges</h2>
-            <ul className="list-disc px-4">
-              <li>Langauge-1</li>
-              <li>Langauge-2</li>
-            </ul>
-          </div> */}
+      
         </div>
         <div className="px-4 ">
           <h2 className="font-bold border-b py-2">History</h2>
-          {formData.experience.length > 0 ? (
-            formData.experience.map((experience, index) => (
-              <>
+         
+            {formData.experience.map((experience, index) => 
+          
                 <div
                   key={index}
                   className="w-full grid gap-2 border-b py-2">
@@ -91,63 +85,9 @@ const Greenglance = ({ formData }) => {
                       __html: experience.summary,
                     }}></div>
                 </div>
-              </>
-            ))
-          ) : (
-            <div>
-              <div className="w-full grid gap-2 border-b py-2">
-                <div className="w-full flex items-center justify-between ">
-                  <div className="grid leading-[120%]">
-                    <span className="font-semibold">Job title</span>
-                    <span className="text-[12px]">Company name</span>
-                  </div>
-                  <div className="text-[12px]">
-                    <span>start date</span> - <span>end date</span>
-                  </div>
-                </div>
-                <ul className="list-disc px-4">
-                  <li>something</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                </ul>
-              </div>
-              <div className="w-full grid gap-2 border-b py-2">
-                <div className="w-full flex items-center justify-between">
-                  <div className="grid leading-[120%]">
-                    <span className="font-semibold">Job title</span>
-                    <span className="text-[12px]">Company name</span>
-                  </div>
-                  <div className="text-[12px]">
-                    <span>start date</span> - <span>end date</span>
-                  </div>
-                </div>
-                <ul className="list-disc px-4">
-                  <li>something</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                </ul>
-              </div>
-              <div className="w-full grid gap-2 border-b py-2">
-                <div className="w-full flex items-center justify-between">
-                  <div className="grid leading-[120%]">
-                    <span className="font-semibold">Job title</span>
-                    <span className="text-[12px]">Company name</span>
-                  </div>
-                  <div className="text-[12px]">
-                    <span>start date</span> - <span>end date</span>
-                  </div>
-                </div>
-                <ul className="list-disc px-4">
-                  <li>something</li>
-                  <li>Teamwork</li>
-                  <li>Problem-Solving</li>
-                  <li>Time Management</li>
-                </ul>
-              </div>
-            </div>
-          )}
+            )
+            }
+          
           <h2 className="font-bold py-2 border-b">Education</h2>
           {formData.education.map((education, index) => (
             <div

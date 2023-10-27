@@ -12,7 +12,7 @@ function App() {
   const [formData, setFormData] = useState({
     profile: null,
     summary: "",
-    skills: [],
+    skills: null,
     experience: [],
     education: [],
   });
@@ -31,17 +31,10 @@ function App() {
   }, [formData]);
 
   const validateFormData = () => {
-    // You can implement your own validation logic here
     const { profile, summary, skills, experience, education } = formData;
 
-    if (!profile.name) {
-      setInvalidField("name");
-      return false;
-    } else if (!profile.address) {
-      setInvalidField("address");
-      return false;
-    } else if (!profile.email) {
-      setInvalidField("email");
+    if (!profile) {
+      setInvalidField("profile");
       return false;
     } else if (!profile.phone) {
       setInvalidField("phone");
@@ -69,23 +62,14 @@ function App() {
 
     if (isValid) {
       setIsDataValid(true);
-      // Data is valid, you can load the GreenGlance component or perform any other action
+      
       console.log("Data is valid, loading GreenGlance...");
     } else {
       setIsDataValid(false);
-      // Data is not valid, you can display an error message or take other actions
+      
       switch (invalidField) {
-        case "name":
-          console.log("Please enter your name.");
-          break;
-        case "address":
-          console.log("Please enter your address.");
-          break;
-        case "email":
-          console.log("Please enter a valid email address.");
-          break;
-        case "phone":
-          console.log("Please enter your phone number.");
+        case "profile":
+          console.log("Please enter your profile.");
           break;
         case "summary":
           console.log("Please provide a summary.");
@@ -108,7 +92,7 @@ function App() {
   return (
     <div className="w-full  grid place-items-center ">
       <Header />
-      <div className="h-full overflow-hidden h-[100vh]  grid grid-cols-2 py-4 p-4">
+      <div className="h-full overflow-hidden h-[100vh]  grid grid-cols-1 py-4 p-4">
         <div className="h-full w-[900px] ">
           <Profile
             profile={formData.profile}
@@ -130,7 +114,7 @@ function App() {
           </button>
         </div>
         <div className="relative h-[1400px]">
-          {isDataValid && <Greenglance formData={formData} />}
+          {isDataValid &&  <Greenglance formData={formData} />}
         </div>
       </div>
     </div>

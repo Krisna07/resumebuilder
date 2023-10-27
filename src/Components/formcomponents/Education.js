@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FaChevronUp, FaGraduationCap, FaPlus } from "react-icons/fa";
+import {  FaGraduationCap, FaPlus } from "react-icons/fa";
 import Autosuggest from "react-autosuggest";
-// import "./Education.css"; // Add a CSS file for styling the autocomplete input
+
 
 const Education = ({ getEducation }) => {
   const [educationEntries, setEducationEntries] = useState([]);
@@ -18,11 +18,11 @@ const Education = ({ getEducation }) => {
     to: "",
   });
   const [suggestions, setSuggestions] = useState([]);
-  const sortedCountries = countries.sort((a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    return nameA.localeCompare(nameB);
-  });
+  // const sortedCountries = countries.sort((a, b) => {
+  //   const nameA = a.name.toLowerCase();
+  //   const nameB = b.name.toLowerCase();
+  //   return nameA.localeCompare(nameB);
+  // });
 
   useEffect(() => {
     fetch("https://countriesnow.space/api/v0.1/countries/states")
@@ -67,7 +67,7 @@ const Education = ({ getEducation }) => {
         to: "",
       });
     }
-    getEducation(newEntry);
+    getEducation(educationEntries);
   };
 
   const onSuggestionsFetchRequested = ({ value }) => {
