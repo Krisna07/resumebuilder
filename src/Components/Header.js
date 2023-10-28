@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPaintBrush } from "react-icons/fa";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+
 const Header = () => {
   return (
     <div className="w-full flex items-center justify-between bg-white shadow p-4">

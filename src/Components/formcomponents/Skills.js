@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus, FaStar, FaTimes } from "react-icons/fa";
+import {  FaStar, FaTimes } from "react-icons/fa";
 
 const Skills = ({ getSkills }) => {
   const [softSkills, setSoftSkills] = useState([]);

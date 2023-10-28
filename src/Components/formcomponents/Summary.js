@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaList } from "react-icons/fa";
 
 const Summary = ({ setSummary }) => {

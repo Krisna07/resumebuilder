@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   FaBuilding,
   FaPlus,
-  FaEdit,
   FaCheck,
   FaTimes,
-  FaTrash,
   FaRegEdit,
   FaTrashAlt,
 } from "react-icons/fa";

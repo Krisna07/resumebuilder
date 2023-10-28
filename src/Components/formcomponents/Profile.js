@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 
 const Profile = ({ setProfile }) => {
-  const [user, setUser] = useState({});
+  
   const [details, setDetails] = useState({
     firstname: "",
     lastname: "",

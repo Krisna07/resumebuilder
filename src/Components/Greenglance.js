@@ -3,8 +3,9 @@ import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
 
 
 const Greenglance = ({ formData }) => {
+
   return (
-    <div className="grid place-items-center   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
+    <div className="grid place-items-center w-[800px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="box-border grid place-items-center">
         <div className="w-20 h-20  shadow-[0_0_2px_0_gray] rounded-full grid place-items-center relative">
           <div className=" w-full h-full absolute bg-gradient-to-r from-green-400 to-green-600  rounded-full z-0 animate-pulse"></div>
@@ -35,12 +36,10 @@ const Greenglance = ({ formData }) => {
         </div>
       </div>
       <div className="text-[14px] w-full">
-        {formData.summary
-          ? formData.Summary
-          : "Highly motivated and accomplished {formData.name} professional with [2 years] of experience in [Key Skill/Experience Area]. Strong analytical and problem-solving abilities, with a commitment to delivering exceptional results. Proven leadership and team collaboration skills. Adept at [Specific Skill/Competency], [Another Skill/Competency], and [Additional Skill/Competency]."}
+        {formData.summary}
       </div>
       <div className="grid grid-cols-[1fr_3fr] gap-4 text-[14px] ">
-        <div className=" grid gap-2">
+        <div className="h-fit grid gap-2">
           <div className="grid gap-2">
             <h2 className="font-bold w-full border-b">Skill</h2>
             <div>

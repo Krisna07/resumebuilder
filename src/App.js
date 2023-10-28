@@ -27,7 +27,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(formData);
+   
   }, [formData]);
 
   const validateFormData = () => {
@@ -92,7 +92,7 @@ function App() {
   return (
     <div className="w-full  grid place-items-center ">
       <Header />
-      <div className="h-full overflow-hidden h-[100vh]  grid grid-cols-1 py-4 p-4">
+      <div className="w-full h-full overflow-hidden  grid grid-cols-2 py-4 p-4">
         <div className="h-full w-[900px] ">
           <Profile
             profile={formData.profile}

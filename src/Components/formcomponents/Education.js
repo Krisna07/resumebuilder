@@ -18,37 +18,35 @@ const Education = ({ getEducation }) => {
     to: "",
   });
   const [suggestions, setSuggestions] = useState([]);
-  // const sortedCountries = countries.sort((a, b) => {
-  //   const nameA = a.name.toLowerCase();
-  //   const nameB = b.name.toLowerCase();
-  //   return nameA.localeCompare(nameB);
-  // });
 
-  useEffect(() => {
-    fetch("https://countriesnow.space/api/v0.1/countries/states")
+  const fetchDatas = (url) => {
+    return fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setCountries(data.data);
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching data: " + error);
+      });
+  };
+  
+  useEffect(() => {
+    fetchDatas("https://countriesnow.space/api/v0.1/countries/states")
+      .then((data) => {
+        setCountries(data.data); 
       });
   }, []);
-
   useEffect(() => {
-    fetch(`http://universities.hipolabs.com/search?country=${newEntry.country}`)
-      .then((response) => response.json())
+    fetchDatas(`http://universities.hipolabs.com/search?country=${newEntry.country}`)
       .then((data) => {
-        setUniversities(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: " + error);
+        setUniversities(data); 
       });
-    const getCountryData = countries.find((country) => {
-      return country.name === newEntry.country;
-    });
-    getCountryData && setStates(getCountryData.states);
+      const getCountryData = countries.find((country) => {
+        return country.name === newEntry.country;
+      });
+      getCountryData && setStates(getCountryData.states);
   }, [newEntry.country]);
+ 
 
   const addEntry = () => {
     if (
