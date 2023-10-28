@@ -65,7 +65,7 @@ const Education = ({ getEducation }) => {
         to: "",
       });
     }
-    getEducation(educationEntries);
+    
   };
 
   const onSuggestionsFetchRequested = ({ value }) => {
@@ -97,7 +97,7 @@ const Education = ({ getEducation }) => {
     onChange: (e, { newValue }) =>
       setNewEntry({ ...newEntry, institution: newValue }),
   };
-
+useEffect(()=>getEducation(educationEntries),[educationEntries, newEntry])
   return (
     <div className="p-4 grid gap-4">
       <div className="flex items-center gap-4 py-2">

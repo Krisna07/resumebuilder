@@ -7,6 +7,8 @@ import Skills from "./Components/formcomponents/Skills";
 import Experience from "./Components/formcomponents/Experience";
 import Education from "./Components/formcomponents/Education";
 import Greenglance from "./Components/Greenglance";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -63,28 +65,28 @@ function App() {
     if (isValid) {
       setIsDataValid(true);
       
-      console.log("Data is valid, loading GreenGlance...");
+      toast("Data is valid, loading GreenGlance...");
     } else {
       setIsDataValid(false);
       
       switch (invalidField) {
         case "profile":
-          console.log("Please enter your profile.");
+          toast("Please enter your profile.");
           break;
         case "summary":
-          console.log("Please provide a summary.");
+          toast("Please provide a summary.");
           break;
         case "skills":
-          console.log("Please add at least one skill.");
+          toast("Please add at least one skill.");
           break;
         case "experience":
-          console.log("Please add at least one experience.");
+          toast("Please add at least one experience.");
           break;
         case "education":
-          console.log("Please add at least one education entry.");
+          toast("Please add at least one education entry.");
           break;
         default:
-          console.log("Please complete all required fields.");
+          toast("Please complete all required fields.");
       }
     }
   };
@@ -92,8 +94,9 @@ function App() {
   return (
     <div className="w-full  grid place-items-center ">
       <Header />
-      <div className="w-full h-full overflow-hidden  grid grid-cols-2 py-4 p-4">
-        <div className="h-full w-[900px] ">
+      <ToastContainer />
+      <div className={`w-full h-full overflow-hidden  grid ${isDataValid?"grid-cols-2":"grid-cols-1"} place-items-center py-4 p-4 `}>
+        <div className="h-full w-[900px]">
           <Profile
             profile={formData.profile}
             setProfile={(value) => updateFormData("profile", value)}
