@@ -3,7 +3,7 @@ import { FaEnvelope, FaLocationArrow, FaPhone, FaStar } from "react-icons/fa";
 
 const Creative = ({ formData }) => {
   return (
-    <div className="grid w-[800px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
+    <div className="grid w-[1000px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="flex gap-4">
         <div className="w-[200px] h-[200px] rounded  bg-gray-200"></div>
         <div className="grid place-items-center gap-4">

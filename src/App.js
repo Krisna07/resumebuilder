@@ -10,6 +10,7 @@ import Greenglance from "./Components/Greenglance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Creative from "./Components/ResumeDesigns/Creative";
+import SunriseChrono from "./Components/ResumeDesigns/Sunrisechrono";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -173,10 +174,10 @@ function App() {
       <Header />
       <ToastContainer />
       <div
-        className={`w-fit h-full overflow-hidden  grid 
-        grid-cols-2
+        className={`w-fit h-full overflow-hidden  flex 
+  
         place-items-center py-4 p-4 `}>
-        <div className="h-full w-[900px]">
+        <div className="h-full w-fit">
           <Profile
             profile={formData.profile}
             setProfile={(value) => updateFormData("profile", value)}
@@ -198,7 +199,8 @@ function App() {
         </div>
         <div className="relative h-[1400px]  shadow">
           {/* <Greenglance formData={DummyformData} /> */}
-          <Creative formData={DummyformData} />
+          {/* <Creative formData={DummyformData} /> */}
+          <SunriseChrono formData={DummyformData} />
         </div>
       </div>
     </div>
