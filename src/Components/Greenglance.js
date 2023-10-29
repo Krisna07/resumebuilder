@@ -1,9 +1,7 @@
 import React from "react";
 import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
 
-
 const Greenglance = ({ formData }) => {
-
   return (
     <div className="grid place-items-center w-[800px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="box-border grid place-items-center">
@@ -35,9 +33,7 @@ const Greenglance = ({ formData }) => {
             : "1234567890"}
         </div>
       </div>
-      <div className="text-[14px] w-full">
-        {formData.summary}
-      </div>
+      <div className="text-[14px] w-full">{formData.summary}</div>
       <div className="grid grid-cols-[1fr_3fr] gap-4 text-[14px] ">
         <div className="h-fit grid gap-2">
           <div className="grid gap-2">
@@ -59,34 +55,31 @@ const Greenglance = ({ formData }) => {
               </ul>
             </div>
           </div>
-      
         </div>
         <div className="px-4 ">
           <h2 className="font-bold border-b py-2">History</h2>
-         
-            {formData.experience.map((experience, index) => 
-          
-                <div
-                  key={index}
-                  className="w-full grid gap-2 border-b py-2">
-                  <div className="w-full flex items-center justify-between ">
-                    <div className="grid leading-[120%]">
-                      <span className="font-semibold">{experience.title}</span>
-                      <span className="text-[12px]">{experience.company}</span>
-                    </div>
-                    <div className="text-[12px]">
-                      <span>{experience.from}</span> -{" "}
-                      <span>{experience.to}</span>
-                    </div>
-                  </div>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: experience.summary,
-                    }}></div>
+
+          {formData.experience.map((experience, index) => (
+            <div
+              key={index}
+              className="w-full grid gap-2 border-b py-2">
+              <div className="w-full flex items-center justify-between ">
+                <div className="grid leading-[120%]">
+                  <span className="font-semibold">{experience.title}</span>
+                  <span className="text-[12px]">{experience.company}</span>
                 </div>
-            )
-            }
-          
+                <div className="text-[12px]">
+                  <span>{experience.from}</span> - <span>{experience.to}</span>
+                </div>
+              </div>
+              <ul className="list-disc w-full px-4">
+                {experience.summary.map((items, index) => (
+                  <li key={index}>{items}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
           <h2 className="font-bold py-2 border-b">Education</h2>
           {formData.education.map((education, index) => (
             <div
