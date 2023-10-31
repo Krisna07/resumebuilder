@@ -1,25 +1,8 @@
 import React from "react";
 import { FaPaintBrush } from "react-icons/fa";
 
-const Header = ({ selectResume }) => {
-  const resumeDesignNames = [
-    "GreenGlance",
-    "Creative",
-    "SunriseChrono",
-    "DaybreakVibe",
-    "AuroraGraph",
-    "SunlitSkills",
-    "SunUpMatrix ",
-    "RiseNShine",
-    "LuminaChronicle",
-    "SunRayCraft ",
-    "MorningGlory ",
-    "SolarEdge ",
-    "EclipseCraft ",
-    "RadiantRise ",
-    "DaySpark ",
-    "ShinePath ",
-  ];
+const Header = ({ selectResume, resume }) => {
+  const resumeDesignNames = ["GreenGlance", "Creative", "SunriseChrono"];
 
   return (
     <div className="w-full grid gap-4 bg-white">
@@ -36,7 +19,11 @@ const Header = ({ selectResume }) => {
           <span
             key={items}
             onClick={() => selectResume(items.toLocaleLowerCase())}
-            className="px-2 py-1 bg-gray-200 rounded hover:shadow">
+            className={`px-2 py-1 rounded hover:shadow ${
+              resume == items.toLocaleLowerCase()
+                ? "bg-green-200"
+                : "bg-gray-200 "
+            }`}>
             {items}
           </span>
         ))}

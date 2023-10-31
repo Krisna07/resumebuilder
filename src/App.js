@@ -169,13 +169,16 @@ function App() {
     ],
   };
 
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState("");
 
-  useEffect(() => console.log(resume), [resume]);
+  // useEffect(() => console.log(resume), [resume]);
 
   return (
     <div className="w-full  grid place-items-center ">
-      <Header selectResume={setResume} />
+      <Header
+        selectResume={setResume}
+        resume={resume}
+      />
       <ToastContainer />
       <div
         className={`w-fit h-full overflow-hidden  flex 
@@ -201,10 +204,7 @@ function App() {
           </button>
         </div>
         <div className="relative h-[1400px] shadow">
-          {!resume ||
-            (resume == "greenglance" && (
-              <Greenglance formData={DummyformData} />
-            ))}
+          {resume == "greenglance" && <Greenglance formData={DummyformData} />}
           {resume == "creative" && <Creative formData={DummyformData} />}
           {resume == "sunrisechrono" && (
             <SunriseChrono formData={DummyformData} />
