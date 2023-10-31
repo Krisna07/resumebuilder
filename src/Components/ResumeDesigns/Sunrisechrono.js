@@ -14,7 +14,7 @@ import {
 
 const SunriseChrono = ({ formData }) => {
   return (
-    <div className="grid w-[1000px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
+    <div className="grid w-[1000px]   gap-4 p-8 shadow-[0_0_2px_0_gray] box-border rounded-md ">
       <div className="w-full grid grid-cols-2">
         <h2 className="grid">
           <span className="text-[60px] leading-[60px] ">
@@ -48,7 +48,7 @@ const SunriseChrono = ({ formData }) => {
                 <div
                   key={index}
                   className="w-full grid gap-2 border-b py-2">
-                  <div className="w-full flex items-center justify-between ">
+                  <div className="w-full flex  justify-between ">
                     <div className="grid leading-[120%]">
                       <span className="font-semibold">{experience.title}</span>
                       <span className="text-[12px]">{experience.company}</span>
@@ -58,9 +58,13 @@ const SunriseChrono = ({ formData }) => {
                       <span>{experience.to}</span>
                     </div>
                   </div>
-                  <ul className="list-disc w-full px-4">
+                  <ul className="list-disc w-full px-4 text-[16px]">
                     {experience.summary.map((items, index) => (
-                      <li key={index}>{items}</li>
+                      <li
+                        key={index}
+                        className="text-[16px]">
+                        {items}
+                      </li>
                     ))}
                   </ul>
                 </div>

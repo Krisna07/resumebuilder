@@ -6,7 +6,7 @@ import Summary from "./Components/formcomponents/Summary";
 import Skills from "./Components/formcomponents/Skills";
 import Experience from "./Components/formcomponents/Experience";
 import Education from "./Components/formcomponents/Education";
-import Greenglance from "./Components/Greenglance";
+import Greenglance from "./Components/ResumeDesigns/Greenglance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Creative from "./Components/ResumeDesigns/Creative";
@@ -169,13 +169,16 @@ function App() {
     ],
   };
 
+  const [resume, setResume] = useState(null);
+
+  useEffect(() => console.log(resume), [resume]);
+
   return (
     <div className="w-full  grid place-items-center ">
-      <Header />
+      <Header selectResume={setResume} />
       <ToastContainer />
       <div
         className={`w-fit h-full overflow-hidden  flex 
-  
         place-items-center py-4 p-4 `}>
         <div className="h-full w-fit">
           <Profile
@@ -197,10 +200,17 @@ function App() {
             Submit
           </button>
         </div>
-        <div className="relative h-[1400px]  shadow">
-          {/* <Greenglance formData={DummyformData} /> */}
+        <div className="relative h-[1400px] shadow">
+          {!resume ||
+            (resume == "greenglance" && (
+              <Greenglance formData={DummyformData} />
+            ))}
+          {resume == "creative" && <Creative formData={DummyformData} />}
+          {resume == "sunrisechrono" && (
+            <SunriseChrono formData={DummyformData} />
+          )}
           {/* <Creative formData={DummyformData} /> */}
-          <SunriseChrono formData={DummyformData} />
+          {/* <SunriseChrono formData={DummyformData} /> */}
         </div>
       </div>
     </div>
