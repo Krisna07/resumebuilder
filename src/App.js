@@ -171,8 +171,6 @@ function App() {
 
   const [resume, setResume] = useState("");
 
-  // useEffect(() => console.log(resume), [resume]);
-
   return (
     <div className="w-full  grid place-items-center ">
       <Header
@@ -209,8 +207,6 @@ function App() {
           {resume == "sunrisechrono" && (
             <SunriseChrono formData={DummyformData} />
           )}
-          {/* <Creative formData={DummyformData} /> */}
-          {/* <SunriseChrono formData={DummyformData} /> */}
         </div>
       </div>
     </div>
