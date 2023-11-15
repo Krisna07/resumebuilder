@@ -3,103 +3,122 @@ import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa";
 
 const Greenglance = ({ formData }) => {
   return (
-    <div className="grid place-items-center w-[800px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
-      <div className="box-border grid place-items-center">
-        <div className="w-20 h-20  shadow-[0_0_2px_0_gray] rounded-full grid place-items-center relative">
-          <div className=" w-full h-full absolute bg-gradient-to-r from-green-400 to-green-600  rounded-full z-0 animate-pulse"></div>
-          <div className="w-[76px] h-[76px] bg-gradient-to-r from-green-200 to-green-100  rounded-full z-10"></div>
+    <>
+      <div className="w-full grid gap-8 ">
+        <div className="flex flex-col items-center ">
+          <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full relative overflow-hidden ">
+            <div className="w-full h-full absolute bg-gradient-to-r from-green-200 to-green-100 rounded-full z-10"></div>
+          </div>
+          <h1 className="text-2xl font-semibold">
+            {formData.profile.firstname} {formData.profile.lastname}
+          </h1>
         </div>
+
+        <div className="border-b ">
+          <div className="flex justify-between text-sm mb-2">
+            <div className="flex items-center gap-2">
+              <FaPhone className="text-gray-600" />
+              <span>{formData.profile.phone || "1234567890"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaEnvelope className="text-gray-600" />
+              <span>{formData.profile.email || "example@example.com"}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaLocationArrow className="text-gray-600" />
+              <span>
+                {formData.profile.street}, {formData.profile.state},{" "}
+                {formData.profile.postcode}
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div>
-          {formData.profile.firstname} {formData.profile.lastname}{" "}
+          <h2 className="text-lg font-semibold mb-2">Summary</h2>
+          <p className="text-sm text-left text-wrap">{formData.summary}</p>
         </div>
-      </div>
-      <div className="w-full flex items-center justify-between text-[12px] border-b py-2">
-        <div className="flex items-center gap-2 ">
-          <FaPhone />{" "}
-          {formData.profile.phone ? formData.profile.phone : "1234567890"}
-        </div>
-        <div className="flex items-center gap-2 ">
-          <FaEnvelope />{" "}
-          {formData.profile.email ? formData.profile.email : "1234567890"}
-        </div>
-        <div className="flex items-center gap-2 ">
-          <FaLocationArrow />{" "}
-          {formData.profile.street
-            ? formData.profile.street +
-              ", " +
-              formData.profile.state +
-              ", " +
-              formData.profile.postcode
-            : "1234567890"}
-        </div>
-      </div>
-      <div className="text-[14px] w-full">{formData.summary}</div>
-      <div className="grid grid-cols-[1fr_3fr] gap-4 text-[14px] ">
-        <div className="h-fit grid gap-2">
-          <div className="grid gap-2">
-            <h2 className="font-bold w-full border-b">Skill</h2>
+
+        <div className="grid grid-cols-[2fr_5fr] h-fit gap-8 ">
+          <div className="w-full ">
+            <h2 className="text-lg font-semibold mb-2">Skills</h2>
             <div>
               <span className="font-semibold">Soft Skills</span>
-              <ul className="list-disc px-4">
+              <ul className="list-disc pl-4">
                 {formData.skills.softSkills.map((skill, index) => (
-                  <li key={skill}>{skill}</li>
+                  <li
+                    key={index}
+                    className="text-sm">
+                    {skill}
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <span className="font-semibold">Hard skills</span>
-              <ul className="list-disc px-4">
+              <span className="font-semibold">Hard Skills</span>
+              <ul className="list-disc pl-4">
                 {formData.skills.hardSkills.map((skill, index) => (
-                  <li key={skill}>{skill}</li>
+                  <li
+                    key={index}
+                    className="text-sm">
+                    {skill}
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
-        <div className="px-4 ">
-          <h2 className="font-bold border-b py-2">History</h2>
-
-          {formData.experience.map((experience, index) => (
-            <div
-              key={index}
-              className="w-full grid gap-2 border-b py-2">
-              <div className="w-full flex items-center justify-between ">
-                <div className="grid leading-[120%]">
-                  <span className="font-semibold">{experience.title}</span>
-                  <span className="text-[12px]">{experience.company}</span>
+          <div className="w-full  grid h-full">
+            <h2 className="text-lg font-semibold mb-2">Work Experience</h2>
+            {formData.experience.map((experience, index) => (
+              <div
+                key={index}
+                className="mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <div>
+                    <h3 className="font-semibold">{experience.title}</h3>
+                    <p className="text-sm">{experience.company}</p>
+                  </div>
+                  <p className="text-sm">
+                    {experience.from} - {experience.to}
+                  </p>
                 </div>
-                <div className="text-[12px]">
-                  <span>{experience.from}</span> - <span>{experience.to}</span>
-                </div>
+                <ul className="list-disc pl-4">
+                  {experience.summary.map((item, idx) => (
+                    <li
+                      key={idx}
+                      className="text-sm">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="list-disc w-full px-4">
-                {experience.summary.map((items, index) => (
-                  <li key={index}>{items}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
 
-          <h2 className="font-bold py-2 border-b">Education</h2>
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Education</h2>
           {formData.education.map((education, index) => (
             <div
               key={index}
-              className="w-full flex items-center justify-between py-2">
-              <div className="grid leading-[120%]">
-                <span className="font-semibold">{education.degree}</span>
-                <span className="text-[12px]">{education.institution}</span>
-                <span className="text-[12px]">
-                  {education.state},{education.country}
-                </span>
+              className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                  <h3 className="font-semibold">{education.degree}</h3>
+                  <p className="text-sm">{education.institution}</p>
+                </div>
+                <p className="text-sm">
+                  {education.from} - {education.to}
+                </p>
               </div>
-              <div className="text-[12px]">
-                <span>{education.from}</span> - <span>{education.to}</span>
-              </div>
+              <p className="text-sm">
+                {education.state}, {education.country}
+              </p>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

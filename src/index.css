@@ -15,3 +15,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.page-container {
+  width: 210mm; /* A4 width */
+  height: 297mm; /* A4 height */
+  padding: 20mm; /* Padding around the content */
+  background-color: #ffffff; /* Page background color */
+  box-sizing: border-box;
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+/* Additional styles for print */
+@media print {
+  .page-container {
+    margin: 0;
+    padding: 0;
+    width: 100%; /* Full width for printing */
+    height: 100%; /* Full height for printing */
+  }
+}

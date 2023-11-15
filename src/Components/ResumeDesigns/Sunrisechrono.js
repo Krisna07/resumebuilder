@@ -4,7 +4,6 @@ import {
   FaBuilding,
   FaEnvelope,
   FaGraduationCap,
-  FaLightbulb,
   FaLocationArrow,
   FaPhone,
   FaRegLightbulb,
@@ -14,15 +13,14 @@ import {
 
 const SunriseChrono = ({ formData }) => {
   return (
-    <div className="grid w-[1000px]   gap-4 p-8 shadow-[0_0_2px_0_gray] box-border rounded-md ">
-      <div className="w-full grid grid-cols-2">
-        <h2 className="grid">
-          <span className="text-[60px] leading-[60px] ">
-            {formData.profile.firstname} {formData.profile.lastname}
-          </span>
-          <span>Web developer</span>
-        </h2>
+    <>
+      <div className="grid pb-8">
+        <span className="text-[60px] leading-[60px] ">
+          {formData.profile.firstname} {formData.profile.lastname}
+        </span>
+        <span>Web developer</span>
       </div>
+
       <div className="flex gap-[100px]">
         <div className="w-[600px] grid gap-8">
           <div className="grid gap-2">
@@ -43,7 +41,6 @@ const SunriseChrono = ({ formData }) => {
               </span>
             </div>
             <div className="grid place-items-center gap-4">
-              {" "}
               {formData.experience.map((experience, index) => (
                 <div
                   key={index}
@@ -151,7 +148,7 @@ const SunriseChrono = ({ formData }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

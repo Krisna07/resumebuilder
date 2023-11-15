@@ -1,120 +1,99 @@
 import React from "react";
-import { FaEnvelope, FaLocationArrow, FaPhone, FaStar } from "react-icons/fa";
+import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaStar } from "react-icons/fa";
 
 const Creative = ({ formData }) => {
   return (
-    <div className="grid w-[1000px]   gap-4 p-4 shadow-[0_0_2px_0_gray] box-border rounded-md ">
-      <div className="flex gap-4">
-        <div className="w-[200px] h-[200px] rounded  bg-gray-200"></div>
-        <div className="grid place-items-center gap-4">
-          <h2 className="text-[80px] leading-[80px] ">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
+      {/* Profile Section */}
+      <div className="flex items-center justify-center space-x-4 mb-6">
+        <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+          {/* You might replace this placeholder image with actual profile picture */}
+          <span className="text-4xl text-gray-500"></span>
+        </div>
+        <div>
+          <h1 className="text-3xl font-bold">
             {formData.profile.firstname} {formData.profile.lastname}
-          </h2>
-          <div className="w-full grid items-center gap-2 justify-between text-[12px]  py-2">
-            <div className="flex items-center gap-2 ">
-              <FaPhone />{" "}
-              {formData.profile.phone ? formData.profile.phone : "1234567890"}
-            </div>
-            <div className="flex items-center gap-2 ">
-              <FaEnvelope />{" "}
-              {formData.profile.email ? formData.profile.email : "1234567890"}
-            </div>
-            <div className="flex items-center gap-2 ">
-              <FaLocationArrow />{" "}
-              {formData.profile.street
-                ? formData.profile.street +
-                  ", " +
-                  formData.profile.state +
-                  ", " +
-                  formData.profile.postcode
-                : "1234567890"}
-            </div>
-          </div>
+          </h1>
+          <p className="text-gray-600">
+            <FaPhone className="inline" /> {formData.profile.phone}
+          </p>
+          <p className="text-gray-600">
+            <FaEnvelope className="inline" /> {formData.profile.email}
+          </p>
+          <p className="text-gray-600">
+            <FaMapMarkerAlt className="inline" /> {formData.profile.street},{" "}
+            {formData.profile.state}, {formData.profile.postcode}
+          </p>
         </div>
       </div>
-      <div className="grid gap-4">
-        <div className=" text-2xl font-bold text-left flex flex-col gap-2">
-          Summary
-          <div className="w-full h-[2px] bg-gray-600 relative "></div>
-        </div>
-        <div className="grid place-items-center gap-4">{formData.summary}</div>
+
+      {/* Summary Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Summary</h2>
+        <p className="text-gray-700">{formData.summary}</p>
       </div>
-      <div className="grid gap-4">
-        <div className=" text-2xl font-bold text-left flex flex-col gap-2">
-          Skills
-          <div className="w-full h-[2px] bg-gray-600 relative "></div>
-        </div>
-        <div className="w-full grid grid-cols-2  gap-4">
+
+      {/* Skills Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Skills</h2>
+        <div className="grid grid-cols-2 gap-2">
           <div>
-            <span className="font-semibold">Soft Skills</span>
-            <ul className="list-disc px-4">
+            <span className="text-gray-700 font-semibold">Soft Skills</span>
+            <ul className="list-disc list-inside text-gray-600">
               {formData.skills.softSkills.map((skill, index) => (
-                <li key={skill}>{skill}</li>
+                <li key={index}>{skill}</li>
               ))}
             </ul>
           </div>
           <div>
-            <span className="font-semibold">Hard skills</span>
-            <ul className="list-disc px-4">
+            <span className="text-gray-700 font-semibold">Hard Skills</span>
+            <ul className="list-disc list-inside text-gray-600">
               {formData.skills.hardSkills.map((skill, index) => (
-                <li key={skill}>{skill}</li>
+                <li key={index}>{skill}</li>
               ))}
             </ul>
           </div>
         </div>
       </div>
-      <div className="grid gap-4">
-        <div className=" text-2xl font-bold text-left flex flex-col gap-2">
-          History
-          <div className="w-full h-[2px] bg-gray-600 relative "></div>
-        </div>
-        <div className="grid place-items-center gap-4">
-          {" "}
-          {formData.experience.map((experience, index) => (
-            <div
-              key={index}
-              className="w-full grid gap-2 border-b py-2">
-              <div className="w-full flex items-center justify-between ">
-                <div className="grid leading-[120%]">
-                  <span className="font-semibold">{experience.title}</span>
-                  <span className="text-[12px]">{experience.company}</span>
-                </div>
-                <div className="text-[12px]">
-                  <span>{experience.from}</span> - <span>{experience.to}</span>
-                </div>
-              </div>
-              <ul className="list-disc w-full px-4">
-                {experience.summary.map((items, index) => (
-                  <li key={index}>{items}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+
+      {/* Experience Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Experience</h2>
+        {formData.experience.map((experience, index) => (
+          <div
+            key={index}
+            className="mb-4">
+            <h3 className="text-lg font-semibold">{experience.title}</h3>
+            <p className="text-gray-600">{experience.company}</p>
+            <p className="text-gray-600">
+              {experience.from} - {experience.to}
+            </p>
+            <ul className="list-disc list-inside text-gray-700">
+              {experience.summary.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <div className="grid gap-4">
-        <div className=" text-2xl font-bold text-left flex flex-col gap-2">
-          Education
-          <div className="w-full h-[2px] bg-gray-600 relative "></div>
-        </div>
-        <div className="grid place-items-center gap-4">
-          {formData.education.map((education, index) => (
-            <div
-              key={index}
-              className="w-full flex items-center justify-between py-2">
-              <div className="grid leading-[120%]">
-                <span className="font-semibold">{education.degree}</span>
-                <span className="text-[12px]">{education.institution}</span>
-                <span className="text-[12px]">
-                  {education.state},{education.country}
-                </span>
-              </div>
-              <div className="text-[12px]">
-                <span>{education.from}</span> - <span>{education.to}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+
+      {/* Education Section */}
+      <div>
+        <h2 className="text-xl font-semibold mb-2">Education</h2>
+        {formData.education.map((education, index) => (
+          <div
+            key={index}
+            className="mb-4">
+            <h3 className="text-lg font-semibold">{education.degree}</h3>
+            <p className="text-gray-600">{education.institution}</p>
+            <p className="text-gray-600">
+              {education.state}, {education.country}
+            </p>
+            <p className="text-gray-600">
+              {education.from} - {education.to}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

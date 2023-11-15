@@ -6,11 +6,9 @@ import Summary from "./Components/formcomponents/Summary";
 import Skills from "./Components/formcomponents/Skills";
 import Experience from "./Components/formcomponents/Experience";
 import Education from "./Components/formcomponents/Education";
-import Greenglance from "./Components/ResumeDesigns/Greenglance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Creative from "./Components/ResumeDesigns/Creative";
-import SunriseChrono from "./Components/ResumeDesigns/Sunrisechrono";
+import CreativePDF from "./Components/Pdfexport";
 
 function App() {
   const [formData, setFormData] = useState({
@@ -177,6 +175,7 @@ function App() {
         selectResume={setResume}
         resume={resume}
       />
+
       <ToastContainer />
       <div
         className={`w-fit h-full overflow-hidden  flex 
@@ -201,13 +200,10 @@ function App() {
             Submit
           </button>
         </div>
-        <div className="relative h-[1400px] shadow">
-          {resume == "greenglance" && <Greenglance formData={DummyformData} />}
-          {resume == "creative" && <Creative formData={DummyformData} />}
-          {resume == "sunrisechrono" && (
-            <SunriseChrono formData={DummyformData} />
-          )}
-        </div>
+        <CreativePDF
+          formData={DummyformData}
+          resume={resume}
+        />
       </div>
     </div>
   );
