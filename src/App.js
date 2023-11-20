@@ -201,7 +201,7 @@ function App() {
           </button>
         </div>
         <CreativePDF
-          formData={DummyformData}
+          formData={formData.profile ? formData : DummyformData}
           resume={resume}
         />
       </div>
