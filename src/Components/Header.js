@@ -14,7 +14,8 @@ const Header = ({ selectResume, resume }) => {
         </div>
         <div
           className="w-fit px-4 py-1 text-[16px] bg-green-200 rounded-full cursor-pointer relative overflow-hidden"
-          onClick={() => setSignupform(!signupform)}>
+          onClick={() => setSignupform(!signupform)}
+        >
           Sign up
           <span className="absolute w-full h-full  left-0 top-0 z-20"></span>
         </div>
@@ -26,10 +27,11 @@ const Header = ({ selectResume, resume }) => {
             key={items}
             onClick={() => selectResume(items.toLocaleLowerCase())}
             className={`px-2 py-1 rounded hover:shadow ${
-              resume == items.toLocaleLowerCase()
+              resume === items.toLocaleLowerCase()
                 ? "bg-green-200"
                 : "bg-gray-200 "
-            }`}>
+            }`}
+          >
             {items}
           </span>
         ))}

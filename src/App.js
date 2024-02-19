@@ -28,7 +28,7 @@ function App() {
     }));
   };
 
-  useEffect(() => {}, [formData]);
+  // useEffect(() => {}, [formData]);
 
   const validateFormData = () => {
     const { profile, summary, skills, experience, education } = formData;
@@ -171,15 +171,13 @@ function App() {
 
   return (
     <div className="w-full  grid place-items-center ">
-      <Header
-        selectResume={setResume}
-        resume={resume}
-      />
+      <Header selectResume={setResume} resume={resume} />
 
       <ToastContainer />
       <div
         className={`w-fit h-full overflow-hidden  flex 
-        place-items-center py-4 p-4 `}>
+        place-items-center py-4 p-4 `}
+      >
         <div className="h-full w-fit">
           <Profile
             profile={formData.profile}
@@ -196,14 +194,12 @@ function App() {
           <button
             type="submit"
             className="w-fit py-1 px-4 rounded-full bg-green-200"
-            onClick={handleSubmit}>
+            onClick={handleSubmit}
+          >
             Submit
           </button>
         </div>
-        <CreativePDF
-          formData={formData.profile ? formData : DummyformData}
-          resume={resume}
-        />
+        <CreativePDF formData={DummyformData} resume={resume} />
       </div>
     </div>
   );

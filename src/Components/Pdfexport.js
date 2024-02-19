@@ -28,14 +28,15 @@ const PDFExport = ({ formData, resume }) => {
     <div className="relative grid gap-4">
       <div ref={ref}>
         <div className="w-[210mm] h-[297mm] bg-white shadow-[0_0_4px_0_gray] px-16 py-8  leading-[120%]">
-          {resume == "greenglance" && <Greenglance formData={formData} />}
-          {resume == "creative" && <Creative formData={formData} />}
-          {resume == "sunrisechrono" && <SunriseChrono formData={formData} />}
+          {resume === "greenglance" && <Greenglance formData={formData} />}
+          {resume === "creative" && <Creative formData={formData} />}
+          {resume === "sunrisechrono" && <SunriseChrono formData={formData} />}
         </div>
       </div>
       <button
         className="w-fit px-4 leading-[120%] flex items- gap-2 py-1 text-sm font-semibold bg-green-400 rounded-full"
-        onClick={generatePDF}>
+        onClick={generatePDF}
+      >
         Download <FaDownload color="gray" />
       </button>
     </div>
