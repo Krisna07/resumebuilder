@@ -21,7 +21,7 @@ const Header = ({ selectResume, resume }) => {
         </div>
         {signupform && <Signup />}
       </div>
-      <div className="w-full flex items-center justify-center gap-4 py-4">
+      {/* <div className="w-full flex items-center justify-center gap-4 py-4">
         {resumeDesignNames.map((items) => (
           <span
             key={items}
@@ -35,7 +35,7 @@ const Header = ({ selectResume, resume }) => {
             {items}
           </span>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
