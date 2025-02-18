@@ -1,134 +1,146 @@
-import React, { useState } from 'react';
-import UserInfoStep from './UserInfoStep';
-import SkillsStep from './SkillsStep';
-import ExperienceStep from './ExperienceStep';
-import EducationStep from './ EducationStep';
-import CertificatesStep from './CertificatesStep';
-
+import React, { useState } from "react";
+import UserInfoStep from "./UserInfoStep";
+import SkillsStep from "./SkillsStep";
+import ExperienceStep from "./ExperienceStep";
+import EducationStep from "./EducationStep";
+import CertificatesStep from "./CertificatesStep";
 
 const MultiStepForm = () => {
   const [formData, setFormData] = useState({
     profile: {
-      name: '',
-      email: '',
-      phone: '',
-      location: '',
-      linkedin: '',
-      portfolio: '',
-      summary: ''
+      name: {
+        firstname: "",
+        middlename: "",
+        lastname: "",
+      },
+      email: "",
+      phone: "",
+      location: "",
+      links: [
+        {
+          type: "",
+          url: "",
+        },
+      ],
+      summary: "",
     },
-    skills: [''],
+    skills: [],
     experience: [
       {
-        title: '',
-        company: '',
-        location: '',
-        duration: '',
-        responsibilities: ['']
-      }
+        title: "",
+        company: "",
+        location: "",
+        duration: "",
+        responsibilities: [""],
+      },
     ],
     education: [
       {
-        degree: '',
-        university: '',
-        year: '',
-        location: ''
-      }
+        degree: "",
+        university: "",
+        year: "",
+        location: "",
+      },
     ],
     certificates: [
       {
-        title: '',
-        issued_by: '',
-        year: ''
-      }
-    ]
+        title: "",
+        issued_by: "",
+        year: "",
+      },
+    ],
   });
-  
+
   const [currentStep, setCurrentStep] = useState(1);
 
-  const handleInputChange = (e, section, index = null, field = null) => {
-    const { name, value } = e.target;
-
-    if (section === 'profile') {
-      setFormData(prevState => ({
-        ...prevState,
-        profile: {
-          ...prevState.profile,
-          [name]: value
-        }
-      }));
-    }
-
-    if (section === 'education' && index !== null) {
-      const updatedEducation = [...formData.education];
-      updatedEducation[index][field] = value;
-      setFormData(prevState => ({
-        ...prevState,
-        education: updatedEducation
-      }));
-    }
-
-    if (section === 'experience' && index !== null) {
-      const updatedExperience = [...formData.experience];
-      updatedExperience[index][field] = value;
-      setFormData(prevState => ({
-        ...prevState,
-        experience: updatedExperience
-      }));
-    }
-
-    if (section === 'certificates' && index !== null) {
-      const updatedCertificates = [...formData.certificates];
-      updatedCertificates[index][field] = value;
-      setFormData(prevState => ({
-        ...prevState,
-        certificates: updatedCertificates
-      }));
-    }
-
-    if (section === 'skills') {
-      const updatedSkills = [...formData.skills];
-      updatedSkills[index] = value;
-      setFormData(prevState => ({
-        ...prevState,
-        skills: updatedSkills
-      }));
-    }
+  // Generic function to update any section of the formData.
+  const updateSection = (section, updatedData) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [section]: updatedData,
+    }));
   };
 
-  // Handling moving to the next or previous step
-  const nextStep = () => {
-    setCurrentStep(prevStep => Math.min(prevStep + 1, 5)); // max 5 steps
-  };
-
-  const prevStep = () => {
-    setCurrentStep(prevStep => Math.max(prevStep - 1, 1)); // min 1 step
-  };
-
-  // Render different form steps
+  // Render different form steps based on currentStep.
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <UserInfoStep formData={formData} handleInputChange={handleInputChange} />;
+        return (
+          <UserInfoStep
+            formData={formData}
+            updateData={(updatedProfile) => {
+              updateSection("profile", updatedProfile);
+              setCurrentStep((prevStep) => prevStep + 1);
+            }}
+          />
+        );
       case 2:
-        return <SkillsStep formData={formData} handleInputChange={handleInputChange} />;
+        return (
+          <SkillsStep
+            formData={formData}
+            updateData={(updatedSkills) => {
+              updateSection("skills", updatedSkills);
+              setCurrentStep((prevStep) => prevStep + 1);
+            }}
+          />
+        );
       case 3:
-        return <ExperienceStep formData={formData} handleInputChange={handleInputChange} />;
+        return (
+          <ExperienceStep
+            formData={formData}
+            updateData={(updatedExperience) => {
+              updateSection("experience", updatedExperience);
+              setCurrentStep((prevStep) => prevStep + 1);
+            }}
+          />
+        );
       case 4:
-        return <EducationStep formData={formData} handleInputChange={handleInputChange} />;
+        return (
+          <EducationStep
+            formData={formData}
+            updateData={(updatedEducation) => {
+              updateSection("education", updatedEducation);
+              setCurrentStep((prevStep) => prevStep + 1);
+            }}
+          />
+        );
       case 5:
-        return <CertificatesStep formData={formData} handleInputChange={handleInputChange} />;
+        return (
+          <CertificatesStep
+            formData={formData}
+            updateData={(updatedCertificates) => {
+              updateSection("certificates", updatedCertificates);
+              setCurrentStep((prevStep) => prevStep + 1);
+            }}
+          />
+        );
+      case 6:
+        console.log(formData);
+        return <div>Form data printed to console</div>;
       default:
         return <div>Invalid Step</div>;
     }
   };
 
   return (
-    <div className='grid place-items-center w-screen h-screen bg-gray-300'>
-      {renderStep()}
-      <div>
-        <button onClick={prevStep} disabled={currentStep === 1}>Previous</button>
-        <button onClick={nextStep} disabled={currentStep === 5}>Next</button>
+    <div className="grid place-items-center h-screen bg-gray-300">
+      <div className="max-w-[600px] w-full grid gap-2">
+        <div className="flex items-center justify-between">
+          {[...Array(5)].map((item, index) => (
+            <div
+              onClick={() => setCurrentStep(index + 1)}
+              key={index}
+              className={`rounded-full w-[40px] p-2 ${
+                index + 1 === currentStep
+                  ? "bg-black  text-white "
+                  : "shadow-md bg-black/10"
+              } text-center font-bold transition-all ease-in-out duration-300`}
+            >
+              {index + 1}
+            </div>
+          ))}
+        </div>
+        {renderStep()}
       </div>
     </div>
   );

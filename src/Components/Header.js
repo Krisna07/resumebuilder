@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { FaPaintBrush } from "react-icons/fa";
-import Signup from "./userauthentication/Signup";
 
 const Header = ({ selectResume, resume }) => {
-  const resumeDesignNames = ["GreenGlance", "Creative", "SunriseChrono"];
+  // const resumeDesignNames = ["GreenGlance", "Creative", "SunriseChrono"];
   const [signupform, setSignupform] = useState(false);
 
   return (
-    <div className="w-full grid gap-4 bg-white">
-      <div className="w-full flex items-center justify-between bg-white shadow p-4">
+    <div className="w-full grid gap-4 bg-white fixed top-0">
+      <div className="w-full flex items-center justify-between bg-white shadow px-4 p-1">
         <div className="flex items-center font-[600] gap-4">
           Resume Builder <FaPaintBrush />
         </div>
@@ -19,7 +18,7 @@ const Header = ({ selectResume, resume }) => {
           Sign up
           <span className="absolute w-full h-full  left-0 top-0 z-20"></span>
         </div>
-        {signupform && <Signup />}
+        {/* {signupform && <Signup />} */}
       </div>
       {/* <div className="w-full flex items-center justify-center gap-4 py-4">
         {resumeDesignNames.map((items) => (
