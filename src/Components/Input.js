@@ -3,8 +3,10 @@ import React from "react";
 
 const Input = ({ type, name, value, onChange, placeholder, required }) => {
   return (
-    <div className="w-full grid gap-1 transition-all ease-in-out text-[16px] font-sans  ">
-      <label className={`w-full font-semibold transition-all ease-in-out  `}>
+    <div className="w-full grid gap-1 transition-all ease-in-out text-[14px] font-sans  ">
+      <label
+        className={`w-full font-semibold transition-all ease-in-out px-1  `}
+      >
         {placeholder}
       </label>
       <input

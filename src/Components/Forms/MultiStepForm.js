@@ -56,7 +56,6 @@ const MultiStepForm = () => {
       [name]: data,
     }));
     setCurrentStep((prevStep) => prevStep + 1);
-    console.log(formData);
   };
 
   // Render different form steps based on currentStep.
@@ -134,7 +133,7 @@ const MultiStepForm = () => {
                   index + 1 === currentStep
                     ? "bg-black  text-white "
                     : "shadow-md w-fit bg-black/10"
-                }  font-bold transition-all ease-in-out duration-300 flex items-center justify-center gap-2`}
+                }  font-semibold text-[14px] transition-all ease-in-out duration-300 flex items-center justify-center`}
               >
                 {index + 1}
                 <span
@@ -144,7 +143,7 @@ const MultiStepForm = () => {
                       : "max-[650px]:hidden "
                   } `}
                 >
-                  {item}
+                  {". "} {item}
                 </span>
               </div>
             )

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaCross,
-  FaTimes,
-} from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import FormNavigator from "./FormNavigator";
 
 const SkillsStep = ({ formData, updateData }) => {
@@ -18,7 +13,8 @@ const SkillsStep = ({ formData, updateData }) => {
     setSkill(value);
   };
 
-  const addSkill = () => {
+  const addSkill = (e) => {
+    e.preventDefault();
     const checkDuplicate = skills.some(
       (prevskill) =>
         prevskill.toString().toLocaleLowerCase() === skill.toLocaleLowerCase()
@@ -32,9 +28,8 @@ const SkillsStep = ({ formData, updateData }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData("skills", skills);
+  const handleSubmit = () => {
+    skills && updateData("skills", skills);
   };
 
   const removeSkills = (item) => {
@@ -64,7 +59,7 @@ const SkillsStep = ({ formData, updateData }) => {
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full grid gap-2 text-left">
+      <form onSubmit={addSkill} className="w-full grid gap-2 text-left">
         <Input
           type="text"
           value={skill}
@@ -72,7 +67,6 @@ const SkillsStep = ({ formData, updateData }) => {
           placeholder="Enter Skill"
           className="w-full border-b-2 outline-none focus:border-green-200 px-4 p-1 rounded-md"
         />
-
         <Button
           onClick={addSkill}
           type="button"
