@@ -41,11 +41,9 @@ const ExperienceStep = ({ formData, updateData }) => {
   };
 
   return (
-    <div className="max-w-[600px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg">
-      <h3>Experience</h3>
-      <form onSubmit={handleSubmit} className="grid gap-4">
+      <form onSubmit={handleSubmit} className="w-full grid gap-2 px-4">
         {experienceData.map((exp, index) => (
-          <div key={index} className="grid gap-2 border p-2 rounded">
+          <div key={index} className="w-full grid gap-2 border p-2 rounded">
             <Input
               type="text"
               name="title"
@@ -103,7 +101,7 @@ const ExperienceStep = ({ formData, updateData }) => {
           </button>
         </div>
       </form>
-    </div>
+   
   );
 };
 

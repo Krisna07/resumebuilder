@@ -55,14 +55,8 @@ const UserInfoStep = ({ formData, updateData }) => {
   };
 
   return (
-    <div className="max-w-[600px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg">
-      <div className="flex items-center gap-4 border-b py-2">
-        <span className="text-xl font-[600]">Profile</span>
-        <div className="w-10 h-10 bg-green-200 rounded-full grid place-items-center">
-          <FaRegUser />
-        </div>
-      </div>
-
+    
+      
       <form className="grid gap-2 px-4" onSubmit={handleSubmit}>
         <div className="flex gap-2 ">
           <Input
@@ -152,7 +146,7 @@ const UserInfoStep = ({ formData, updateData }) => {
           Submit
         </button>
       </form>
-    </div>
+    
   );
 };
 

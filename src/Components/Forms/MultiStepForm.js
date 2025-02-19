@@ -66,16 +66,28 @@ const MultiStepForm = () => {
     switch (currentStep) {
       case 1:
         return (
-          <UserInfoStep
+          <div className="w-full min-h-[400px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg text-left">
+            <div className="w-full"> 
+             <h2 className="text-xl font-[600]">Lets start with your deatils </h2>
+             <p>Provide essential information to proceed. </p>
+          </div>
+
+            <UserInfoStep
             formData={formData}
             updateData={(updatedProfile) => {
               updateSection("profile", updatedProfile);
               setCurrentStep((prevStep) => prevStep + 1);
             }}
           />
+          </div>
         );
       case 2:
         return (
+          <div className="w-full min-h-[400px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg text-left">
+          <div className="w-full"> 
+           <h2 className="text-xl font-[600]">Lets add your skils </h2>
+           <p>Provide all your skills </p>
+        </div>
           <SkillsStep
             formData={formData}
             updateData={(updatedSkills) => {
@@ -83,9 +95,16 @@ const MultiStepForm = () => {
               setCurrentStep((prevStep) => prevStep + 1);
             }}
           />
+                 </div>
         );
       case 3:
         return (
+          <div className="w-full min-h-[400px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg text-left">
+          <div className="w-full"> 
+           <h2 className="text-xl font-[600]">Lets add your skils </h2>
+           <p>Provide all your skills </p>
+        </div>
+     
           <ExperienceStep
             formData={formData}
             updateData={(updatedExperience) => {
@@ -93,26 +112,42 @@ const MultiStepForm = () => {
               setCurrentStep((prevStep) => prevStep + 1);
             }}
           />
+             </div>
+          
         );
       case 4:
         return (
-          <EducationStep
+          <div className="w-full min-h-[400px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg text-left">
+          <div className="w-full"> 
+           <h2 className="text-xl font-[600]">Lets add your skils </h2>
+           <p>Provide all your skills </p>
+        </div>
+        <EducationStep
             formData={formData}
             updateData={(updatedEducation) => {
               updateSection("education", updatedEducation);
               setCurrentStep((prevStep) => prevStep + 1);
             }}
           />
+                 </div>
+          
         );
       case 5:
         return (
-          <CertificatesStep
+          <div className="w-full min-h-[400px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg text-left">
+          <div className="w-full"> 
+           <h2 className="text-xl font-[600]">Lets add your skils </h2>
+           <p>Provide all your skills </p>
+        </div>
+        <CertificatesStep
             formData={formData}
             updateData={(updatedCertificates) => {
               updateSection("certificates", updatedCertificates);
               setCurrentStep((prevStep) => prevStep + 1);
-            }}
-          />
+            }}/>
+                 </div>
+          
+         
         );
       case 6:
         console.log(formData);
@@ -124,23 +159,26 @@ const MultiStepForm = () => {
 
   return (
     <div className="grid place-items-center h-screen bg-gray-300">
-      <div className="max-w-[600px] w-full grid gap-2">
-        <div className="flex items-center justify-between">
-          {[...Array(5)].map((item, index) => (
+      <div className="max-w-fit h-[400px] grid gap-2 place-items-start  p-2 box-border">
+      
+        <div className="w-fit flex items-center justify-between gap-2">
+          {["Profile", "Skill", "Experience","Education","Certificates"].map((item, index) => (
             <div
               onClick={() => setCurrentStep(index + 1)}
               key={index}
-              className={`rounded-full w-[40px] p-2 ${
+              className={`rounded-full  p-1 px-4 ${
                 index + 1 === currentStep
                   ? "bg-black  text-white "
                   : "shadow-md bg-black/10"
-              } text-center font-bold transition-all ease-in-out duration-300`}
+              }  font-bold transition-all ease-in-out duration-300 flex items-center gap-2`}
             >
-              {index + 1}
+              {index + 1} 
+              <span>{item}</span>
             </div>
           ))}
         </div>
         {renderStep()}
+
       </div>
     </div>
   );

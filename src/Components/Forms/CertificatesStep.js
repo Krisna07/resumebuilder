@@ -27,11 +27,10 @@ const CertificatesStep = ({ formData, updateData }) => {
   };
 
   return (
-    <div className="max-w-[600px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg">
-      <h3>Step 5: Certificates</h3>
-      <form onSubmit={handleSubmit} className="grid gap-4">
+ 
+      <form onSubmit={handleSubmit} className="w-full grid gap-4">
         {certData.map((cert, index) => (
-          <div key={index}>
+          <div key={index} className="w-full">
             <Input
               type="text"
               name="title"
@@ -71,7 +70,7 @@ const CertificatesStep = ({ formData, updateData }) => {
           </button>
         </div>
       </form>
-    </div>
+   
   );
 };
 

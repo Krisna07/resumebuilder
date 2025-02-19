@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Input from "../Input";
 
 const EducationStep = ({ formData, updateData }) => {
   const [educationData, setEducationData] = useState(formData.education);
@@ -26,12 +27,11 @@ const EducationStep = ({ formData, updateData }) => {
   };
 
   return (
-    <div className="max-w-[600px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg">
-      <h3>Step 4: Education</h3>
-      <form onSubmit={handleSubmit} className="grid gap-4">
+  
+      <form onSubmit={handleSubmit} className="w-full grid gap-4">
         {educationData.map((edu, index) => (
-          <div key={index} className="grid gap-2 border p-2 rounded">
-            <input
+          <div key={index} className="w-full grid gap-2 border p-2 rounded">
+            <Input
               type="text"
               name="degree"
               value={edu.degree}
@@ -39,7 +39,7 @@ const EducationStep = ({ formData, updateData }) => {
               placeholder="Degree"
               className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
-            <input
+            <Input
               type="text"
               name="university"
               value={edu.university}
@@ -47,7 +47,7 @@ const EducationStep = ({ formData, updateData }) => {
               placeholder="University"
               className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
-            <input
+            <Input
               type="text"
               name="year"
               value={edu.year}
@@ -55,7 +55,7 @@ const EducationStep = ({ formData, updateData }) => {
               placeholder="Year"
               className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
-            <input
+            <Input
               type="text"
               name="location"
               value={edu.location}
@@ -81,7 +81,7 @@ const EducationStep = ({ formData, updateData }) => {
           </button>
         </div>
       </form>
-    </div>
+  
   );
 };
 

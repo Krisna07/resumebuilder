@@ -29,16 +29,16 @@ const SkillsStep = ({ formData, updateData }) => {
   };
 
   return (
-    <div className="max-w-[600px] shadow-md grid gap-4 p-4 bg-gray-200 rounded-lg">
-      <h3>Skills</h3>
-      <form onSubmit={handleSubmit} className="grid gap-2">
-        {skills.length > 0 ? (
+    <div className="w-full h-full ">
+    {skills.length > 0 ? (
           skills.map((skill, index) => <span key={index}>{skill}</span>)
         ) : (
           <span>No skills added yet</span>
         )}
 
-        <div>
+      <form onSubmit={handleSubmit} className="w-full grid gap-2 tetx-left">
+       
+  
           <input
             type="text"
             value={skill}
@@ -46,12 +46,12 @@ const SkillsStep = ({ formData, updateData }) => {
             placeholder="Skill"
             className="w-full border-b-2 outline-none focus:border-green-200 px-4 p-1 rounded-md"
           />
-        </div>
+       
 
         <button
           type="button"
           onClick={addSkill}
-          className="w-fit px-2 p-[4px] bg-gray-300"
+          className="w-fit px-2 p-[4px] bg-gray-300 text-sm"
         >
           Add Skill
         </button>
