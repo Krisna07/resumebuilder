@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "../Input";
+import FormNavigator from "./FormNavigator";
 
 const CertificatesStep = ({ formData, updateData }) => {
   const [certData, setCertData] = useState(formData.certificates);
@@ -22,12 +23,12 @@ const CertificatesStep = ({ formData, updateData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateData(certData);
+    updateData("certificates", certData);
     // Move to the next step
   };
 
   return (
- 
+    <>
       <form onSubmit={handleSubmit} className="w-full grid gap-4">
         {certData.map((cert, index) => (
           <div key={index} className="w-full">
@@ -54,23 +55,17 @@ const CertificatesStep = ({ formData, updateData }) => {
             />
           </div>
         ))}
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={addCertificate}
-            className="w-fit px-2 p-1 bg-gray-300 rounded-md"
-          >
-            Add Certificate
-          </button>
-          <button
-            type="submit"
-            className="w-fit px-2 p-1 bg-green-300 rounded-md"
-          >
-            Submit Certificates
-          </button>
-        </div>
+
+        <button
+          type="button"
+          onClick={addCertificate}
+          className="w-fit px-2 p-1 bg-gray-300 rounded-md"
+        >
+          Add Certificate
+        </button>
       </form>
-   
+      <FormNavigator handleSubmit={handleSubmit} />
+    </>
   );
 };
 

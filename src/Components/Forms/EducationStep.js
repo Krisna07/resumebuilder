@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Input from "../Input";
+import FormNavigator from "./FormNavigator";
 
 const EducationStep = ({ formData, updateData }) => {
   const [educationData, setEducationData] = useState(formData.education);
@@ -22,15 +23,15 @@ const EducationStep = ({ formData, updateData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateData(educationData);
+    updateData("education", educationData);
     // Move to the next step
   };
 
   return (
-  
+    <>
       <form onSubmit={handleSubmit} className="w-full grid gap-4">
         {educationData.map((edu, index) => (
-          <div key={index} className="w-full grid gap-2 border p-2 rounded">
+          <div key={index} className="w-full grid gap-2 border rounded">
             <Input
               type="text"
               name="degree"
@@ -65,23 +66,17 @@ const EducationStep = ({ formData, updateData }) => {
             />
           </div>
         ))}
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={addEducation}
-            className="w-fit px-2 p-1 bg-gray-300 rounded-md"
-          >
-            Add Education
-          </button>
-          <button
-            type="submit"
-            className="w-fit px-2 p-1 bg-green-300 rounded-md"
-          >
-            Submit Education
-          </button>
-        </div>
+
+        <button
+          type="button"
+          onClick={addEducation}
+          className="w-fit px-2 p-1 bg-gray-300 rounded-md"
+        >
+          Add Education
+        </button>
       </form>
-  
+      <FormNavigator handleSubmit={handleSubmit} />
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 const Input = ({ type, name, value, onChange, placeholder, required }) => {
   return (
-    <div className="w-full grid gap-1 transition-all ease-in-out  ">
-      <label className={`w-full font-semibold transition-all ease-in-out `}>
+    <div className="w-full grid gap-1 transition-all ease-in-out text-[16px] font-sans  ">
+      <label className={`w-full font-semibold transition-all ease-in-out  `}>
         {placeholder}
       </label>
       <input
@@ -14,7 +14,7 @@ const Input = ({ type, name, value, onChange, placeholder, required }) => {
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="w-full border-b-2 outline-none focus:border-green-200 px-4 p-1 rounded-md relative z-10 "
+        className="w-full outline-none focus:ring-1 focus:ring-green-600 transition-all ease-in-out duration-300 px-[8px] py-[4px]  text-[14px] rounded-md relative z-10 "
       />
     </div>
   );

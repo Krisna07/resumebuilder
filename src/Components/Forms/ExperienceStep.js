@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Input from "../Input";
+import FormNavigator from "./FormNavigator";
 
 const ExperienceStep = ({ formData, updateData }) => {
   const [experienceData, setExperienceData] = useState(formData.experience);
@@ -36,14 +37,14 @@ const ExperienceStep = ({ formData, updateData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateData(experienceData);
-    // Move to the next step
+    updateData("experience", experienceData);
   };
 
   return (
-      <form onSubmit={handleSubmit} className="w-full grid gap-2 px-4">
+    <>
+      <form onSubmit={handleSubmit} className="w-full grid gap-2">
         {experienceData.map((exp, index) => (
-          <div key={index} className="w-full grid gap-2 border p-2 rounded">
+          <div key={index} className="w-full grid gap-2 border rounded">
             <Input
               type="text"
               name="title"
@@ -85,23 +86,17 @@ const ExperienceStep = ({ formData, updateData }) => {
             />
           </div>
         ))}
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={addExperience}
-            className="w-fit px-2 p-1 bg-gray-300 rounded-md"
-          >
-            Add Experience
-          </button>
-          <button
-            type="submit"
-            className="w-fit px-2 p-1 bg-green-300 rounded-md"
-          >
-            Submit Experience
-          </button>
-        </div>
+
+        <button
+          type="button"
+          onClick={addExperience}
+          className="w-fit px-2 p-1 bg-gray-300 rounded-md"
+        >
+          Add Experience
+        </button>
       </form>
-   
+      <FormNavigator handleSubmit={handleSubmit} />
+    </>
   );
 };
 

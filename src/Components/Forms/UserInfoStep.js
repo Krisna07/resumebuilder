@@ -1,29 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { FaRegUser } from "react-icons/fa";
+import React, { useState } from "react";
 import Input from "../Input";
+import Button from "../Button";
+import { FaPlus } from "react-icons/fa";
+import FormNavigator from "./FormNavigator";
 
-const UserInfoStep = ({ formData, updateData }) => {
+const UserInfoStep = ({ formData, handleSubmit }) => {
   const [profileData, setProfileData] = useState(formData.profile);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prevState) => {
-      if (name.includes(".")) {
-        const keys = name.split(".");
-        return {
-          ...prevState,
-          [keys[0]]: {
-            ...prevState[keys[0]],
-            [keys[1]]: value,
-          },
-        };
-      } else {
-        return {
-          ...prevState,
-          [name]: value,
-        };
-      }
-    });
+    setProfileData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const handleLinkChange = (index, e) => {
@@ -48,41 +37,23 @@ const UserInfoStep = ({ formData, updateData }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
-    updateData(profileData);
-    // Move to the next step
+    console.log(profileData);
+    handleSubmit("profile", profileData);
   };
 
   return (
-    
-      
-      <form className="grid gap-2 px-4" onSubmit={handleSubmit}>
-        <div className="flex gap-2 ">
-          <Input
-            type="text"
-            name="name.firstname"
-            required={true}
-            value={profileData.name.firstname}
-            onChange={handleChange}
-            placeholder="Firstname"
-          />
-          <Input
-            type="text"
-            name="name.middlename"
-            value={profileData.name.middlename || ""}
-            onChange={handleChange}
-            placeholder="Middlename"
-          />
-          <Input
-            type="text"
-            name="name.lastname"
-            required={true}
-            value={profileData.name.lastname}
-            onChange={handleChange}
-            placeholder="Lastname"
-          />
-        </div>
+    <>
+      <form className="w-full grid gap-1" onSubmit={submitForm}>
+        <Input
+          type="text"
+          name="fullname"
+          required={true}
+          value={profileData.fullname}
+          onChange={handleChange}
+          placeholder="Fullname"
+        />
         <Input
           type="email"
           name="email"
@@ -107,46 +78,50 @@ const UserInfoStep = ({ formData, updateData }) => {
           onChange={handleChange}
           placeholder="Location"
         />
-        {profileData.links.map((link, index) => (
-          <div key={index} className="flex items-center justify-between gap-2">
-            <div className="grid gap-1 transition-all ease-in-out">
-              <label className="uppercase font-semibold transition-all ease-in-out">
-                Type
-              </label>
-              <select
-                name="type"
-                value={link.type}
+        <div className="w-full grid gap-1 transition-all ease-in-out text-[16px] font-sans">
+          <label className="w-full font-semibold transition-all ease-in-out">
+            Connects
+          </label>
+          {profileData.links.map((link, index) => (
+            <div
+              key={index}
+              className="w-full flex items-center justify-between gap-2"
+            >
+              <div className="grid gap-1 transition-all ease-in-out text-[14px]">
+                <select
+                  name="type"
+                  value={link.type}
+                  onChange={(e) => handleLinkChange(index, e)}
+                  className="outline-none focus:ring-1 focus:ring-blue-500 bg-slate-300 px-2 p-1 pr-1 rounded-md relative z-10 text-[12px] font-semibold text-left"
+                >
+                  <option value="linkedin">LinkedIn</option>
+                  <option value="portfolio">Portfolio</option>
+                  <option value="github">GitHub</option>
+                  <option value="twitter">Twitter</option>
+                </select>
+              </div>
+              <input
+                type="text"
+                name="url"
+                value={link.url}
                 onChange={(e) => handleLinkChange(index, e)}
-                className="outline-none focus:ring-blue-500 bg-slate-300 px-4 p-1 rounded-md relative z-10 "
-              >
-                <option value="">Select</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="portfolio">Portfolio</option>
-                <option value="github">GitHub</option>
-                <option value="twitter">Twitter</option>
-              </select>
+                placeholder="Enter Link"
+                className="w-full outline-none focus:ring-1 focus:ring-green-600 transition-all ease-in-out duration-300 px-[8px] py-[4px] text-[14px] rounded-md relative z-10"
+              />
             </div>
-            <Input
-              type="text"
-              name="url"
-              value={link.url}
-              onChange={(e) => handleLinkChange(index, e)}
-              placeholder="Enter Link"
-            />
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={addLink}
-          className="w-fit px-2 p-[4px] bg-gray-300 text-sm"
-        >
-          Add Link
-        </button>
-        <button className="w-full px-2 p-[4px] bg-green-300" type="submit">
-          Submit
-        </button>
+          ))}
+          <Button
+            type="button"
+            onClick={addLink}
+            variant="secondary"
+            size="small"
+          >
+            <FaPlus size={10} /> Add Link
+          </Button>
+        </div>
       </form>
-    
+      <FormNavigator handleSubmit={submitForm} />
+    </>
   );
 };
 
