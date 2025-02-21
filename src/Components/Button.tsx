@@ -1,6 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 import { cva } from "class-variance-authority";
+import { VariantProps } from "class-variance-authority";
+
+interface ButtonProps extends VariantProps<typeof buttonStyles> {
+  children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  variant: "primary" | "secondary" | "success" | "danger";
+  size: "small" | "medium" | "large";
+  fullWidth?: boolean;
+}
 
 const buttonStyles = cva(
   "px-[16px] py-[4px] h-fit rounded-full transition-all ease-in-out duration-300 font-semibold shadow-md flex items-center gap-1",
@@ -31,7 +41,13 @@ const buttonStyles = cva(
   }
 );
 
-const Button = ({ variant, size, fullWidth, children, ...props }) => {
+const Button: React.FC<ButtonProps> = ({
+  variant,
+  size,
+  fullWidth,
+  children,
+  ...props
+}) => {
   return (
     <button
       className={clsx(buttonStyles({ variant, size, fullWidth }))}

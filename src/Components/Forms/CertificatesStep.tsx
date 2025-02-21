@@ -2,12 +2,28 @@ import React, { useState } from "react";
 import Input from "../Input";
 import FormNavigator from "./FormNavigator";
 
-const CertificatesStep = ({ formData, updateData }) => {
+interface FormData {
+  certificates: { title: string; issued_by: string; year: string }[];
+}
+
+interface CertificatesStepProps {
+  formData: FormData;
+  updateData: (name: keyof FormData, data: any) => void;
+}
+
+const CertificatesStep: React.FC<CertificatesStepProps> = ({
+  formData,
+  updateData,
+}) => {
   const [certData, setCertData] = useState(formData.certificates);
 
-  const handleChange = (e, index, field) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    field: string
+  ) => {
     const { value } = e.target;
-    setCertData((prevState) => {
+    setCertData((prevState: any) => {
       const updatedCerts = [...prevState];
       updatedCerts[index] = { ...updatedCerts[index], [field]: value };
       return updatedCerts;
@@ -15,22 +31,21 @@ const CertificatesStep = ({ formData, updateData }) => {
   };
 
   const addCertificate = () => {
-    setCertData((prevState) => [
+    setCertData((prevState: any) => [
       ...prevState,
       { title: "", issued_by: "", year: "" },
     ]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     updateData("certificates", certData);
-    // Move to the next step
   };
 
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full grid gap-4">
-        {certData.map((cert, index) => (
+        {certData.map((cert: any, index: number) => (
           <div key={index} className="w-full">
             <Input
               type="text"
@@ -55,14 +70,6 @@ const CertificatesStep = ({ formData, updateData }) => {
             />
           </div>
         ))}
-
-        <button
-          type="button"
-          onClick={addCertificate}
-          className="w-fit px-2 p-1 bg-gray-300 rounded-md"
-        >
-          Add Certificate
-        </button>
       </form>
       <FormNavigator handleSubmit={handleSubmit} />
     </>

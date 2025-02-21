@@ -1,13 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "../Input";
 import FormNavigator from "./FormNavigator";
+import { FormData } from "./MultiStepForm";
+import Button from "../Button";
 
-const EducationStep = ({ formData, updateData }) => {
+interface EducationStepProps {
+  formData: FormData;
+  handleSubmit: (name: keyof FormData, data: any) => void;
+}
+
+const EducationStep: React.FC<EducationStepProps> = ({
+  formData,
+  handleSubmit,
+}) => {
   const [educationData, setEducationData] = useState(formData.education);
 
-  const handleChange = (e, index, field) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    field: string
+  ) => {
     const { value } = e.target;
-    setEducationData((prevState) => {
+    setEducationData((prevState: any) => {
       const updatedEdu = [...prevState];
       updatedEdu[index] = { ...updatedEdu[index], [field]: value };
       return updatedEdu;
@@ -15,22 +29,22 @@ const EducationStep = ({ formData, updateData }) => {
   };
 
   const addEducation = () => {
-    setEducationData((prevState) => [
+    setEducationData((prevState: any) => [
       ...prevState,
       { degree: "", university: "", year: "", location: "" },
     ]);
   };
 
-  const handleSubmit = (e) => {
+  const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    updateData("education", educationData);
-    // Move to the next step
+    console.log(educationData);
+    handleSubmit("education", educationData);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full grid gap-4">
-        {educationData.map((edu, index) => (
+      <form onSubmit={submitForm} className="w-full grid gap-4">
+        {educationData.map((edu: any, index: number) => (
           <div key={index} className="w-full grid gap-2 border rounded">
             <Input
               type="text"
@@ -38,7 +52,7 @@ const EducationStep = ({ formData, updateData }) => {
               value={edu.degree}
               onChange={(e) => handleChange(e, index, "degree")}
               placeholder="Degree"
-              className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
+              // className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
             <Input
               type="text"
@@ -46,7 +60,7 @@ const EducationStep = ({ formData, updateData }) => {
               value={edu.university}
               onChange={(e) => handleChange(e, index, "university")}
               placeholder="University"
-              className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
+              // className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
             <Input
               type="text"
@@ -54,7 +68,7 @@ const EducationStep = ({ formData, updateData }) => {
               value={edu.year}
               onChange={(e) => handleChange(e, index, "year")}
               placeholder="Year"
-              className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
+              // className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
             <Input
               type="text"
@@ -62,20 +76,13 @@ const EducationStep = ({ formData, updateData }) => {
               value={edu.location}
               onChange={(e) => handleChange(e, index, "location")}
               placeholder="Location"
-              className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
+              // className="w-full border-b-2 outline-none px-4 p-1 rounded-md"
             />
           </div>
         ))}
-
-        <button
-          type="button"
-          onClick={addEducation}
-          className="w-fit px-2 p-1 bg-gray-300 rounded-md"
-        >
-          Add Education
-        </button>
       </form>
-      <FormNavigator handleSubmit={handleSubmit} />
+      <Button children={"Add Edication"} variant={"secondary"} size={"small"} />
+      <FormNavigator handleSubmit={submitForm} />
     </>
   );
 };

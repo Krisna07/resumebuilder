@@ -2,10 +2,20 @@ import React from "react";
 import Button from "../Button";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const FormNavigator = ({ handleSubmit }) => {
+interface FormNavigatorProps {
+  handleSubmit: any;
+}
+
+const FormNavigator: React.FC<FormNavigatorProps> = ({ handleSubmit }) => {
   return (
     <div className="w-full flex items-center justify-between pt-2">
-      <Button type="submit" size={"small"} variant="secondary" disabled>
+      <Button
+        type="submit"
+        size={"small"}
+        variant="secondary"
+        // disabled
+        fullWidth={false}
+      >
         <FaChevronLeft /> Back
       </Button>
       <Button
@@ -13,6 +23,7 @@ const FormNavigator = ({ handleSubmit }) => {
         size={"small"}
         variant="primary"
         onClick={handleSubmit}
+        fullWidth={false}
       >
         Next <FaChevronRight />
       </Button>
