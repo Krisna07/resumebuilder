@@ -1,9 +1,8 @@
-import React from "react";
 import MultiStepForm from "./Components/Forms/MultiStepForm";
 
 const App = () => {
   return (
-    <div>
+    <div className="w-full h-full">
       <MultiStepForm />
     </div>
   );

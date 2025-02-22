@@ -3,7 +3,7 @@ import Button from "../Button";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface FormNavigatorProps {
-  handleSubmit: any;
+  handleSubmit: () => void;
 }
 
 const FormNavigator: React.FC<FormNavigatorProps> = ({ handleSubmit }) => {

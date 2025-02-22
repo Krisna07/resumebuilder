@@ -10,6 +10,7 @@ interface ButtonProps extends VariantProps<typeof buttonStyles> {
   variant: "primary" | "secondary" | "success" | "danger";
   size: "small" | "medium" | "large";
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 const buttonStyles = cva(

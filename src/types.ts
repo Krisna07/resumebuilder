@@ -18,13 +18,18 @@ export interface Experience {
   title: string;
   company: string;
   location: string;
-  duration: string;
-  responsibilities: string[];
+  startDate: string;
+  endDate?: string;
+  current?: boolean;
+  responsibilities?: string[];
 }
 export interface Education {
   degree: string;
   university: string;
   year: string;
+  startDate: string;
+  endDate?: string;
+  current?: boolean;
   location: string;
 }
 export interface Certificates {
