@@ -4,8 +4,17 @@ import SkillsStep from "./SkillsStep";
 import ExperienceStep from "./ExperienceStep";
 import EducationStep from "./EducationStep";
 import CertificatesStep from "./CertificatesStep";
+// import FormLayout from "./FormLayout";
+import {
+  Certificates,
+  Education,
+  Experience,
+  Profile,
+  ResumeData,
+} from "../../types";
+import Button from "../Button";
 import FormLayout from "./FomLayout";
-import { Experience, Profile, ResumeData } from "../../types";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const MultiStepForm: React.FC = () => {
   const [formData, setFormData] = useState<ResumeData>({
@@ -30,15 +39,12 @@ const MultiStepForm: React.FC = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  const handleSubmit = (
-    name: string,
-    data: Partial<ResumeData[keyof ResumeData]>
-  ) => {
-    setFormData((prevState: ResumeData) => ({
-      ...prevState,
-      [name]: data,
-    }));
-    setCurrentStep(currentStep + 1);
+  const handleNext = () => {
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 6));
+  };
+
+  const handlePrevious = () => {
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
   };
 
   const renderStep = () => {
@@ -92,7 +98,12 @@ const MultiStepForm: React.FC = () => {
         return (
           <FormLayout
             children={
-              <EducationStep formData={formData} handleSubmit={handleSubmit} />
+              <EducationStep
+                data={formData.education}
+                onChange={(data: Education[]) =>
+                  setFormData({ ...formData, education: data })
+                }
+              />
             }
             heading={"Add your Educations"}
             subheading={"Provide all your academic qualifications."}
@@ -103,8 +114,10 @@ const MultiStepForm: React.FC = () => {
           <FormLayout
             children={
               <CertificatesStep
-                formData={formData}
-                handleSubmit={handleSubmit}
+                data={formData.certificates}
+                onChange={(data: Certificates[]) =>
+                  setFormData({ ...formData, certificates: data })
+                }
               />
             }
             heading={"Let's add your certificates"}
@@ -121,7 +134,7 @@ const MultiStepForm: React.FC = () => {
 
   return (
     <div className="grid place-items-center transition-all ease-in-out duration-300">
-      <div className="w-full min-[650px]:w-[650px] h-[400px] grid gap-2 place-items-start p-2 box-border">
+      <div className="w-full min-[650px]:w-[650px]  grid gap-2 place-items-start p-2 box-border">
         <div className="w-full flex items-center justify-center gap-2">
           {["Profile", "Skill", "Experience", "Education", "Certificates"].map(
             (item, index) => (
@@ -150,6 +163,28 @@ const MultiStepForm: React.FC = () => {
         </div>
 
         {renderStep()}
+
+        <div className="mt-6 w-full flex justify-between">
+          <Button
+            type="button"
+            variant="secondary"
+            size="small"
+            onClick={handlePrevious}
+            disabled={currentStep === 1}
+          >
+            <FaChevronLeft /> Previous
+          </Button>
+
+          <Button
+            type="button"
+            variant="primary"
+            size="small"
+            onClick={handleNext}
+            disabled={currentStep === 6}
+          >
+            {currentStep === 6 ? "Submit" : "Next"} <FaChevronRight />
+          </Button>
+        </div>
       </div>
     </div>
   );

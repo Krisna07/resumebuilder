@@ -1,47 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../Input";
-import Button from "../Button";
-import { FaPlus } from "react-icons/fa";
+
 import { Profile } from "../../types";
+import Button from "../Button";
+import { FaTrash } from "react-icons/fa6";
 
 interface UserInfoStepProps {
   data: Profile;
   onChange: (updatedData: Profile) => void;
 }
 const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
-  const [profileData, setProfileData] = useState<Profile>(data);
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setProfileData((prevState: Profile) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
-  const handleLinkChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setProfileData((prevState: Profile) => {
-      const updatedLinks = [...prevState.links];
-      updatedLinks[index] = {
-        ...updatedLinks[index],
-        [name]: value,
-      };
-      return {
-        ...prevState,
-        links: updatedLinks,
-      };
+  const addLink = () => {
+    onChange({
+      ...data,
+      links: [
+        ...data.links,
+        {
+          type: "",
+          url: "",
+        },
+      ],
     });
   };
 
-  const addLink = () => {
-    setProfileData((prevState: Profile) => ({
-      ...prevState,
-      links: [...prevState.links, { type: "", url: "" }],
-    }));
+  const removeLink = (index: number) => {
+    const updatedLinks = data.links.filter((_, i) => i !== index);
+    onChange({ ...data, links: updatedLinks });
   };
 
   return (
@@ -50,7 +34,7 @@ const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
         type="text"
         name="fullname"
         required={true}
-        value={profileData.fullname}
+        value={data.fullname}
         onChange={(e) => onChange({ ...data, fullname: e.target.value })}
         placeholder="Fullname"
       />
@@ -58,7 +42,7 @@ const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
         type="email"
         name="email"
         required={true}
-        value={profileData.email}
+        value={data.email}
         onChange={(e) => onChange({ ...data, email: e.target.value })}
         placeholder="Email"
       />
@@ -66,7 +50,7 @@ const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
         type="text"
         name="phone"
         required={true}
-        value={profileData.phone}
+        value={data.phone}
         onChange={(e) => onChange({ ...data, phone: e.target.value })}
         placeholder="Phone"
       />
@@ -74,55 +58,70 @@ const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
         type="text"
         name="location"
         required={true}
-        value={profileData.location}
+        value={data.location}
         onChange={(e) => onChange({ ...data, location: e.target.value })}
         placeholder="Location"
       />
-      <div className="w-full grid gap-1 transition-all ease-in-out text-[16px] font-sans">
-        <label className="w-full font-semibold transition-all ease-in-out">
-          Connects
-        </label>
-        {profileData.links?.map(
-          (link: { type: string; url: string }, index: number) => (
-            <div
-              key={index}
-              className="w-full flex items-center justify-between gap-2"
-            >
-              <div className="grid gap-1 transition-all ease-in-out text-[14px]">
-                <select
-                  name="type"
-                  value={link.type}
-                  onChange={(e) => handleLinkChange(index, e)}
-                  className="outline-none focus:ring-1 focus:ring-blue-500 bg-slate-300 px-2 p-1 pr-1 rounded-md relative z-10 text-[12px] font-semibold text-left"
-                >
-                  <option value="">Select Type</option>
-                  <option value="linkedin">LinkedIn</option>
-                  <option value="portfolio">Portfolio</option>
-                  <option value="github">GitHub</option>
-                  <option value="twitter">Twitter</option>
-                </select>
-              </div>
-              <input
-                type="text"
-                name="url"
-                value={link.url}
-                onChange={(e) => handleLinkChange(index, e)}
-                placeholder="Enter Link"
-                className="w-full outline-none focus:ring-1 focus:ring-green-600 transition-all ease-in-out duration-300 px-[8px] py-[4px] text-[14px] rounded-md relative z-10"
-              />
-            </div>
-          )
-        )}
-        <Button
-          type="button"
-          onClick={addLink}
-          variant="secondary"
-          size="small"
-          fullWidth={false}
-        >
-          <FaPlus size={10} /> Add Link
-        </Button>
-      </div>
+
+      {data.links.map((link, index) => (
+        <div key={index} className="flex gap-2 relative">
+          <Input
+            type="text"
+            name="type"
+            value={link.type}
+            onChange={(e) => {
+              const updatedLinks = [...data.links];
+              updatedLinks[index] = {
+                ...updatedLinks[index],
+                type: e.target.value,
+              };
+              onChange({ ...data, links: updatedLinks });
+            }}
+            placeholder="Link Type (e.g., GitHub)"
+          />
+          <Input
+            type="url"
+            name="url"
+            value={link.url}
+            onChange={(e) => {
+              const updatedLinks = [...data.links];
+              updatedLinks[index] = {
+                ...updatedLinks[index],
+                url: e.target.value,
+              };
+              onChange({ ...data, links: updatedLinks });
+            }}
+            placeholder="URL"
+          />
+
+          <FaTrash
+            onClick={() => removeLink(index)}
+            color="red"
+            size={12}
+            className="absolute right-0 top-2"
+          />
+        </div>
+      ))}
+      <Button type="button" variant="secondary" size="small" onClick={addLink}>
+        Add Link
+      </Button>
+
+      <Input
+        type="text"
+        name="summary"
+        value={data.summary}
+        onChange={(e) => onChange({ ...data, summary: e.target.value })}
+        placeholder="Summary"
+      />
+
+      <Button
+        type="button"
+        variant="primary"
+        size="small"
+        // onClick={handleSubmit}
+      >
+        Save Profile
+      </Button>
     </>
   );
 };

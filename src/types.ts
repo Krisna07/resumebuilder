@@ -26,7 +26,6 @@ export interface Experience {
 export interface Education {
   degree: string;
   university: string;
-  year: string;
   startDate: string;
   endDate?: string;
   current?: boolean;

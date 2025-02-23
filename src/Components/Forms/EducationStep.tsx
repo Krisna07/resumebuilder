@@ -1,141 +1,100 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../Input";
-import FormNavigator from "./FormNavigator";
 
 import Button from "../Button";
-import { Education, ResumeData } from "../../types";
+import { Education } from "../../types";
+import { Trash2 } from "lucide-react";
 
 interface EducationStepProps {
-  formData: ResumeData;
-  handleSubmit: (name: string, data: Education[]) => void;
+  data: Education[];
+  onChange: (data: Education[]) => void;
 }
 
-const EducationStep: React.FC<EducationStepProps> = ({
-  formData,
-  handleSubmit,
-}) => {
-  const [educationData, setEducationData] = useState<Education[]>(
-    formData.education
-  );
-  const [education, setEducation] = useState<Education>({
-    degree: "",
-    university: "",
-    year: "",
-    startDate: null,
-    endDate: null,
-    current: false,
-    location: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "startDate" || name === "endDate") {
-      setEducation((prevState) => ({
-        ...prevState,
-        [name]: new Date(value),
-      }));
-    } else {
-      setEducation((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+const EducationStep: React.FC<EducationStepProps> = ({ data, onChange }) => {
+  const addEducation = () => {
+    if (
+      data.length > 0 &&
+      (!data[0].degree || !data[0].university || !data[0].startDate)
+    ) {
+      return alert("Make sure to add details for the first education entry.");
     }
+    onChange([
+      ...data,
+      {
+        degree: "",
+        university: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        current: false,
+      },
+    ]);
   };
-  const addEducation = (e: React.FormEvent) => {
-    e.preventDefault();
-    setEducationData((prevData = []) => [...prevData, education]);
-    setEducation({
-      degree: "",
-      university: "",
-      year: "",
-      startDate: null,
-      endDate: null,
-      current: false,
-      location: "",
-    });
-  };
+
   const removeEducation = (index: number) => {
-    setEducationData((prevData = []) =>
-      prevData.filter((_, idx) => idx !== index)
-    );
+    onChange(data.filter((_, i) => i !== index));
   };
-  const submitForm = () => {
-    console.log(educationData);
-    handleSubmit("education", educationData);
+
+  const updateEducation = (index: number, field: string, value: string) => {
+    const newData = [...data];
+    newData[index] = { ...newData[index], [field]: value };
+    onChange(newData);
+  };
+
+  const toggleCurrentEducation = (index: number, checked: boolean) => {
+    const newData = [...data];
+    newData[index] = { ...newData[index], current: checked };
+    onChange(newData);
   };
 
   return (
     <>
-      <div className="mb-4">
-        {educationData &&
-          educationData.map((edu: Education, index: number) => (
-            <div
-              key={index}
-              className="border p-2 mb-2 rounded flex flex-col gap-2 bg-gray-100"
+      {data.map((education, index) => (
+        <div key={index} className="w-full grid gap-2 border rounded p-4">
+          <div className="flex items-center justify-between gap-4">
+            <Input
+              type="text"
+              name="degree"
+              value={education.degree}
+              onChange={(e) => updateEducation(index, "degree", e.target.value)}
+              placeholder="Degree"
+            />
+            <button
+              type="button"
+              onClick={() => removeEducation(index)}
+              className="text-red-500 hover:text-red-600"
             >
-              <h2 className="text-lg font-bold">{edu.degree}</h2>
-              <p>
-                {edu.university} {edu.location}
-              </p>
-              <div>
-                {edu.startDate
-                  ? new Date(edu.startDate).toLocaleDateString()
-                  : ""}
-                {edu.endDate
-                  ? new Date(edu.endDate).toLocaleDateString()
-                  : " - Current"}
-              </div>
+              <Trash2 size={20} />
+            </button>
+          </div>
 
-              <Button
-                type="button"
-                variant="danger"
-                size="small"
-                onClick={() => removeEducation(index)}
-              >
-                Remove Experience
-              </Button>
-            </div>
-          ))}
-      </div>
-      <form onSubmit={addEducation} className="w-full grid gap-4">
-        <div className="w-full grid gap-2 border rounded">
-          <Input
-            type="text"
-            name="degree"
-            value={education.degree}
-            onChange={handleChange}
-            placeholder="Degree"
-          />
           <Input
             type="text"
             name="university"
             value={education.university}
-            onChange={handleChange}
+            onChange={(e) =>
+              updateEducation(index, "university", e.target.value)
+            }
             placeholder="University"
           />
+
           <div className="w-full flex gap-2 items-center justify-between">
             <Input
               type="date"
               name="startDate"
-              required
-              value={
-                education.startDate
-                  ? education.startDate.toISOString().split("T")[0]
-                  : ""
+              value={education.startDate}
+              onChange={(e) =>
+                updateEducation(index, "startDate", e.target.value)
               }
-              onChange={handleChange}
               placeholder="From"
             />
             <Input
               type="date"
               name="endDate"
-              value={
-                education.endDate
-                  ? education.endDate.toISOString().split("T")[0]
-                  : ""
+              value={education.endDate ? education.endDate : ""}
+              onChange={(e) =>
+                updateEducation(index, "endDate", e.target.value)
               }
-              onChange={handleChange}
               placeholder="To"
             />
           </div>
@@ -145,35 +104,30 @@ const EducationStep: React.FC<EducationStepProps> = ({
               type="checkbox"
               name="current"
               checked={education.current}
-              className="sr-only peer "
-              onChange={(e) =>
-                setEducation((prevState) => ({
-                  ...prevState,
-                  current: e.target.checked,
-                }))
-              }
+              className="sr-only peer"
+              onChange={(e) => toggleCurrentEducation(index, e.target.checked)}
             />
             <div className="relative w-8 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute  after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-            <span className="ms-3 text-sm font-medium ">Still studying</span>
+            <span className="ms-3 text-sm font-medium">Still Studying</span>
           </label>
+
           <Input
             type="text"
             name="location"
             value={education.location}
-            onChange={handleChange}
+            onChange={(e) => updateEducation(index, "location", e.target.value)}
             placeholder="Location"
           />
         </div>
+      ))}
 
-        <Button
-          children={"Add Edication"}
-          variant={"secondary"}
-          size={"small"}
-          onClick={() => addEducation}
-        />
-      </form>
-
-      <FormNavigator handleSubmit={submitForm} />
+      <Button
+        children={"Add Education"}
+        variant={"secondary"}
+        size={"small"}
+        onClick={addEducation}
+        type="submit"
+      />
     </>
   );
 };
