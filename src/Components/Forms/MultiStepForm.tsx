@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserInfoStep from "./UserInfoStep";
 import SkillsStep from "./SkillsStep";
 import ExperienceStep from "./ExperienceStep";
 import EducationStep from "./EducationStep";
 import CertificatesStep from "./CertificatesStep";
-// import FormLayout from "./FormLayout";
+
 import {
   Certificates,
   Education,
@@ -15,27 +15,18 @@ import {
 import Button from "../Button";
 import FormLayout from "./FomLayout";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import ResumePreviewStep from "../ResumeDesigns/ResumePreview";
 
-const MultiStepForm: React.FC = () => {
-  const [formData, setFormData] = useState<ResumeData>({
-    profile: {
-      fullname: "",
-      email: "",
-      phone: "",
-      location: "",
-      links: [
-        {
-          type: "",
-          url: "",
-        },
-      ],
-      summary: "",
-    },
-    skills: [],
-    experience: [],
-    education: [],
-    certificates: [],
-  });
+interface MultiStepFormProps {
+  resumeContent: ResumeData;
+}
+
+const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
+  const [formData, setFormData] = useState<ResumeData>(resumeContent);
+
+  useEffect(() => {
+    setFormData(resumeContent);
+  }, [resumeContent]);
 
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -125,8 +116,7 @@ const MultiStepForm: React.FC = () => {
           />
         );
       case 6:
-        console.log(formData);
-        return <div>Form data printed to console</div>;
+        return <ResumePreviewStep formData={formData} />;
       default:
         return <div>Invalid Step</div>;
     }
