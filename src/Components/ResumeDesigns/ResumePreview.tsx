@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ResumeData, Experience, Education } from "../../types";
+import { ResumeData } from "../../types";
 import { GenerateResume } from "../Aiactions/generate";
 import Button from "../Button";
 import Creative from "./Creative";
@@ -26,8 +26,8 @@ const ResumePreviewStep: React.FC<ResumePreviewStepProps> = ({ formData }) => {
     }
   };
 
-  const { profile, skills, experience, education, certificates } =
-    generatedResume;
+  //   const { profile, skills, experience, education, certificates } =
+  //     generatedResume;
 
   return (
     <>
