@@ -123,7 +123,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
   };
 
   return (
-    <div className="grid place-items-center transition-all ease-in-out duration-300">
+    <div className="w-full grid place-items-center transition-all ease-in-out duration-300">
       <div className="w-full  grid gap-2 place-items-start p-2 box-border ">
         {currentStep != 6 && (
           <div className="w-full flex items-center justify-center gap-2">
@@ -144,7 +144,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
                 <span
                   className={`w-[20px] h-[20px]  grid place-items-center text-center transition-all ease-in-out duration-300 leading-[80%] text-sm rounded-full ${
                     index + 1 === currentStep
-                      ? "bg-black/50 text-white"
+                      ? "bg-black text-white"
                       : " w-fit bg-white"
                   } `}
                 >
@@ -164,30 +164,31 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
           </div>
         )}
 
-        {renderStep()}
-
-        <div className="mt-6 w-full flex justify-between">
-          <Button
-            type="button"
-            variant="secondary"
-            size="small"
-            onClick={handlePrevious}
-            disabled={currentStep === 1}
-          >
-            <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
-          </Button>
-
-          {currentStep != 6 && (
+        <div className="w-full grid place-items-center">
+          {renderStep()}
+          <div className="mt-6  gap-4 flex justify-between">
             <Button
               type="button"
-              variant="primary"
+              variant="secondary"
               size="small"
-              onClick={handleNext}
-              disabled={currentStep === 6}
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
             >
-              {currentStep === 5 ? "Submit" : "Next"} <FaChevronRight />
+              <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
             </Button>
-          )}
+
+            {currentStep != 6 && (
+              <Button
+                type="button"
+                variant="primary"
+                size="small"
+                onClick={handleNext}
+                disabled={currentStep === 6}
+              >
+                {currentStep === 5 ? "Submit" : "Next"} <FaChevronRight />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

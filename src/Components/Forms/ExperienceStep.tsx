@@ -127,7 +127,7 @@ const ExperienceStep: React.FC<ExperienceStepProps> = ({ data, onChange }) => {
               <Datepicker
                 index={index}
                 target="startDate"
-                value={experience.startDate}
+                value={experience.startDate ? experience.startDate : ""}
                 update={updateExperience}
               />
               <Datepicker

@@ -59,7 +59,7 @@ const App = () => {
   };
   const [manual, setManual] = useState(false);
   return (
-    <div className="w-full min-h-screen grid place-items-center ">
+    <div className="min-w-full min-h-screen grid place-items-center ">
       {/* <PdfPreview /> */}
 
       {!manual && (
