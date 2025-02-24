@@ -124,20 +124,32 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
 
   return (
     <div className="grid place-items-center transition-all ease-in-out duration-300">
-      <div className="w-full min-[650px]:w-[650px]  grid gap-2 place-items-start p-2 box-border">
-        <div className="w-full flex items-center justify-center gap-2">
-          {["Profile", "Skill", "Experience", "Education", "Certificates"].map(
-            (item, index) => (
+      <div className="w-full  grid gap-2 place-items-start p-2 box-border ">
+        {currentStep != 6 && (
+          <div className="w-full flex items-center justify-center gap-2">
+            {[
+              "Profile",
+              "Skill",
+              "Experience",
+              "Education",
+              "Certificates",
+            ].map((item, index) => (
               <div
                 onClick={() => setCurrentStep(index + 1)}
                 key={index}
-                className={`rounded-full cursor-pointer min-w-[18px] h-[30px] px-[12px] ${
-                  index + 1 === currentStep
-                    ? "bg-black text-white"
-                    : "shadow-md w-fit bg-black/10"
-                } font-semibold text-[14px] transition-all ease-in-out duration-300 flex items-center justify-center`}
+                className={`w-fit cursor-pointer  transition-all ease-in-out duration-300 flex items-center gap-2 ${
+                  index + 1 === currentStep ? "text-black" : "text-black/50"
+                } `}
               >
-                {index + 1}
+                <span
+                  className={`w-[20px] h-[20px]  grid place-items-center text-center transition-all ease-in-out duration-300 leading-[80%] text-sm rounded-full ${
+                    index + 1 === currentStep
+                      ? "bg-black/50 text-white"
+                      : " w-fit bg-white"
+                  } `}
+                >
+                  {index + 1}
+                </span>
                 <span
                   className={`${
                     index + 1 === currentStep
@@ -145,12 +157,12 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
                       : "max-[650px]:hidden"
                   }`}
                 >
-                  {". "} {item}
+                  {item}
                 </span>
               </div>
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        )}
 
         {renderStep()}
 
@@ -162,18 +174,20 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
             onClick={handlePrevious}
             disabled={currentStep === 1}
           >
-            <FaChevronLeft /> Previous
+            <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
           </Button>
 
-          <Button
-            type="button"
-            variant="primary"
-            size="small"
-            onClick={handleNext}
-            disabled={currentStep === 6}
-          >
-            {currentStep === 6 ? "Submit" : "Next"} <FaChevronRight />
-          </Button>
+          {currentStep != 6 && (
+            <Button
+              type="button"
+              variant="primary"
+              size="small"
+              onClick={handleNext}
+              disabled={currentStep === 6}
+            >
+              {currentStep === 5 ? "Submit" : "Next"} <FaChevronRight />
+            </Button>
+          )}
         </div>
       </div>
     </div>

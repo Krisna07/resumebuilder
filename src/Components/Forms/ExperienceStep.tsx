@@ -6,6 +6,9 @@ import "react-quill/dist/quill.snow.css";
 import { FaTimes } from "react-icons/fa";
 import { Trash2 } from "lucide-react";
 
+import "react-datepicker/dist/react-datepicker.css"; // Import the necessary CSS
+import Datepicker from "./Datepicker";
+
 interface ExperienceStepProps {
   data: Experience[];
   onChange: (data: Experience[]) => void;
@@ -121,27 +124,20 @@ const ExperienceStep: React.FC<ExperienceStepProps> = ({ data, onChange }) => {
               placeholder="Location"
             />
             <div className="w-full flex gap-2 items-center justify-between">
-              <Input
-                type="date"
-                name="startDate"
-                required
+              <Datepicker
+                index={index}
+                target="startDate"
                 value={experience.startDate}
-                onChange={(e) =>
-                  updateExperience(index, "startDate", e.target.value)
-                }
-                placeholder="From"
+                update={updateExperience}
               />
-              <Input
-                type="date"
-                name="endDate"
+              <Datepicker
+                index={index}
+                current={experience.current}
+                target="endDate"
                 value={experience.endDate ? experience.endDate : ""}
-                onChange={(e) =>
-                  updateExperience(index, "endDate", e.target.value)
-                }
-                placeholder="To"
+                update={updateExperience}
               />
             </div>
-
             <label className="w-fit flex items-start cursor-pointer">
               <input
                 type="checkbox"
@@ -175,7 +171,7 @@ const ExperienceStep: React.FC<ExperienceStepProps> = ({ data, onChange }) => {
                       key={idx}
                       className="flex items-center justify-between gap-2"
                     >
-                      <span className="flex items-center gap-1">
+                      <span className="flex items-start gap-1">
                         <span className="text-sm font-semibold">
                           {" "}
                           {idx + 1}.{" "}

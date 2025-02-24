@@ -4,6 +4,7 @@ import Input from "../Input";
 import Button from "../Button";
 import { Education } from "../../types";
 import { Trash2 } from "lucide-react";
+import Datepicker from "./Datepicker";
 
 interface EducationStepProps {
   data: Education[];
@@ -79,23 +80,17 @@ const EducationStep: React.FC<EducationStepProps> = ({ data, onChange }) => {
           />
 
           <div className="w-full flex gap-2 items-center justify-between">
-            <Input
-              type="date"
-              name="startDate"
+            <Datepicker
+              index={index}
+              target="startDate"
               value={education.startDate}
-              onChange={(e) =>
-                updateEducation(index, "startDate", e.target.value)
-              }
-              placeholder="From"
+              update={updateEducation}
             />
-            <Input
-              type="date"
-              name="endDate"
-              value={education.endDate ? education.endDate : ""}
-              onChange={(e) =>
-                updateEducation(index, "endDate", e.target.value)
-              }
-              placeholder="To"
+            <Datepicker
+              index={index}
+              target="endDate"
+              value={education.endDate ? education.endDate : "Current"}
+              update={updateEducation}
             />
           </div>
 

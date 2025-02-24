@@ -31,13 +31,15 @@ const ResumePreviewStep: React.FC<ResumePreviewStepProps> = ({ formData }) => {
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={() => generateResume()}
-        children={isGenerating ? "Generating..." : "Generate"}
-        size={"small"}
-      />
-      <Creative formData={generatedResume} />
+      <div className="max-[900px]:w-full w-[900px]">
+        <Button
+          variant="primary"
+          onClick={() => generateResume()}
+          children={isGenerating ? "Generating..." : "Regenerate"}
+          size={"small"}
+        />
+        <Creative formData={generatedResume} />
+      </div>
     </>
   );
 };

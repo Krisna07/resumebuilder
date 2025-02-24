@@ -106,13 +106,19 @@ const UserInfoStep: React.FC<UserInfoStepProps> = ({ data, onChange }) => {
         Add Link
       </Button>
 
-      <Input
-        type="text"
-        name="summary"
-        value={data.summary}
-        onChange={(e) => onChange({ ...data, summary: e.target.value })}
-        placeholder="Summary"
-      />
+      <div className="w-full grid gap-1 transition-all ease-in-out text-[14px] font-sans">
+        <label className="w-full font-semibold transition-all ease-in-out px-1">
+          Summary
+        </label>
+        <textarea
+          // type="text"
+          name="summary"
+          value={data.summary}
+          onChange={(e) => onChange({ ...data, summary: e.target.value })}
+          placeholder="Summary"
+          className="w-full outline-none ring-1 focus:ring-green-600 ring-gray-200 transition-all ease-in-out duration-300 px-[8px] py-[4px] text-[14px] rounded-md relative z-10 min-h-[16ch]"
+        />
+      </div>
 
       <Button
         type="button"
