@@ -54,9 +54,9 @@ const App = () => {
     }
   };
   return (
-    <div className="w-full h-full">
-      <MultiStepForm resumeContent={resumeContent} />
-      <div className="p-4">
+    <div className="w-full min-h-screen grid place-items-center ">
+      
+      <div className="p-4 bg-white shadow-lg w-fit rounded-lg hover:shadow-[0_0_2px_0_gray] transition-all ease-in-out duration-300">
         <label
           htmlFor="resume-upload"
           className="block text-lg font-semibold mb-2"
@@ -77,13 +77,20 @@ const App = () => {
         )}
         {loading && <p>Processing your resume...</p>}
         {error && <p className="text-red-500">{error}</p>}
-        {resumeContent && (
+      
+      </div>
+      {resumeContent.profile.fullname && <MultiStepForm resumeContent={resumeContent} />}
+      {resumeContent && (
           <div className="mt-4">
             <h2>Parsed Resume Content:</h2>
+
+            <object data={`${file?file:""}`} 
+        type='application/pdf' 
+        width='100%' height='700px'>
+</object>
             {/* <pre>{resumeContent}</pre> Display parsed content here */}
           </div>
         )}
-      </div>
     </div>
   );
 };
