@@ -8,7 +8,6 @@ import Button from "./Components/Button";
 
 const App = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [manual, setManual] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [manual, setManual] = useState<boolean>(false);
   const [resumeContent, setResumeContent] = useState<ResumeData>({
@@ -51,15 +50,10 @@ const App = () => {
       try {
         const data = await pdfToText(file);
         const result = await GenerateResume(undefined, data);
-<<<<<<< HEAD
         if (result) {
           setManual(true);
           setResumeContent(result); // Store the parsed content
         }
-=======
-        result && setManual(true)
-        setResumeContent(result); // Store the parsed content
->>>>>>> 027fa570ec2a0254e3bec63326e0d27c17e206c1
       } catch {
         setError("Failed to process the resume.");
       } finally {
@@ -67,7 +61,6 @@ const App = () => {
       }
     }
   };
-<<<<<<< HEAD
 
   return (
     <div className="min-w-full min-h-screen grid place-items-center ">
@@ -104,45 +97,6 @@ const App = () => {
               />
             </div>
           </div>
-=======
- 
-
-  return (
-    <div className="min-w-full min-h-screen grid place-items-center ">
-      {/* <PdfPreview /> */}
-
-      {(!manual) && (
-        <>
-          <div className="p-4 bg-white hover:shadow-lg w-fit text-center grid place-items-center gap-4 rounded-lg shadow-[0_0_2px_0_gray] transition-all ease-in-out duration-300">
-            <label
-              htmlFor="resume-upload"
-              className="block text-lg font-semibold mb-2"
-            >
-              Upload Your Resume (PDF)
-            </label>
-            <input
-              type="file"
-              id="resume-upload"
-              accept="application/pdf"
-              onChange={handleFileChange}
-              className="file:border p-2"
-            />
-            {file && (
-              <div className="mt-2">
-                <strong>Selected file:</strong> {file.name}
-              </div>
-            )}
-            {loading && <p>Processing your resume...</p>}
-            {error && <p className="text-red-500">{error}</p>}
-            <Button
-            children={"Add manual Data"}
-            variant={"primary"}
-            size={"small"}
-            onClick={() => setManual(true)}
-          />
-          </div>
-          
->>>>>>> 027fa570ec2a0254e3bec63326e0d27c17e206c1
         </>
       )}
       {(resumeContent.profile.fullname || manual) && (
