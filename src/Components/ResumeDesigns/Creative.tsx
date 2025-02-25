@@ -4,33 +4,32 @@ import { ResumePreviewStepProps } from "./ResumePreview";
 
 const Creative: React.FC<ResumePreviewStepProps> = ({ formData }) => {
   return (
-    <div className="w-full  bg-white rounded-lg shadow-lg p-6 px-16 gap-2">
+    <div className="w-full grid gap-4 text-[14px]">
       {/* Profile Section */}
-      <div className="w-full grid mb-8 gap-2">
-        <h2 className="text-3xl font-bold">{formData.profile.fullname}</h2>
-        <div className="flex items-center justify-between">
-          {" "}
-          <p className="text-gray-600">
-            <FaPhone className="inline" /> {formData.profile.phone}
+      <div className="w-full grid gap-2">
+        <h2 className="text-2xl font-bold">{formData.profile.fullname}</h2>
+        <div className="flex items-center justify-between text-sm">
+          <p className="text-gray-600 flex items-center gap-2">
+            <FaPhone size={12} /> {formData.profile.phone}
           </p>
-          <p className="text-gray-600">
-            <FaEnvelope className="inline" /> {formData.profile.email}
+          <p className="text-gray-600 flex items-center gap-2">
+            <FaEnvelope size={12} /> {formData.profile.email}
           </p>
-          <p className="text-gray-600">
-            <FaMapMarkerAlt className="inline" />
+          <p className="text-gray-600 flex items-center gap-2">
+            <FaMapMarkerAlt size={12} />
             {formData.profile.location}
           </p>
         </div>
       </div>
 
       {/* Summary Section */}
-      <div className="mb-8 text-justify">
+      <div className="text-justify">
         <h2 className="text-xl font-semibold mb-2">Summary</h2>
         <p className="text-gray-700">{formData.profile.summary}</p>
       </div>
 
       {/* Skills Section */}
-      <div className="w-full mb-8 ">
+      <div className="w-full">
         <h2 className="w-full text-xl font-semibold mb-2">Skills</h2>
         <div className="w-full grid gap-2">
           <ul className="w-full list-disc list-inside text-gray-600 grid grid-cols-3">
@@ -44,10 +43,10 @@ const Creative: React.FC<ResumePreviewStepProps> = ({ formData }) => {
       </div>
 
       {/* Experience Section */}
-      <div className="mb-8">
+      <div className="">
         <h2 className="text-xl font-semibold mb-2">Experience</h2>
         {formData.experience.map((experience, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className="mb-2">
             <h3 className="text-lg font-semibold">{experience.title}</h3>
             <div className="flex items-center justify-between text-sm">
               <p className="text-gray-600">{experience.company}</p>

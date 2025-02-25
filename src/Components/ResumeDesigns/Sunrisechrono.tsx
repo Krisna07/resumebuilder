@@ -1,7 +1,5 @@
-import React from "react";
 import {
   FaBriefcase,
-  FaBuilding,
   FaEnvelope,
   FaGraduationCap,
   FaLocationArrow,
@@ -11,7 +9,7 @@ import {
   FaTasks,
 } from "react-icons/fa";
 
-const SunriseChrono = ({ formData }) => {
+const SunriseChrono = ({ formData }: any) => {
   return (
     <>
       <div className="grid pb-8">
@@ -42,9 +40,7 @@ const SunriseChrono = ({ formData }) => {
             </div>
             <div className="grid place-items-center gap-4">
               {formData.experience.map((experience, index) => (
-                <div
-                  key={index}
-                  className="w-full grid gap-2 border-b py-2">
+                <div key={index} className="w-full grid gap-2 border-b py-2">
                   <div className="w-full flex  justify-between ">
                     <div className="grid leading-[120%]">
                       <span className="font-semibold">{experience.title}</span>
@@ -57,9 +53,7 @@ const SunriseChrono = ({ formData }) => {
                   </div>
                   <ul className="list-disc w-full px-4 text-[16px]">
                     {experience.summary.map((items, index) => (
-                      <li
-                        key={index}
-                        className="text-[16px]">
+                      <li key={index} className="text-[16px]">
                         {items}
                       </li>
                     ))}
@@ -78,7 +72,8 @@ const SunriseChrono = ({ formData }) => {
               {formData.education.map((education, index) => (
                 <div
                   key={index}
-                  className="w-full flex items-center justify-between py-2">
+                  className="w-full flex items-center justify-between py-2"
+                >
                   <div className="grid leading-[120%]">
                     <span className="font-semibold">{education.degree}</span>
                     <span className="text-[12px]">{education.institution}</span>

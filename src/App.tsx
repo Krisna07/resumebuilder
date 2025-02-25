@@ -9,6 +9,7 @@ import Button from "./Components/Button";
 const App = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [manual, setManual] = useState<boolean>(false);
   const [resumeContent, setResumeContent] = useState<ResumeData>({
     profile: {
       fullname: "",
@@ -49,7 +50,10 @@ const App = () => {
       try {
         const data = await pdfToText(file);
         const result = await GenerateResume(undefined, data);
-        setResumeContent(result); // Store the parsed content
+        if (result) {
+          setManual(true);
+          setResumeContent(result); // Store the parsed content
+        }
       } catch {
         setError("Failed to process the resume.");
       } finally {
@@ -57,41 +61,42 @@ const App = () => {
       }
     }
   };
-  const [manual, setManual] = useState(false);
+
   return (
     <div className="min-w-full min-h-screen grid place-items-center ">
-      {/* <PdfPreview /> */}
-
       {!manual && (
         <>
-          <div className="p-4 bg-white shadow-lg w-fit rounded-lg hover:shadow-[0_0_2px_0_gray] transition-all ease-in-out duration-300">
-            <label
-              htmlFor="resume-upload"
-              className="block text-lg font-semibold mb-2"
-            >
-              Upload Your Resume (PDF)
-            </label>
-            <input
-              type="file"
-              id="resume-upload"
-              accept="application/pdf"
-              onChange={handleFileChange}
-              className="file:border p-2"
-            />
-            {file && (
-              <div className="mt-2">
-                <strong>Selected file:</strong> {file.name}
-              </div>
+          <div
+            className={`relative grid place-items-center w-fit h-fit overflow-hidden p-1 rounded-lg `}
+          >
+            {loading && (
+              <div className="absolute w-[300%] h-[300%] bg-gradient-to-tr from-red-600 via-blue-600 to-yellow-600  animate-spin opacity-25"></div>
             )}
-            {loading && <p>Processing your resume...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            <div className="relative bg-white hover:shadow-lg  p-4 gap-2 w-fit rounded-lg   ring-1   transition-all ease-in-out duration-300">
+              {" "}
+              <label
+                htmlFor="resume-upload"
+                className="block text-lg font-semibold mb-2 "
+              >
+                Upload Your Resume (PDF)
+              </label>
+              <input
+                type="file"
+                id="resume-upload"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                className="file:border p-2"
+              />
+              {loading && <p>Processing your resume...</p>}
+              {error && <p className="text-red-500">{error}</p>}
+              <Button
+                children={"Add manual Data"}
+                variant={"primary"}
+                size={"small"}
+                onClick={() => setManual(true)}
+              />
+            </div>
           </div>
-          <Button
-            children={"Add manual Data"}
-            variant={"primary"}
-            size={"small"}
-            onClick={() => setManual(true)}
-          />
         </>
       )}
       {(resumeContent.profile.fullname || manual) && (
