@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
+    "@react-pdf/renderer": "^4.2.2",
     "@types/pdfjs-dist": "^2.10.378",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.4.7",
     "html2pdf.js": "^0.10.2",
     "jspdf": "^3.0.0",
     "lucide-react": "^0.344.0",

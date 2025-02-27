@@ -126,7 +126,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
     <div className="w-full grid place-items-center transition-all ease-in-out duration-300">
       <div className="w-full  grid gap-2 place-items-start p-2 box-border ">
         {currentStep != 6 && (
-          <div className="w-full flex items-center justify-center gap-2">
+          <div className="w-full flex items-center justify-center gap-[12px]">
             {[
               "Profile",
               "Skill",
@@ -137,19 +137,19 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
               <div
                 onClick={() => setCurrentStep(index + 1)}
                 key={index}
-                className={`w-fit cursor-pointer  transition-all ease-in-out duration-300 flex items-center gap-2 ${
+                className={`w-fit cursor-pointer  transition-all ease-in-out duration-300 flex items-center ${
                   index + 1 === currentStep ? "text-black" : "text-black/50"
                 } `}
               >
-                <span
-                  className={`w-[20px] h-[20px]  grid place-items-center text-center transition-all ease-in-out duration-300 leading-[80%] text-sm rounded-full ${
+                <div
+                  className={`min-w-[20px] h-[20px] m-[4px] grid place-items-center text-center transition-all ease-in-out duration-300 leading-[80%] text-sm rounded-full ${
                     index + 1 === currentStep
                       ? "bg-black text-white"
                       : " w-fit bg-white"
                   } `}
                 >
                   {index + 1}
-                </span>
+                </div>
                 <span
                   className={`${
                     index + 1 === currentStep
@@ -164,9 +164,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
           </div>
         )}
 
-        <div className="w-full grid place-items-center">
+        <div className="w-full grid gap-2 place-items-center">
           {renderStep()}
-          <div className="mt-6  gap-4 flex justify-between">
+          <div className="mt-6 gap-4 flex justify-between">
             <Button
               type="button"
               variant="secondary"
