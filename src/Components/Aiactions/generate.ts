@@ -1,7 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { ResumeData } from "../../types";
 
-const genAI = new GoogleGenerativeAI("AIzaSyC1Nz0Ta1Q8ihC8e3fSxIQ4qvcpCnSv1q8");
+const api = import.meta.env.VITE_GEMINI_API;
+
+const genAI = new GoogleGenerativeAI(api);
 
 export async function GenerateResume(userdata?: ResumeData, data?: string) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -94,7 +96,7 @@ Please create a professional resume using the details and provide the output in 
   location: string;
     }
   ],
-  "skills": string[]
+"skills": string[]
 ,"certificates": [{
   title: string;
   issued_by: string;
@@ -102,7 +104,7 @@ Please create a professional resume using the details and provide the output in 
 }]
 }
 
-Make sure to add a summary that aligns with the user's profile (at least 50 words) and ensure that each work experience has a description with at least 5 points. Also, generate at least 10 relevant skills.
+Make sure to add a summary that aligns with the user's profile (at least 50 words) and ensure that each work experience has a description with at least 5 points.Make sure the date format for the resume it Month/year(full year). Also, generate at least 10 relevant skills.
 `;
 
   try {

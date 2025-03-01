@@ -6,9 +6,11 @@ import { GenerateResume } from "./Components/Aiactions/generate";
 import { ResumeData } from "./types";
 import Button from "./Components/Button";
 
+import { Upload } from "lucide-react";
+
 const App = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
+  // const [preview, setPreview] = useState<string | null>(null);
   const [manual, setManual] = useState<boolean>(false);
   const [resumeContent, setResumeContent] = useState<ResumeData>({
     profile: {
@@ -36,14 +38,14 @@ const App = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
-    console.log(event.target.files);
+
     if (file) {
       if (file.type !== "application/pdf") {
         setError("Please upload a valid PDF file.");
         return;
       }
-      setFile(file);
-      setPreview(URL.createObjectURL(file));
+      // setFile(file);
+      // setPreview(URL.createObjectURL(file));
       setLoading(true);
       setError(null); // Reset error state
 
@@ -51,6 +53,7 @@ const App = () => {
         const data = await pdfToText(file);
         const result = await GenerateResume(undefined, data);
         if (result) {
+          console.log(result);
           setManual(true);
           setResumeContent(result); // Store the parsed content
         }
@@ -63,32 +66,48 @@ const App = () => {
   };
 
   return (
-    <div className="min-w-full min-h-screen grid place-items-center ">
+    <div className="min-w-full min-h-screen grid  place-items-center ">
       {!manual && (
         <>
           <div
-            className={`relative grid place-items-center w-fit h-fit overflow-hidden p-1 rounded-lg `}
+            className={`relative grid place-items-center overflow-hidden p-1   rounded-lg `}
           >
             {loading && (
               <div className="absolute w-[300%] h-[300%] bg-gradient-to-tr from-red-600 via-blue-600 to-yellow-600  animate-spin opacity-25"></div>
             )}
-            <div className="relative bg-white hover:shadow-lg  p-4 gap-2 w-fit rounded-lg   ring-1   transition-all ease-in-out duration-300">
-              {" "}
+            <div className="relative bg-white hover:shadow-lg  p-4  grid place-items-center gap-2 min-[400px]:w-[400px] w-full rounded-lg   ring-1   transition-all ease-in-out duration-300">
               <label
                 htmlFor="resume-upload"
-                className="block text-lg font-semibold mb-2 "
+                className="block text-lg font-semibold mb-2 font-[Bebas Neue]"
               >
-                Upload Your Resume (PDF)
+                Get started with your resume
               </label>
-              <input
-                type="file"
-                id="resume-upload"
-                accept="application/pdf"
-                onChange={handleFileChange}
-                className="file:border p-2"
-              />
-              {loading && <p>Processing your resume...</p>}
+              <div
+                className={`border-dashed relative ${
+                  loading
+                    ? "w-[100px] h-[100px] rounded-full animate-spin"
+                    : "w-full h-[100px]"
+                } border-[1px] border-gray-900 grid place-items-center transition-all ease-out `}
+              >
+                <div
+                  className={`${
+                    loading ? "hidden" : "block"
+                  } relative w-full h-full grid place-items-center `}
+                >
+                  <Upload />
+                  Upload Your Resume
+                  <input
+                    type="file"
+                    id="resume-upload"
+                    accept="application/pdf"
+                    onChange={handleFileChange}
+                    className="file:border p-2 w-full h-full absolute opacity-0 "
+                  />
+                </div>
+              </div>
+              {loading && <p>Reading your resume...</p>}
               {error && <p className="text-red-500">{error}</p>}
+
               <Button
                 children={"Add manual Data"}
                 variant={"primary"}
