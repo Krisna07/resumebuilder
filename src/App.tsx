@@ -75,7 +75,8 @@ const App = () => {
             {loading && (
               <div className="absolute w-[300%] h-[300%] bg-gradient-to-tr from-red-600 via-blue-600 to-yellow-600  animate-spin opacity-25"></div>
             )}
-            <div className="relative bg-white hover:shadow-lg  p-4  grid place-items-center gap-2 min-[400px]:w-[400px] w-full rounded-lg   ring-1   transition-all ease-in-out duration-300">
+            <div className="relative bg-white hover:shadow-lg  p-4 gap-2 w-fit rounded-lg   ring-1   transition-all ease-in-out duration-300">
+              {" "}
               <label
                 htmlFor="resume-upload"
                 className="block text-lg font-semibold mb-2 font-[Bebas Neue]"
@@ -121,17 +122,7 @@ const App = () => {
       {(resumeContent.profile.fullname || manual) && (
         <MultiStepForm resumeContent={resumeContent} />
       )}
-      {/* {preview && (
-        <div className="mt-4">
-          <h2>Parsed Resume Content:</h2>
-          <embed
-            className=""
-            src={preview || undefined}
-            width="800"
-            height="500"
-          ></embed>
-        </div>
-      )} */}
+    
     </div>
   );
 };

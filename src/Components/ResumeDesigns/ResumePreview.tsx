@@ -3,8 +3,10 @@ import { ResumeData } from "../../types";
 import { GenerateResume } from "../Aiactions/generate";
 import Button from "../Button";
 import Creative from "./Creative";
-import html2pdf from "html2pdf.js";
+import {usePDF, PDFDownloadLink, Document, Page } from '@react-pdf/renderer';
+
 import jsPDF from "jspdf";
+import Format from "./Format";
 
 export interface ResumePreviewStepProps {
   formData: ResumeData;
@@ -53,7 +55,11 @@ const ResumePreviewStep: React.FC<ResumePreviewStepProps> = ({ formData }) => {
     }
   };
   // ... existing code ...
+  const [instance, updateInstance] = usePDF({ document: <Creative formData={generatedResume}/> });
 
+  if (instance.loading) return <div>Loading ...</div>;
+
+  if (instance.error) return <div>Something went wrong: {instance.error}</div>;
   return (
     <>
       <div className="max-[900px]:w-full w-[900px] grid place-items-center gap-4">
@@ -71,10 +77,12 @@ const ResumePreviewStep: React.FC<ResumePreviewStepProps> = ({ formData }) => {
             size={"small"}
           />
         </div>
-        <div ref={resumeRef} className="bg-white w-[210mm] p-8">
+        <Format/>
+        <Document>
           <Creative formData={generatedResume} />
+        </Document>
         </div>
-      </div>
+      
     </>
   );
 };
