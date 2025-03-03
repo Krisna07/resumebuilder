@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../Input";
 import { Experience } from "../../types";
 import Button from "../Button";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import { FaTimes } from "react-icons/fa";
 import { Trash2 } from "lucide-react";
 

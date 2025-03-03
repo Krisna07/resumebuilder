@@ -88,7 +88,7 @@ Please create a professional resume using the details and provide the output in 
   ],
   "education": [
     {
-       degree: string;
+  degree: string;
   university: string;
   startDate: string;
   endDate?: string;

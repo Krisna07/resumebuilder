@@ -15,7 +15,7 @@ import {
 import Button from "../Button";
 import FormLayout from "./FomLayout";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import ResumePreviewStep from "../ResumeDesigns/ResumePreview";
+import ResumePreview from "../resumes/ResumePreview";
 
 interface MultiStepFormProps {
   resumeContent: ResumeData;
@@ -116,7 +116,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
           />
         );
       case 6:
-        return <ResumePreviewStep formData={formData} />;
+        return <ResumePreview formData={formData} />;
       default:
         return <div>Invalid Step</div>;
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import Input from "../Input";
-
 import Button from "../Button";
 import { Education } from "../../types";
 import { Trash2 } from "lucide-react";
@@ -89,7 +88,7 @@ const EducationStep: React.FC<EducationStepProps> = ({ data, onChange }) => {
             <Datepicker
               index={index}
               target="endDate"
-              value={education.endDate ? education.endDate : "Current"}
+              value={education.endDate ? education.endDate : ""}
               update={updateEducation}
             />
           </div>

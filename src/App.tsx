@@ -5,12 +5,10 @@ import pdfToText from "react-pdftotext";
 import { GenerateResume } from "./Components/Aiactions/generate";
 import { ResumeData } from "./types";
 import Button from "./Components/Button";
-
 import { Upload } from "lucide-react";
+import ResumePreview from "./Components/resumes/ResumePreview";
 
 const App = () => {
-  // const [file, setFile] = useState<File | null>(null);
-  // const [preview, setPreview] = useState<string | null>(null);
   const [manual, setManual] = useState<boolean>(false);
   const [resumeContent, setResumeContent] = useState<ResumeData>({
     profile: {
@@ -27,8 +25,26 @@ const App = () => {
       summary: "",
     },
     skills: [],
-    experience: [],
-    education: [],
+    experience: [
+      {
+        title: "",
+        company: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        current: false,
+        responsibilities: [],
+      },
+    ],
+    education: [
+      {
+        degree: "",
+        university: "",
+        startDate: "",
+        location: "",
+        current: false,
+      },
+    ],
     certificates: [],
   });
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,12 +86,12 @@ const App = () => {
       {!manual && (
         <>
           <div
-            className={`relative grid place-items-center overflow-hidden p-1   rounded-lg `}
+            className={`relative  grid place-items-center overflow-hidden p-1   rounded-lg `}
           >
             {loading && (
               <div className="absolute w-[300%] h-[300%] bg-gradient-to-tr from-red-600 via-blue-600 to-yellow-600  animate-spin opacity-25"></div>
             )}
-            <div className="relative bg-white hover:shadow-lg  p-4 gap-2 w-fit rounded-lg   ring-1   transition-all ease-in-out duration-300">
+            <div className="relative min-[400px]:w-[400px] bg-white hover:shadow-lg  p-4 gap-2 w-fit rounded-lg grid  ring-1   transition-all ease-in-out duration-300">
               {" "}
               <label
                 htmlFor="resume-upload"
@@ -83,32 +99,34 @@ const App = () => {
               >
                 Get started with your resume
               </label>
-              <div
-                className={`border-dashed relative ${
-                  loading
-                    ? "w-[100px] h-[100px] rounded-full animate-spin"
-                    : "w-full h-[100px]"
-                } border-[1px] border-gray-900 grid place-items-center transition-all ease-out `}
-              >
+              <div className="min-w-full grid place-items-center">
+                {" "}
                 <div
-                  className={`${
-                    loading ? "hidden" : "block"
-                  } relative w-full h-full grid place-items-center `}
+                  className={`border-dashed relative ${
+                    loading
+                      ? "w-[100px] h-[100px] rounded-full animate-spin"
+                      : "w-full h-[100px]"
+                  } border-[1px] border-gray-900 grid place-items-center transition-all ease-out `}
                 >
-                  <Upload />
-                  Upload Your Resume
-                  <input
-                    type="file"
-                    id="resume-upload"
-                    accept="application/pdf"
-                    onChange={handleFileChange}
-                    className="file:border p-2 w-full h-full absolute opacity-0 "
-                  />
+                  <div
+                    className={`${
+                      loading ? "hidden" : "block"
+                    } relative w-full h-full grid place-items-center `}
+                  >
+                    <Upload />
+                    Upload Your Resume
+                    <input
+                      type="file"
+                      id="resume-upload"
+                      accept="application/pdf"
+                      onChange={handleFileChange}
+                      className="file:border p-2 w-full h-full absolute opacity-0 "
+                    />
+                  </div>
                 </div>
               </div>
               {loading && <p>Reading your resume...</p>}
               {error && <p className="text-red-500">{error}</p>}
-
               <Button
                 children={"Add manual Data"}
                 variant={"primary"}
@@ -122,7 +140,6 @@ const App = () => {
       {(resumeContent.profile.fullname || manual) && (
         <MultiStepForm resumeContent={resumeContent} />
       )}
-    
     </div>
   );
 };
