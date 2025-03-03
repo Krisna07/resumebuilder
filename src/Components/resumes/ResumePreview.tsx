@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FaDownload } from "react-icons/fa";
-import { exportResumeToPDF } from "./pdfExportUtility";
-
-// Import your resume templates
-import Creative from "../ResumeDesigns/Creative";
-import { Minimal, Modern, Professional } from "./templates/ResumeTemplates";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ResumeData } from "../../types";
+
+// Import templates with explicit paths - adjust these paths to match your project structure
+import MinimalPDF from "../../Components/resumes/templates/Minimal";
+import Modern from "../../Components/resumes/templates/Modern";
+import Professional from "../../Components/resumes/templates/Professional";
+import Creative from "../ResumeDesigns/Creative"; // Make sure this exists
 
 // Define valid template keys
 type TemplateKey = "creative" | "modern" | "professional" | "minimal";
@@ -17,27 +19,14 @@ const templates: Record<
   creative: Creative,
   modern: Modern,
   professional: Professional,
-  minimal: Minimal,
+  minimal: MinimalPDF,
 };
 
 const ResumePreview = ({ formData }: { formData: ResumeData }) => {
   const [selectedTemplate, setSelectedTemplate] =
-    useState<TemplateKey>("modern");
-  const [isExporting, setIsExporting] = useState(false);
-  const resumeRef = useRef(null);
-
-  const handleExportPDF = async () => {
-    setIsExporting(true);
-
-    try {
-      await exportResumeToPDF(resumeRef, formData, {
-        onComplete: () => setIsExporting(false),
-        onError: () => setIsExporting(false),
-      });
-    } catch (error) {
-      setIsExporting(false);
-    }
-  };
+    useState<keyof typeof templates>("modern");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const SelectedTemplate = templates[selectedTemplate];
 
@@ -54,33 +43,45 @@ const ResumePreview = ({ formData }: { formData: ResumeData }) => {
             onChange={(e) => setSelectedTemplate(e.target.value as TemplateKey)}
             className="border rounded px-2 py-1"
           >
-            <option value="creative">Creative</option>
-            <option value="modern">Modern</option>
-            <option value="professional">Professional</option>
             <option value="minimal">Minimal</option>
-            <option value="chronological">Chronological</option>
+            <option value="creative">Creative</option>
+            <option value="professional">Professional</option>
+            <option value="modern">Modern</option>
           </select>
         </div>
 
-        <button
-          onClick={handleExportPDF}
-          disabled={isExporting}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition disabled:opacity-50"
+        <PDFDownloadLink
+          document={<SelectedTemplate formData={formData} />}
+          fileName={`${formData.profile.fullname.replace(
+            /\s+/g,
+            "_"
+          )}_Resume.pdf`}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
         >
-          {isExporting ? (
-            "Generating PDF..."
-          ) : (
-            <>
-              <FaDownload size={14} /> Download PDF
-            </>
-          )}
-        </button>
+          {({ loading: pdfLoading, error: pdfError }) => {
+            if (pdfError) {
+              console.error("PDF generation error:", pdfError);
+              return "Error generating PDF";
+            }
+            return pdfLoading ? (
+              "Generating PDF..."
+            ) : (
+              <>
+                <FaDownload size={14} /> Download PDF
+              </>
+            );
+          }}
+        </PDFDownloadLink>
       </div>
 
-      <div className="border rounded-lg shadow-lg overflow-hidden bg-white">
-        <div ref={resumeRef} className="p-8">
-          <SelectedTemplate formData={formData} />
-        </div>
+      <div className="border rounded-lg shadow-lg overflow-hidden bg-white h-screen">
+        {error ? (
+          <div className="p-8 text-center text-red-500">{error}</div>
+        ) : (
+          <PDFViewer width="100%" height="100%" className="w-full h-full">
+            <SelectedTemplate formData={formData} />
+          </PDFViewer>
+        )}
       </div>
     </div>
   );

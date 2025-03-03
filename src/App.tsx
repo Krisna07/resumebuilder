@@ -6,7 +6,6 @@ import { GenerateResume } from "./Components/Aiactions/generate";
 import { ResumeData } from "./types";
 import Button from "./Components/Button";
 import { Upload } from "lucide-react";
-import ResumePreview from "./Components/resumes/ResumePreview";
 
 const App = () => {
   const [manual, setManual] = useState<boolean>(false);
