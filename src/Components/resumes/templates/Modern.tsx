@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ResumeData } from "../../../types";
+import { MdEmail } from "react-icons/md";
 
 // Create Props interface
 interface ModernProps {
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 10,
+    lineHeight: "100%",
   },
   header: {
     marginBottom: 20,
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 5,
+    lineHeight: "80%",
   },
   skill: {
     padding: 3,
@@ -101,6 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     marginRight: 5,
     marginBottom: 5,
+    lineHeight: "80%",
   },
 });
 
@@ -114,9 +118,12 @@ const Modern = ({ formData }: ModernProps) => {
         <View style={styles.header}>
           <Text style={styles.name}>{profile.fullname}</Text>
           <View style={styles.contact}>
-            <Text style={styles.contactItem}>✉️ {profile.email}</Text>
-            <Text style={styles.contactItem}>📱 {profile.phone}</Text>
-            <Text style={styles.contactItem}>📍 {profile.location}</Text>
+            <Text style={styles.contactItem}>
+              <MdEmail />
+              {profile.email}
+            </Text>
+            <Text style={styles.contactItem}>{profile.phone}</Text>
+            <Text style={styles.contactItem}>{profile.location}</Text>
           </View>
         </View>
 
