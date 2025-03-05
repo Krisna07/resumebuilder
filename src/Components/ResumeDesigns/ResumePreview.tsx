@@ -54,7 +54,7 @@ const ResumePreviewStep: React.FC<ResumePreviewStepProps> = ({ formData }) => {
       });
     }
   };
-  // ... existing code ...
+
   const [instance] = usePDF({
     document: <Creative formData={generatedResume} />,
   });

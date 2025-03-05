@@ -6,6 +6,7 @@ import { GenerateResume } from "./Components/Aiactions/generate";
 import { ResumeData } from "./types";
 import Button from "./Components/Button";
 import { Upload } from "lucide-react";
+// import ResumePreview from "./Components/resumes/ResumePreview";
 
 const App = () => {
   const [manual, setManual] = useState<boolean>(false);
@@ -23,7 +24,12 @@ const App = () => {
       ],
       summary: "",
     },
-    skills: [],
+    skills: [
+      {
+        type: "",
+        skills: [""],
+      },
+    ],
     experience: [
       {
         title: "",
@@ -68,9 +74,10 @@ const App = () => {
         const data = await pdfToText(file);
         const result = await GenerateResume(undefined, data);
         if (result) {
-          console.log(result);
           setManual(true);
-          setResumeContent(result); // Store the parsed content
+          setResumeContent(result);
+          localStorage.setItem("resumeData", JSON.stringify(result));
+          // Store the parsed content
         }
       } catch {
         setError("Failed to process the resume.");
@@ -79,9 +86,11 @@ const App = () => {
       }
     }
   };
+  const resumePresent = localStorage.getItem("resumeData");
+  console.log(JSON.parse(resumePresent));
 
   return (
-    <div className="min-w-full min-h-screen grid  place-items-center ">
+    <div className="min-w-full min-h-screen grid place-items-center ">
       {!manual && (
         <>
           <div
@@ -139,6 +148,7 @@ const App = () => {
       {(resumeContent.profile.fullname || manual) && (
         <MultiStepForm resumeContent={resumeContent} />
       )}
+      {/* <ResumePreview formData={resumeContent} /> */}
     </div>
   );
 };

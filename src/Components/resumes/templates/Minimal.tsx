@@ -12,9 +12,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     display: "flex",
     flexDirection: "column",
+    lineHeight: "100%",
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 10,
     display: "flex",
     flexDirection: "column",
   },
@@ -70,9 +71,9 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   bullet: {
+    width: "100%",
     fontSize: 10,
     marginLeft: 8,
-    marginBottom: 2,
   },
   skills: {
     display: "flex",
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     width: "30%",
     fontSize: 10,
     marginRight: 5,
-    marginBottom: 3,
+    marginBottom: 2,
   },
   rowContainer: {
     display: "flex",
@@ -132,8 +133,13 @@ const MinimalPDF = ({ formData }: MinimalProps) => {
                 </Text>
               </View>
               {exp.responsibilities?.map((resp, j) => (
-                <Text key={j} style={styles.bullet}>
-                  • {resp}
+                <Text
+                  style={{ display: "flex", alignItems: "flex-start", gap: 2 }}
+                >
+                  -
+                  <Text key={j} style={styles.bullet}>
+                    {resp}
+                  </Text>
                 </Text>
               ))}
             </View>
@@ -169,7 +175,7 @@ const MinimalPDF = ({ formData }: MinimalProps) => {
           <View style={styles.skills}>
             {skills.map((skill, i) => (
               <Text key={i} style={styles.skill}>
-                • {skill}
+                - {skill}
               </Text>
             ))}
           </View>

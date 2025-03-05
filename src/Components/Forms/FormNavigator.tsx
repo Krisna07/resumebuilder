@@ -13,7 +13,6 @@ const FormNavigator: React.FC<FormNavigatorProps> = ({ handleSubmit }) => {
         type="submit"
         size={"small"}
         variant="secondary"
-        // disabled
         fullWidth={false}
       >
         <FaChevronLeft /> Back

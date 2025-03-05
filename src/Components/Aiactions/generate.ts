@@ -70,7 +70,7 @@ Please create a professional resume using the details and provide the output in 
   email: string;
   phone: string;
   location: string;
-  links: { type: string; url: string }[];
+  links: { type: string; url: string }[]; make sure to keep link and give the type of  link the link can be twitter, github and linkedin 
   summary: string;
 }
   },
@@ -96,7 +96,11 @@ Please create a professional resume using the details and provide the output in 
   location: string;
     }
   ],
-"skills": string[]
+"skills": 
+[{
+type:string, //This can be the type of skill for the user, the user can have skills based on the role like Fontend skills, backend skills, tools, etc 
+skills:string[], // arrange the skills that user have provided and add accordingly if needed
+}]
 ,"certificates": [{
   title: string;
   issued_by: string;
@@ -104,7 +108,7 @@ Please create a professional resume using the details and provide the output in 
 }]
 }
 
-Make sure to add a summary that aligns with the user's profile (at least 50 words) and ensure that each work experience has a description with at least 5 points.Make sure the date format for the resume it Month/year(full year). Also, generate at least 10 relevant skills.
+Make sure to add a summary that aligns with the user's profile (not more than 50 words) and ensure that each work experience has a description with at least 5 points.Make sure the date format for the resume it Month-year like Jan 2024(full year). Also, generate at least 10 relevant skills.
 `;
 
   try {

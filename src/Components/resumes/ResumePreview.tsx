@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { FaDownload } from "react-icons/fa";
+
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { ResumeData } from "../../types";
-
-// Import templates with explicit paths - adjust these paths to match your project structure
 import MinimalPDF from "../../Components/resumes/templates/Minimal";
 import Modern from "../../Components/resumes/templates/Modern";
 import Professional from "../../Components/resumes/templates/Professional";
-import Creative from "../ResumeDesigns/Creative"; // Make sure this exists
+import Creative from "../ResumeDesigns/Creative";
+import Button from "../Button";
+import { GenerateResume } from "../Aiactions/generate";
+import { FaChevronLeft } from "react-icons/fa6";
 
-// Define valid template keys
 type TemplateKey = "creative" | "modern" | "professional" | "minimal";
 
 const templates: Record<
@@ -22,7 +22,15 @@ const templates: Record<
   minimal: MinimalPDF,
 };
 
-const ResumePreview = ({ formData }: { formData: ResumeData }) => {
+const ResumePreview = ({
+  formData,
+  handleReview,
+}: {
+  formData: ResumeData;
+  handleReview?: () => void;
+}) => {
+  const [generatedResume, setGeneratedResume] = useState<ResumeData>(formData);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [selectedTemplate, setSelectedTemplate] =
     useState<keyof typeof templates>("modern");
   const [loading, setLoading] = useState(false);
@@ -30,10 +38,24 @@ const ResumePreview = ({ formData }: { formData: ResumeData }) => {
 
   const SelectedTemplate = templates[selectedTemplate];
 
+  const generateResume = async () => {
+    setIsGenerating(true);
+    try {
+      const result = await GenerateResume(generatedResume);
+
+      setGeneratedResume(result);
+    } catch (error) {
+      console.error("Error generating resume:", error);
+      alert("Failed to generate resume. Please try again.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col gap-2 h-screen">
       <div className="mb-6 flex justify-between items-center">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <label htmlFor="template-select" className="font-medium">
             Choose Template:
           </label>
@@ -49,6 +71,22 @@ const ResumePreview = ({ formData }: { formData: ResumeData }) => {
             <option value="modern">Modern</option>
           </select>
         </div>
+        <div className="flex items-center gap-4">
+          <Button
+            onClick={() => generateResume()}
+            children={isGenerating ? "Generating..." : "Regenerate"}
+            size="small"
+            variant="secondary"
+          />
+          <Button
+            type="button"
+            variant="secondary"
+            size="small"
+            onClick={() => handleReview()}
+          >
+            <FaChevronLeft /> Review
+          </Button>
+        </div>
 
         <PDFDownloadLink
           document={<SelectedTemplate formData={formData} />}
@@ -56,31 +94,29 @@ const ResumePreview = ({ formData }: { formData: ResumeData }) => {
             /\s+/g,
             "_"
           )}_Resume.pdf`}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
+          className=""
         >
-          {({ loading: pdfLoading, error: pdfError }) => {
-            if (pdfError) {
-              console.error("PDF generation error:", pdfError);
-              return "Error generating PDF";
-            }
-            return pdfLoading ? (
-              "Generating PDF..."
-            ) : (
-              <>
-                <FaDownload size={14} /> Download PDF
-              </>
-            );
-          }}
+          <Button
+            children={`Download Resume`}
+            size="medium"
+            variant="primary"
+          />
         </PDFDownloadLink>
       </div>
 
-      <div className="border rounded-lg shadow-lg overflow-hidden bg-white h-screen">
+      <div className=" border rounded-lg shadow-lg overflow-hidden h-full  bg-red-500   grid place-items-center">
         {error ? (
           <div className="p-8 text-center text-red-500">{error}</div>
         ) : (
-          <PDFViewer width="100%" height="100%" className="w-full h-full">
-            <SelectedTemplate formData={formData} />
-          </PDFViewer>
+          <>
+            <PDFViewer
+              width="100%"
+              height="100%"
+              className="w-full h-full bg-white"
+            >
+              <SelectedTemplate formData={generatedResume} />
+            </PDFViewer>
+          </>
         )}
       </div>
     </div>

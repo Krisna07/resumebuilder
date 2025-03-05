@@ -1,13 +1,11 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { ResumeData } from "../../../types";
-import { MdEmail } from "react-icons/md";
 
 // Create Props interface
 interface ModernProps {
   formData: ResumeData;
 }
 
-// Create styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -15,18 +13,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#f7f9fc",
     display: "flex",
     flexDirection: "column",
-    gap: 10,
-    lineHeight: "100%",
+    gap: "12px",
+    lineHeight: "80%",
   },
   header: {
-    marginBottom: 20,
     borderBottom: "2px solid #3498db",
-    paddingBottom: 10,
+    paddingBottom: 2,
   },
   name: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#2980b9",
+    marginBottom: "8px",
   },
   contact: {
     display: "flex",
@@ -42,7 +40,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   section: {
-    marginBottom: 10,
     display: "flex",
     flexDirection: "column",
   },
@@ -50,8 +47,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     backgroundColor: "#ecf0f1",
-    padding: 5,
-    marginBottom: 6,
+    padding: "4px 0",
+    marginBottom: 4,
     color: "#34495e",
   },
   expHeader: {
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   jobTitle: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "bold",
     color: "#2c3e50",
   },
@@ -95,22 +92,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 5,
-    lineHeight: "80%",
   },
   skill: {
-    padding: 3,
+    padding: 5,
+    paddingBottom: 0,
     border: "1px solid #ccc",
     borderRadius: 3,
     fontSize: 10,
-    marginRight: 5,
-    marginBottom: 5,
-    lineHeight: "80%",
   },
 });
 
 const Modern = ({ formData }: ModernProps) => {
   const { profile, experience, education, skills } = formData;
-
+  console.log(skills);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -118,12 +112,15 @@ const Modern = ({ formData }: ModernProps) => {
         <View style={styles.header}>
           <Text style={styles.name}>{profile.fullname}</Text>
           <View style={styles.contact}>
-            <Text style={styles.contactItem}>
-              <MdEmail />
-              {profile.email}
-            </Text>
+            <Text style={styles.contactItem}>{profile.email}</Text>
             <Text style={styles.contactItem}>{profile.phone}</Text>
             <Text style={styles.contactItem}>{profile.location}</Text>
+            {profile.links.length > 0 &&
+              profile.links.map((link, i) => (
+                <Text key={i} style={styles.contactItem}>
+                  {link.url}
+                </Text>
+              ))}
           </View>
         </View>
 
@@ -137,16 +134,16 @@ const Modern = ({ formData }: ModernProps) => {
         </View>
 
         {/* Skills */}
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <Text style={styles.sectionTitle}>Skills</Text>
           <View style={styles.skills}>
-            {skills?.map((skill, i) => (
-              <Text key={i} style={styles.skill}>
-                {skill}
-              </Text>
-            ))}
+            
+                {skills.map((item, i) => (
+                  <Text key={i} style={styles.skill}>{item}</Text>)
+                )}  
+     
           </View>
-        </View>
+        </View> */}
 
         {/* Experience */}
         <View style={styles.section}>

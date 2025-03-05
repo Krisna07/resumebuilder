@@ -11,6 +11,7 @@ import {
   Experience,
   Profile,
   ResumeData,
+  skills,
 } from "../../types";
 import Button from "../Button";
 import FormLayout from "./FomLayout";
@@ -61,7 +62,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
             children={
               <SkillsStep
                 data={formData.skills}
-                updateSkills={(data: string[]) =>
+                updateSkills={(data: skills[]) =>
                   setFormData({ ...formData, skills: data })
                 }
               />
@@ -116,7 +117,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
           />
         );
       case 6:
-        return <ResumePreview formData={formData} />;
+        return (
+          <ResumePreview formData={formData} handleReview={handlePrevious} />
+        );
       default:
         return <div>Invalid Step</div>;
     }
@@ -164,8 +167,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
           </div>
         )}
 
-        <div className="w-full grid gap-2 place-items-center">
+        <div className="w-full grid gap-2 place-items-center relative">
           {renderStep()}
+
           <div className="mt-6 gap-4 flex justify-between">
             <Button
               type="button"

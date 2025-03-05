@@ -1,9 +1,14 @@
 export interface ResumeData {
   profile: Profile;
-  skills: string[];
+  skills: skills[];
   experience: Experience[];
   education: Education[];
   certificates: Certificates[];
+}
+
+export interface skills {
+  type?: string;
+  skills: string[];
 }
 
 export interface Profile {
