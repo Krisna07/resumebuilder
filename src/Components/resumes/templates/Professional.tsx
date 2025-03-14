@@ -1,197 +1,106 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import React from "react";
 import { ResumeData } from "../../../types";
 
 interface ProfessionalProps {
   formData: ResumeData;
 }
 
-const styles = StyleSheet.create({
-  page: {
-    padding: 40,
-    fontFamily: "Times-Roman",
-    backgroundColor: "#fafafa",
-    display: "flex",
-    flexDirection: "column",
-  },
-  header: {
-    marginBottom: 20,
-    textAlign: "center",
-    borderBottom: "1px solid #333",
-    paddingBottom: 10,
-    display: "flex",
-    flexDirection: "column",
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    marginBottom: 5,
-    color: "#2c3e50",
-  },
-  contact: {
-    flexDirection: "row",
-    justifyContent: "center",
-    fontSize: 10,
-    color: "#7f8c8d",
-  },
-  contactDivider: {
-    marginHorizontal: 5,
-  },
-  section: {
-    marginBottom: 15,
-    paddingHorizontal: 10,
-    display: "flex",
-    flexDirection: "column",
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    textAlign: "center",
-    borderBottom: "1pt solid #000",
-    paddingBottom: 2,
-    marginBottom: 8,
-    color: "#34495e",
-  },
-  expHeader: {
-    marginBottom: 3,
-  },
-  jobTitleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  jobTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#2c3e50",
-  },
-  company: {
-    fontSize: 10,
-    fontStyle: "italic",
-    color: "#7f8c8d",
-  },
-  dateLocation: {
-    fontSize: 10,
-  },
-  bullet: {
-    fontSize: 10,
-    marginLeft: 10,
-    marginBottom: 3,
-    color: "#34495e",
-  },
-  skillsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  skillGroup: {
-    width: "50%",
-    marginBottom: 5,
-  },
-  skillTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#2c3e50",
-  },
-  skillList: {
-    fontSize: 10,
-    color: "#34495e",
-  },
-});
-
 const Professional = ({ formData }: ProfessionalProps) => {
   const { profile, experience, education, skills } = formData;
 
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.name}>{profile.fullname}</Text>
-          <View style={styles.contact}>
-            <Text>{profile.email}</Text>
-            <Text style={styles.contactDivider}>|</Text>
-            <Text>{profile.phone}</Text>
-            <Text style={styles.contactDivider}>|</Text>
-            <Text>{profile.location}</Text>
-          </View>
-        </View>
+    <div className="p-10 bg-gray-50 max-w-4xl mx-auto">
+      {/* Header */}
+      <div className="text-center mb-10 border-b border-gray-800 pb-4">
+        <h1 className="text-2xl font-bold uppercase text-gray-800">
+          {profile.fullname}
+        </h1>
+        <div className="flex justify-center text-xs text-gray-600 mt-2">
+          <div>{profile.email}</div>
+          <div className="mx-3">|</div>
+          <div>{profile.phone}</div>
+          <div className="mx-3">|</div>
+          <div>{profile.location}</div>
+        </div>
+      </div>
 
-        {profile.summary && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Professional Summary</Text>
-            <Text style={{ fontSize: 10, textAlign: "justify" }}>
-              {profile.summary}
-            </Text>
-          </View>
-        )}
+      {/* Professional Summary */}
+      {profile.summary && (
+        <div className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-800 text-center uppercase border-b border-gray-600 pb-2 mb-4">
+            Professional Summary
+          </h2>
+          <p className="text-sm text-gray-700 text-justify">
+            {profile.summary}
+          </p>
+        </div>
+      )}
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Professional Experience</Text>
-          {experience?.map((exp, i) => (
-            <View
-              key={i}
-              style={{
-                marginBottom: 10,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <View style={styles.expHeader}>
-                <View style={styles.jobTitleRow}>
-                  <Text style={styles.jobTitle}>{exp.title},</Text>
-                  <Text style={styles.dateLocation}>
-                    {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                  </Text>
-                </View>
-                <Text style={styles.company}>
-                  {exp.company}, {exp.location}
-                </Text>
-              </View>
-              {exp.responsibilities?.map((resp, j) => (
-                <Text key={j} style={styles.bullet}>
-                  • {resp}
-                </Text>
-              ))}
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          {education?.map((edu, i) => (
-            <View
-              key={i}
-              style={{
-                marginBottom: 5,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <View style={styles.jobTitleRow}>
-                <Text style={styles.jobTitle}>{edu.degree}</Text>
-                <Text style={styles.dateLocation}>
-                  {edu.startDate} - {edu.current ? "Present" : edu.endDate}
-                </Text>
-              </View>
-              <Text style={styles.company}>
-                {edu.university}, {edu.location}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Skills</Text>
-          <View style={styles.skillsContainer}>
-            {skills.map((skill, i) => (
-              <Text key={i} style={styles.bullet}>
-                • {skill}
-              </Text>
+      {/* Professional Experience */}
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold text-gray-800 text-center uppercase border-b border-gray-600 pb-2 mb-4">
+          Professional Experience
+        </h2>
+        {experience?.map((exp, i) => (
+          <div key={i} className="mb-6">
+            <div className="flex justify-between mb-3">
+              <h3 className="text-md font-bold text-gray-800">{exp.title}</h3>
+              <div className="text-xs text-gray-600">
+                {exp.startDate} - {exp.current ? "Present" : exp.endDate}
+              </div>
+            </div>
+            <div className="italic text-xs text-gray-600 mb-2">
+              {exp.company}, {exp.location}
+            </div>
+            {exp.responsibilities?.map((resp, j) => (
+              <div key={j} className="flex items-start mb-2">
+                <div className="text-gray-600 mr-2">•</div>
+                <p className="text-xs text-gray-700">{resp}</p>
+              </div>
             ))}
-          </View>
-        </View>
-      </Page>
-    </Document>
+          </div>
+        ))}
+      </div>
+
+      {/* Education */}
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold text-gray-800 text-center uppercase border-b border-gray-600 pb-2 mb-4">
+          Education
+        </h2>
+        {education?.map((edu, i) => (
+          <div key={i} className="mb-4">
+            <div className="flex justify-between mb-3">
+              <h3 className="text-md font-bold text-gray-800">{edu.degree}</h3>
+              <div className="text-xs text-gray-600">
+                {edu.startDate} - {edu.current ? "Present" : edu.endDate}
+              </div>
+            </div>
+            <div className="italic text-xs text-gray-600">
+              {edu.university}, {edu.location}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Skills */}
+      <div>
+        <h2 className="text-lg font-semibold text-gray-800 text-center uppercase border-b border-gray-600 pb-2 mb-4">
+          Skills
+        </h2>
+        <div className="flex flex-wrap gap-3">
+          {skills.map((skill, i) => (
+            <div
+              key={i}
+              className="text-xs font-semibold text-gray-800 bg-gray-200 px-3 py-1 rounded-full"
+            >
+              {skill.skills.map((skill, i) => (
+                <span key={i}>{skill}</span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

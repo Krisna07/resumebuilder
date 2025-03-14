@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-
-import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import React, { useRef, useState } from "react";
 import { ResumeData } from "../../types";
 import MinimalPDF from "../../Components/resumes/templates/Minimal";
 import Modern from "../../Components/resumes/templates/Modern";
-import Professional from "../../Components/resumes/templates/Professional";
-import Creative from "../ResumeDesigns/Creative";
 import Button from "../Button";
 import { GenerateResume } from "../Aiactions/generate";
-import { FaChevronLeft } from "react-icons/fa6";
-
-type TemplateKey = "creative" | "modern" | "professional" | "minimal";
+import { FaChevronLeft, FaDownload } from "react-icons/fa6";
+import html2pdf from "html2pdf.js";
+import Creative from "./templates/Creative";
+import Professional from "./templates/Professional";
+type TemplateKey = "modern" | "minimal" | "professional" | "creative";
 
 const templates: Record<
   TemplateKey,
   React.ComponentType<{ formData: ResumeData }>
 > = {
-  creative: Creative,
   modern: Modern,
+  creative: Creative,
   professional: Professional,
   minimal: MinimalPDF,
 };
@@ -32,8 +30,8 @@ const ResumePreview = ({
   const [generatedResume, setGeneratedResume] = useState<ResumeData>(formData);
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedTemplate, setSelectedTemplate] =
-    useState<keyof typeof templates>("modern");
-  const [loading, setLoading] = useState(false);
+    useState<keyof typeof templates>("creative");
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const SelectedTemplate = templates[selectedTemplate];
@@ -47,16 +45,49 @@ const ResumePreview = ({
     } catch (error) {
       console.error("Error generating resume:", error);
       alert("Failed to generate resume. Please try again.");
+      setError("oops!! Failed to rasie Resume AI ");
     } finally {
       setIsGenerating(false);
     }
   };
+  const resumeRef = useRef(null);
+  const generatePDF = () => {
+    const options = {
+      filename: "resume.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+
+    // Ensure the PDF is generated with selectable text, not images
+    const pdfOptions = {
+      html2canvas: {
+        useCORS: true, // To ensure that cross-origin images work
+        scale: 2,
+        logging: true, // To help with debugging
+      },
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait",
+        compress: true, // Compress content to optimize PDF size
+      },
+    };
+
+    html2pdf()
+      .from(resumeRef.current) // Capture content from the resumeRef element
+      .set(pdfOptions) // Apply the custom PDF options
+      .save();
+  };
 
   return (
-    <div className="w-full flex flex-col gap-2 h-screen">
-      <div className="mb-6 flex justify-between items-center">
-        <div className="flex gap-2 items-center">
-          <label htmlFor="template-select" className="font-medium">
+    <div className="w-full flex flex-col gap-2 h-screen place-items-center">
+      <div className="mb-6 flex justify-between items-center flex-wrap gap-2">
+        <div className="flex gap-2 items-center ">
+          <label
+            htmlFor="template-select"
+            className="font-medium whitespace-nowrap"
+          >
             Choose Template:
           </label>
           <select
@@ -82,41 +113,31 @@ const ResumePreview = ({
             type="button"
             variant="secondary"
             size="small"
-            onClick={() => handleReview()}
+            onClick={handleReview} // Changed to directly reference handleReview
           >
             <FaChevronLeft /> Review
           </Button>
-        </div>
-
-        <PDFDownloadLink
-          document={<SelectedTemplate formData={formData} />}
-          fileName={`${formData.profile.fullname.replace(
-            /\s+/g,
-            "_"
-          )}_Resume.pdf`}
-          className=""
-        >
           <Button
-            children={`Download Resume`}
-            size="medium"
+            type="button"
             variant="primary"
-          />
-        </PDFDownloadLink>
+            size="small"
+            onClick={generatePDF}
+            // className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+          >
+            <span className="flex items-center gap-2">
+              Download <FaDownload />
+            </span>
+          </Button>
+        </div>
       </div>
 
-      <div className=" border rounded-lg shadow-lg overflow-hidden h-full  bg-red-500   grid place-items-center">
+      <div className="bg-white  w-full  shadow-md rounded-md min-[800px]:max-w-3xl  ">
         {error ? (
           <div className="p-8 text-center text-red-500">{error}</div>
         ) : (
-          <>
-            <PDFViewer
-              width="100%"
-              height="100%"
-              className="w-full h-full bg-white"
-            >
-              <SelectedTemplate formData={generatedResume} />
-            </PDFViewer>
-          </>
+          <div ref={resumeRef} className="w-full ">
+            <SelectedTemplate formData={formData} />
+          </div>
         )}
       </div>
     </div>

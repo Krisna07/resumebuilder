@@ -16,6 +16,7 @@ ${
     ? `Name: ${userdata.profile.fullname}
 Email: ${userdata.profile.email}
 Phone: ${userdata.profile.phone}
+links:${userdata.profile.links}
 
 Work Experience:
 ${userdata.experience
@@ -70,7 +71,9 @@ Please create a professional resume using the details and provide the output in 
   email: string;
   phone: string;
   location: string;
-  links: { type: string; url: string }[]; make sure to keep link and give the type of  link the link can be twitter, github and linkedin 
+  links: { type: string; url: string }[]; make sure to keep link and give the type of  link the link can be any social try to use the ${
+    userdata?.profile.links
+  }
   summary: string;
 }
   },
@@ -96,7 +99,9 @@ Please create a professional resume using the details and provide the output in 
   location: string;
     }
   ],
-"skills": 
+"skills": //make sure to use mmultiple type of skills accoring to the user make sure to breakit down properly according to the ${
+    userdata?.profile.summary
+  }, ${userdata?.experience} and ${userdata?.skills}
 [{
 type:string, //This can be the type of skill for the user, the user can have skills based on the role like Fontend skills, backend skills, tools, etc 
 skills:string[], // arrange the skills that user have provided and add accordingly if needed
@@ -114,10 +119,12 @@ Make sure to add a summary that aligns with the user's profile (not more than 50
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
+
     const text = await response.text();
 
     if (text) {
       const jsonResponse = text.split("`json")[1]?.split("`")[0];
+      // console.log(jsonResponse);
       return JSON.parse(jsonResponse);
     } else {
       throw new Error("Response text does not contain valid JSON format");

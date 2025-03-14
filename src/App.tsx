@@ -76,7 +76,7 @@ const App = () => {
         if (result) {
           setManual(true);
           setResumeContent(result);
-          localStorage.setItem("resumeData", JSON.stringify(result));
+          // localStorage.setItem("resumeData", JSON.stringify(result));
           // Store the parsed content
         }
       } catch {
@@ -87,7 +87,6 @@ const App = () => {
     }
   };
   const resumePresent = localStorage.getItem("resumeData");
-  console.log(JSON.parse(resumePresent));
 
   return (
     <div className="min-w-full min-h-screen grid place-items-center ">
@@ -146,7 +145,11 @@ const App = () => {
         </>
       )}
       {(resumeContent.profile.fullname || manual) && (
-        <MultiStepForm resumeContent={resumeContent} />
+        <MultiStepForm
+          resumeContent={
+            resumePresent ? JSON.parse(resumePresent) : resumeContent
+          }
+        />
       )}
       {/* <ResumePreview formData={resumeContent} /> */}
     </div>

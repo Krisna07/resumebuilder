@@ -170,18 +170,17 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
         <div className="w-full grid gap-2 place-items-center relative">
           {renderStep()}
 
-          <div className="mt-6 gap-4 flex justify-between">
-            <Button
-              type="button"
-              variant="secondary"
-              size="small"
-              onClick={handlePrevious}
-              disabled={currentStep === 1}
-            >
-              <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
-            </Button>
-
-            {currentStep != 6 && (
+          {currentStep != 6 && (
+            <div className="mt-6 gap-4 flex justify-between">
+              <Button
+                type="button"
+                variant="secondary"
+                size="small"
+                onClick={handlePrevious}
+                disabled={currentStep === 1}
+              >
+                <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
+              </Button>
               <Button
                 type="button"
                 variant="primary"
@@ -191,8 +190,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
               >
                 {currentStep === 5 ? "Submit" : "Next"} <FaChevronRight />
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  img {
+    @apply inline-block;
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
