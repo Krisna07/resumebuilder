@@ -24,12 +24,7 @@ const App = () => {
       ],
       summary: "",
     },
-    skills: [
-      {
-        type: "",
-        skills: [""],
-      },
-    ],
+    skills: [],
     experience: [
       {
         title: "",

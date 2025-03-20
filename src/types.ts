@@ -8,7 +8,7 @@ export interface ResumeData {
 
 export interface skills {
   type?: string;
-  skills: string[];
+  skills?: string[];
 }
 
 export interface Profile {
