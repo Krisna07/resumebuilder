@@ -14,6 +14,8 @@ export default function Datepicker({
   target,
   update,
 }: DatePickerProps) {
+  const isValidDate = value ? !isNaN(new Date(value).getTime()) : false;
+
   return (
     <label className="w-full grid gap-1 transition-all ease-in-out text-[14px] font-sans">
       {target == "startDate" ? "Start Date" : "End Date"}
@@ -21,7 +23,7 @@ export default function Datepicker({
         <span>{value ? value : "Select Date"}</span>
 
         <DatePicker
-          selected={value ? new Date(value) : new Date()}
+          selected={isValidDate ? new Date(value!) : null}
           onChange={(date: Date | null) => {
             if (date) {
               const options = {
@@ -34,7 +36,6 @@ export default function Datepicker({
           }}
           showMonthYearPicker
           dateFormat="yyyy-MM"
-          locale="en-GB"
           customInput={<input />}
           className="absolute min-w-full opacity-0"
         />
