@@ -25,7 +25,7 @@ const Creative = ({ formData }: CreativeProps) => {
         <h3 className={`text-3xl font-bold mb-2`}>{profile.fullname}</h3>
         <div className="w-full flex items-center justify-between ">
           <span className={styles.normaltext}>
-            <BsPinMap color="red" /> {profile.location}
+            <BsPinMap  /> {profile.location}
           </span>
           <span className={styles.normaltext}>
             <CiMail /> {profile.email}
@@ -35,6 +35,7 @@ const Creative = ({ formData }: CreativeProps) => {
           </span>
           {profile.links[0]?.url &&
             profile.links.map((link, idx) => (
+
               <span className={styles.normaltext} key={idx}>
                 <BsGlobe /> {link.url}
               </span>
@@ -54,7 +55,7 @@ const Creative = ({ formData }: CreativeProps) => {
             <div key={idx} className="grid grid-cols-[2fr_6fr] gap-2">
               <h4 className={styles.subHeading}>{skill.type}</h4>
               <div className="flex items-center gap-2 flex-wrap">
-                {skill.skills.map((skill, idx) => (
+                {skill.skills?.map((skill, idx) => (
                   <span
                     key={idx}
                     className={`text-[12px] whitespace-nowrap p-[2px_4px] border-[1px] border-solid border-gray-800 rounded-md`}

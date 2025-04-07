@@ -20,9 +20,10 @@ import ResumePreview from "../resumes/ResumePreview";
 
 interface MultiStepFormProps {
   resumeContent: ResumeData;
+  handleResumeDataUpdate: (data: ResumeData) => void;
 }
 
-const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
+const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResumeDataUpdate }) => {
   const [formData, setFormData] = useState<ResumeData>(resumeContent);
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent }) => {
         );
       case 6:
         return (
-          <ResumePreview formData={formData} handleReview={handlePrevious} />
+          <ResumePreview formData={formData} handleReview={handlePrevious} handleResumeDataUpdate={handleResumeDataUpdate}  />
         );
       default:
         return <div>Invalid Step</div>;

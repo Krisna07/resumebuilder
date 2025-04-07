@@ -6,6 +6,7 @@ import { GenerateResume } from "./Components/Aiactions/generate";
 import { ResumeData } from "./types";
 import Button from "./Components/Button";
 import { Upload } from "lucide-react";
+import ResumePreview from "./Components/resumes/ResumePreview";
 // import ResumePreview from "./Components/resumes/ResumePreview";
 
 const App = () => {
@@ -50,6 +51,10 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const updateResumeContent = (data: ResumeData) => {
+    console.log("Updated Resume Data:", data);
+    setResumeContent(data); // Update the resume content with the new data
+  };
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -70,7 +75,7 @@ const App = () => {
         const result = await GenerateResume(undefined, data);
         if (result) {
           setManual(true);
-          setResumeContent(result);
+          updateResumeContent(result);
           // localStorage.setItem("resumeData", JSON.stringify(result));
           // Store the parsed content
         }
@@ -144,6 +149,8 @@ const App = () => {
           resumeContent={
             resumePresent ? JSON.parse(resumePresent) : resumeContent
           }
+          handleResumeDataUpdate={updateResumeContent}
+          
         />
       )}
       {/* <ResumePreview formData={resumeContent} /> */}

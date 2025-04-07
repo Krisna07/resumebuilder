@@ -23,9 +23,11 @@ const templates: Record<
 const ResumePreview = ({
   formData,
   handleReview,
+  handleResumeDataUpdate
 }: {
   formData: ResumeData;
   handleReview?: () => void;
+  handleResumeDataUpdate?: (data: ResumeData) => void;
 }) => {
   const [generatedResume, setGeneratedResume] = useState<ResumeData>(formData);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -40,8 +42,9 @@ const ResumePreview = ({
     setIsGenerating(true);
     try {
       const result = await GenerateResume(generatedResume);
-
+      console.log("Generated Resume:", result);
       setGeneratedResume(result);
+      handleResumeDataUpdate?.(result); // Call the parent function to update the resume data
     } catch (error) {
       console.error("Error generating resume:", error);
       alert("Failed to generate resume. Please try again.");
@@ -52,14 +55,10 @@ const ResumePreview = ({
   };
   const resumeRef = useRef(null);
   const generatePDF = () => {
-    const options = {
-      filename: "resume.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-
-    // Ensure the PDF is generated with selectable text, not images
+    if (!resumeRef.current) {
+      console.error("Resume reference is not valid");
+      return;
+    }
     const pdfOptions = {
       html2canvas: {
         useCORS: true, // To ensure that cross-origin images work
@@ -68,16 +67,19 @@ const ResumePreview = ({
       },
       jsPDF: {
         unit: "mm",
+        filename: "resume.pdf",
+        margin: [2, 0, 0, 0], // Top, Left, Bottom, Right margins
         format: "a4",
         orientation: "portrait",
         compress: true, // Compress content to optimize PDF size
-      },
-    };
+    }
+  }
+    const fileName = `${generatedResume?.profile.fullname}_Resume.pdf`;
 
     html2pdf()
       .from(resumeRef.current) // Capture content from the resumeRef element
       .set(pdfOptions) // Apply the custom PDF options
-      .save();
+      .save(fileName) // Save the PDF with the specified filename;
   };
 
   return (
@@ -136,7 +138,7 @@ const ResumePreview = ({
           <div className="p-8 text-center text-red-500">{error}</div>
         ) : (
           <div ref={resumeRef} className="w-full ">
-            <SelectedTemplate formData={formData} />
+            <SelectedTemplate formData={generatedResume} />
           </div>
         )}
       </div>
