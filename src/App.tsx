@@ -52,7 +52,7 @@ const App = () => {
   const [error, setError] = useState<string | null>(null);
 
   const updateResumeContent = (data: ResumeData) => {
-    console.log("Updated Resume Data:", data);
+    // console.log("Updated Resume Data:", data);
     setResumeContent(data); // Update the resume content with the new data
   };
   const handleFileChange = async (

@@ -96,7 +96,7 @@ const Professional = ({ formData }: ProfessionalProps) => {
             {skills.map((skill, i) => (
               <div
                 key={i}
-                className="text-sm bg-gray-100  rounded border border-gray-200"
+                className="text-sm  rounded"
               >
                 <span className="font-semibold">{skill.type}:</span>{" "}
                 {skill.skills?.map((s, index) => (

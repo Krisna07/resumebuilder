@@ -42,7 +42,7 @@ const ResumePreview = ({
     setIsGenerating(true);
     try {
       const result = await GenerateResume(generatedResume);
-      console.log("Generated Resume:", result);
+      // console.log("Generated Resume:", result);
       setGeneratedResume(result);
       handleResumeDataUpdate?.(result); // Call the parent function to update the resume data
     } catch (error) {
