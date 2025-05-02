@@ -54,7 +54,7 @@ const Professional = ({ formData }: ProfessionalProps) => {
               </div>
               {exp.responsibilities && exp.responsibilities?.length > 0 && (
                 <ul className="list-disc pl-5 mt-2">
-                  {exp.responsibilities?.map((resp, j) => (s
+                  {exp.responsibilities?.map((resp, j) => (
                     <li key={j} className="text-sm text-gray-700 mb-1">{resp}</li>
                   ))}
                 </ul>
