@@ -4,11 +4,52 @@ import { ResumeData } from "../../types";
 const api = import.meta.env.VITE_GEMINI_API;
 
 const genAI = new GoogleGenerativeAI(api);
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-export async function GenerateResume(userdata?: ResumeData, data?: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+export async function analyseResumeToJobDescription(userdata?: ResumeData, jobDescription?: string) {
 
-  const prompt = `Create a professional resume using the following information:
+
+  const prompt = `Analyze the following resume data and job description to provide a detailed analysis:
+
+  Resume Data:
+  ${JSON.stringify(userdata, null, 2)}
+
+  Job Description:
+  ${jobDescription}
+
+  Please provide a comprehensive analysis that includes:
+  - A brief description of the candidate's qualifications.
+  - The percentage match between the resume and the job description.
+  - Suggestions for improving the resume to better fit the job description.
+
+  Please provide the analysis in JSON format with the following structure:{
+  "jobDescription": string, // The job description provided
+  "matchingPercentage": number, // Percentage match between the resume and job description
+  "description": string, // Brief description of the candidate's qualifications
+  "suggestions": string[], // List of suggestions for improving the resume
+  `;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+
+    const text = await response.text();
+    if (text) {
+      const jsonResponse = text.split("`json")[1]?.split("`")[0];
+      return JSON.parse(jsonResponse);
+    } else {
+      throw new Error("Response text does not contain valid JSON format");
+    }
+  } catch (error) {
+    console.error("Error analyzing resume:", error);
+    throw new Error("Failed to analyze resume");
+  }
+
+}
+
+export async function GenerateResume(userdata?: ResumeData, data?: string, jobDescription?: string) {
+
+  const prompt = `Create a professional resume using the following information and taylor to align wirth the job decription provided:
 
   ${userdata ? `
   Name: ${userdata.profile.fullname}
@@ -18,7 +59,7 @@ export async function GenerateResume(userdata?: ResumeData, data?: string) {
   
   Work Experience:
   ${userdata.experience
-    .map((exp) => `
+        .map((exp) => `
     - Position: ${exp.title}
       Company: ${exp.company}
       Duration: ${exp.startDate} to ${exp.endDate ? exp.endDate : "current"}
@@ -26,11 +67,11 @@ export async function GenerateResume(userdata?: ResumeData, data?: string) {
       Description: 
         ${exp.responsibilities?.join("\n")}
     `)
-    .join("\n")}
+        .join("\n")}
   
   Education:
   ${userdata.education
-    .map((edu) => `
+        .map((edu) => `
     - Degree: ${edu.degree}
       Location: ${edu.location}
       University: ${edu.university}
@@ -38,7 +79,7 @@ export async function GenerateResume(userdata?: ResumeData, data?: string) {
       End Date: ${edu.endDate}
       Current: ${edu.current ? "Yes" : "No"}
     `)
-    .join("\n")}
+        .join("\n")}
   
   Certifications:
   ${userdata.certificates.map((cert) => `
@@ -50,6 +91,9 @@ export async function GenerateResume(userdata?: ResumeData, data?: string) {
   Skills:
   ${userdata.skills.join(", ")}
   ` : `${data}`}
+  
+  Job Description:
+  ${jobDescription ? jobDescription : "No job description provided."}
   
   Please create a professional resume using the details above and output it in JSON format. The JSON structure should match the following format:
   

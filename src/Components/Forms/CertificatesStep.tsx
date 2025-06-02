@@ -1,6 +1,5 @@
 import React from "react";
 import Input from "../Input";
-import FormNavigator from "./FormNavigator";
 import { Certificates } from "../../types";
 import Button from "../Button";
 import { Trash2 } from "lucide-react";

@@ -17,13 +17,17 @@ import Button from "../Button";
 import FormLayout from "./FomLayout";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import ResumePreview from "../resumes/ResumePreview";
+import JobDescription from "./JobDescription";
 
 interface MultiStepFormProps {
   resumeContent: ResumeData;
+  jobDescription:string;
   handleResumeDataUpdate: (data: ResumeData) => void;
+  handleJobDescription : (data : string)=> void;
+  // handleResumeAnalysis:(data:AnalysisResult)=>void
 }
 
-const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResumeDataUpdate }) => {
+const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResumeDataUpdate, handleJobDescription,jobDescription }) => {
   const [formData, setFormData] = useState<ResumeData>(resumeContent);
 
   useEffect(() => {
@@ -33,7 +37,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResu
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 6));
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 7));
   };
 
   const handlePrevious = () => {
@@ -118,26 +122,41 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResu
           />
         );
       case 6:
+          return (
+            <FormLayout
+              children={
+                <JobDescription
+                formData={formData}
+                handleJobDescription={handleJobDescription}
+                // handleResumeAnalysis={handleResumeAnalysis}
+                />
+              }
+              heading={"Let's add Job description"}
+              subheading={"Provide detail job description with roles and responsibilities."}
+            />
+          );
+      case 7:
         return (
-          <ResumePreview formData={formData} handleReview={handlePrevious} handleResumeDataUpdate={handleResumeDataUpdate}  />
+          <ResumePreview formData={formData} jobDescription={jobDescription}  handleReview={handlePrevious} handleResumeDataUpdate={handleResumeDataUpdate}  />
         );
       default:
         return <div>Invalid Step</div>;
     }
   };
-
+const navigations = [
+  "Profile",
+  "Skill",
+  "Experience",
+  "Education",
+  "Certificates",
+  "Job Description"
+]
   return (
     <div className="w-full grid place-items-center transition-all ease-in-out duration-300">
       <div className="w-full  grid gap-2 place-items-start p-2 box-border ">
-        {currentStep != 6 && (
+        {currentStep != (navigations.length + 1) && (
           <div className="w-full flex items-center justify-center gap-[12px]">
-            {[
-              "Profile",
-              "Skill",
-              "Experience",
-              "Education",
-              "Certificates",
-            ].map((item, index) => (
+            {navigations.map((item, index) => (
               <div
                 onClick={() => setCurrentStep(index + 1)}
                 key={index}
@@ -171,7 +190,7 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResu
         <div className="w-full grid gap-2 place-items-center relative">
           {renderStep()}
 
-          {currentStep != 6 && (
+          {currentStep != (navigations.length+1) && (
             <div className="mt-6 gap-4 flex justify-between">
               <Button
                 type="button"
@@ -180,16 +199,16 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ resumeContent, handleResu
                 onClick={handlePrevious}
                 disabled={currentStep === 1}
               >
-                <FaChevronLeft /> {currentStep === 6 ? "Review" : "Previous"}
+                <FaChevronLeft /> {currentStep === 7 ? "Review" : "Previous"}
               </Button>
               <Button
                 type="button"
                 variant="primary"
                 size="small"
                 onClick={handleNext}
-                disabled={currentStep === 6}
+                disabled={currentStep === 7}
               >
-                {currentStep === 5 ? "Submit" : "Next"} <FaChevronRight />
+                {currentStep === 6 ? "Submit" : "Next"} <FaChevronRight />
               </Button>
             </div>
           )}

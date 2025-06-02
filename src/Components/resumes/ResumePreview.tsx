@@ -23,8 +23,10 @@ const templates: Record<
 const ResumePreview = ({
   formData,
   handleReview,
-  handleResumeDataUpdate
+  handleResumeDataUpdate,
+  jobDescription
 }: {
+  jobDescription:string;
   formData: ResumeData;
   handleReview?: () => void;
   handleResumeDataUpdate?: (data: ResumeData) => void;
@@ -41,7 +43,7 @@ const ResumePreview = ({
   const generateResume = async () => {
     setIsGenerating(true);
     try {
-      const result = await GenerateResume(generatedResume);
+      const result = await GenerateResume(generatedResume,undefined, jobDescription);
       // console.log("Generated Resume:", result);
       setGeneratedResume(result);
       handleResumeDataUpdate?.(result); // Call the parent function to update the resume data

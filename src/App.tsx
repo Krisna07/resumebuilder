@@ -3,10 +3,10 @@ import { useState } from "react";
 import MultiStepForm from "./Components/Forms/MultiStepForm";
 import pdfToText from "react-pdftotext";
 import { GenerateResume } from "./Components/Aiactions/generate";
-import { ResumeData } from "./types";
+import { AnalysisResult, ResumeData } from "./types";
 import Button from "./Components/Button";
 import { Upload } from "lucide-react";
-import ResumePreview from "./Components/resumes/ResumePreview";
+// import ResumePreview from "./Components/resumes/ResumePreview";
 // import ResumePreview from "./Components/resumes/ResumePreview";
 
 const App = () => {
@@ -50,6 +50,18 @@ const App = () => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [jobDescription, setJobdescription ]= useState<string | null>()
+  // const [resumeAnalyis, setResumeAnalysis] = useState<AnalysisResult |null>()
+
+  const updateJobDescription=(jobAd:string)=>{
+    setJobdescription(jobAd)
+  }
+
+  // const handleResumeAnalysis =(data:AnalysisResult)=>{
+  //   setResumeAnalysis(data)
+  // }
+
+  
 
   const updateResumeContent = (data: ResumeData) => {
     // console.log("Updated Resume Data:", data);
@@ -58,7 +70,7 @@ const App = () => {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0];
+    const file =  event.target.files?.[0]
 
     if (file) {
       if (file.type !== "application/pdf") {
@@ -72,6 +84,7 @@ const App = () => {
 
       try {
         const data = await pdfToText(file);
+        // console.log(data)
         const result = await GenerateResume(undefined, data);
         if (result) {
           setManual(true);
@@ -149,7 +162,10 @@ const App = () => {
           resumeContent={
             resumePresent ? JSON.parse(resumePresent) : resumeContent
           }
+          handleJobDescription = {updateJobDescription}
           handleResumeDataUpdate={updateResumeContent}
+          jobDescription={jobDescription?jobDescription:''}
+          // handleResumeAnalysis ={handleResumeAnalysis}
           
         />
       )}

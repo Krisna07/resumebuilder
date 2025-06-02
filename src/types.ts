@@ -45,3 +45,10 @@ export interface UserResume {
   content: string;
   template: "modern" | "classic" | "minimal";
 }
+
+export interface AnalysisResult {
+  jobDescription: string;
+  description: string;
+  matchingPercentage: number;
+  suggestions: string[];
+}
