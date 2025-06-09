@@ -1,0 +1,27 @@
+
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json", 
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "api/scrape.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/scrape",   
+      "destination": "/api/scrape.ts" 
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
