@@ -170,3 +170,37 @@ export async function GenerateResume(userdata?: ResumeData, data?: string, jobDe
     throw new Error("Failed to generate resume");
   }
 }
+
+export async function extractUrlData(url: string) {
+  const prompt = `Extract the following data from the URL provided:
+  
+  URL: ${url}
+  
+  Please provide the extracted data in JSON format with the following structure:
+  
+  {
+    "title": string, // The title of the page
+    "description": string, // A brief description of the content
+    "image": string, // URL of an image associated with the content
+    "keywords": string[] // List of keywords related to the content
+  }
+  
+  Ensure that the extracted data is accurate and relevant to the content of the page.`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    console.log("Response:", response);
+
+    const text = await response.text();
+    if (text) {
+      const jsonResponse = text.split("`json")[1]?.split("`")[0];
+      return JSON.parse(jsonResponse);
+    } else {
+      throw new Error("Response text does not contain valid JSON format");
+    }
+  } catch (error) {
+    console.error("Error extracting URL data:", error);
+    throw new Error("Failed to extract URL data");
+  }
+}

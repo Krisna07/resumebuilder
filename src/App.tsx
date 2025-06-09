@@ -3,7 +3,7 @@ import { useState } from "react";
 import MultiStepForm from "./Components/Forms/MultiStepForm";
 import pdfToText from "react-pdftotext";
 import { GenerateResume } from "./Components/Aiactions/generate";
-import { AnalysisResult, ResumeData } from "./types";
+import {  ResumeData } from "./types";
 import Button from "./Components/Button";
 import { Upload } from "lucide-react";
 // import ResumePreview from "./Components/resumes/ResumePreview";

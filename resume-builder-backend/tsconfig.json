@@ -1,0 +1,18 @@
+// filepath: /Users/kpaudel/Desktop/resumebuilder/resume-builder-backend/tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2020", // Or a newer version like ES2022
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true, // If you import JSON files
+    // "types": ["node"], // Usually not needed if @types/node is installed
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
